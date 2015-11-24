@@ -1,4 +1,4 @@
-# FA_SA-Burgerladen
+# FS_SA-Burgerladen
 Repository für unser Unternehmensplanspiel
 ===========================================
 
