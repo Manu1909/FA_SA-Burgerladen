@@ -8,6 +8,13 @@ public class Standort {
 	private int kuehlgroesse;
 	
 	
+	public Standort(int miete, int traffic, int bekanntheit, int kuehlgroeße){
+		this.miete = miete;
+		this.traffic  = traffic;
+		this.bekanntheit = bekanntheit;
+		this.kuehlgroesse = kuehlgroeße;
+	}
+	
 	public int berechneMiete(){
 		return 0;
 	}

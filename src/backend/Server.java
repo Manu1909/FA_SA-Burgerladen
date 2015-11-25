@@ -21,7 +21,6 @@ public class Server {
 			
 			while(true){
                 s = ss.accept();
-
                 DataInputStream in = new DataInputStream(clientS.getInputStream());
                 DataOutputStream out = new DataOutputStream(s.getOutputStream());
                 out.writeUTF("Hallo Welt :P | " + i++);
