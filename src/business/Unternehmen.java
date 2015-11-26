@@ -123,5 +123,9 @@ public class Unternehmen {
 		
 	}
 	
+	public void waehleStandort(){
+		
+	}
+	
 
 }
