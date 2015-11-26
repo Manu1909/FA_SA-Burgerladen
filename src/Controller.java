@@ -14,5 +14,7 @@ public class Controller {
 		//u1.setLieferant(fleischlieferant, brotlieferant, salatlieferant, sossenlieferant);
 		//u1.berechneKapital();
 		
+		System.out.println(u1.getStandort().getMiete());
+		
 	}
 }
