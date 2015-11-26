@@ -1,7 +1,6 @@
-package client;
+package business;
 
 import backend.Client;
-import server.Lieferant;
 
 public class Unternehmen {
 	
@@ -23,7 +22,6 @@ public class Unternehmen {
 	public Unternehmen(String name) {
 		this.name = name;
 	}
-	
 	
 	//Getter und Setter für alle Attribute
 	public double getGewinn() {

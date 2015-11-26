@@ -1,6 +1,6 @@
-package client;
+package business;
 
-public class Kühlraum {
+public class Kuehlraum {
 	
 	private int lagerGroesse;
 	private int inhalt;

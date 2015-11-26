@@ -1,4 +1,4 @@
-package server;
+package business;
 
 public class Zutat {
 	

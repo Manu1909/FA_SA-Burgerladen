@@ -1,21 +1,20 @@
-package client;
+package business;
 
 public class Standort {
 	
 	private int miete;
 	private int traffic;
 	private int bekanntheit;
-	private int kuehlgroesse;
+	private Kuehlraum kuehlraum;
 	
-	public Standort(int miete, int traffic, int bekanntheit, int kuehlgroeße){
+	public Standort(int miete, int traffic, int bekanntheit, Kuehlraum kuehlraum){
 		this.miete = miete;
 		this.traffic  = traffic;
 		this.bekanntheit = bekanntheit;
-		this.kuehlgroesse = kuehlgroeße;
+		this.kuehlraum = kuehlraum;
 	}
 	
 	
-
 	//Getter und Setter für Standort
 	public int getMiete() {
 		return miete;
@@ -40,15 +39,6 @@ public class Standort {
 	public void setBekanntheit(int bekanntheit) {
 		this.bekanntheit = bekanntheit;
 	}
-
-	public int getKuehlgroesse() {
-		return kuehlgroesse;
-	}
-
-	public void setKuehlgroesse(int kuehlgroesse) {
-		this.kuehlgroesse = kuehlgroesse;
-	}
-	
 	
 	public int berechneMiete(){
 		return 0;
