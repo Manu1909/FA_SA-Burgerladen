@@ -40,6 +40,8 @@ public class Standort {
 		this.bekanntheit = bekanntheit;
 	}
 	
+	
+	//berechneMiete des kompletten Standorts
 	public int berechneMiete(){
 		return 0;
 	}

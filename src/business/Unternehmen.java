@@ -123,5 +123,12 @@ public class Unternehmen {
 		
 	}
 	
+	public void waehleStandort(){
+		
+	}
 
+	// Kreditoptionen müssen noch hinzugefügt werden
+	public void waehleKredit(){
+		
+	}
 }
