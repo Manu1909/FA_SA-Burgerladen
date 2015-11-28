@@ -21,6 +21,11 @@ public class Datenbank {
 	public static Lieferant sol3 = new Lieferant(1300, 9, 0.15);
 	public static Lieferant[] sol = {sol1, sol2, sol3};
 	
+	public static Kredit k1 = new Kredit(8, 10, 8000);
+	public static Kredit k2 = new Kredit(6, 8, 5000);
+	public static Kredit k3 = new Kredit(4, 6, 2000);
+	public static Kredit[] k = {k1, k2, k3};
+	
 	//private int konstante = 
 	
 	public Lieferant getFl1() {
