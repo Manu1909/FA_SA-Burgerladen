@@ -27,8 +27,9 @@ public class Burger {
 	}
 	
 	
-	public void berechneQualitaet(Unternehmen u){
+	public int berechneQualitaet(Unternehmen u){
 		qualitaet = (int) (((u.getFleischlieferant().getQualitaet() + u.getBrotlieferant().getQualitaet() + u.getSalatlieferant().getQualitaet() + u.getSossenlieferant().getQualitaet())/4.0) + 0.5);
+		return qualitaet;
 	}
 
 }

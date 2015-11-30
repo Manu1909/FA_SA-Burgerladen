@@ -65,7 +65,14 @@ public class Bestellung {
 		boolean blok;
 		boolean salok;
 		boolean solok;
-		//ToDo Pr�fe Lagerplatz im K�hlraum!!!!!!!!
+		boolean krok;
+
+		if(u.getStandort().getKuehlraum().berechneFreienLagerplatz()>=bestellmenge){
+			krok = true;
+		}
+		else{
+			krok = false;
+		}
 		
 		
 		if(Datenbank.fl1.uebrigeRessourcen() >= bestellmenge || Datenbank.fl2.uebrigeRessourcen() >= bestellmenge || Datenbank.fl3.uebrigeRessourcen() >= bestellmenge){
@@ -96,7 +103,7 @@ public class Bestellung {
 			solok = false;
 		}
 		
-		if(flok && blok && salok && solok){
+		if(flok && blok && salok && solok && krok){
 			menge = bestellmenge;
 		}
 		else{
@@ -151,6 +158,10 @@ public class Bestellung {
 		bestelleBrot(bl);
 		bestelleSalat(sal);
 		bestelleSosse(sol);
+	}
+
+	public double berechneGesamtpreis(){
+		return (u.getFleischlieferant().getPreisProGut() + u.getBrotlieferant().getPreisProGut() + u.getSalatlieferant().getPreisProGut() + u.getSossenlieferant().getPreisProGut())*menge;
 	}
 	
 
