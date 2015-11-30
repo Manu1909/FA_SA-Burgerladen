@@ -112,6 +112,14 @@ public class Unternehmen {
 		this.sossenlieferant = sossenlieferant;
 	}
 	
+	public Kredit getKredit() {
+		return kredit;
+	}
+	
+	public void setKredit(Kredit kredit) {
+		this.kredit = kredit;
+	}
+	
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
 		setBrotlieferant(brotlieferant);
@@ -127,8 +135,7 @@ public class Unternehmen {
 		
 	}
 
-	// Kreditoptionen müssen noch hinzugefügt werden
-	public void waehleKredit(){
-		
+	public void waehleKredit(Kredit k){
+		setKredit(kredit);
 	}
 }
