@@ -2,25 +2,33 @@ package business;
 
 public class Standort {
 	
-	private int miete;
+	private String lage;
+	private double miete;
 	private int traffic;
 	private int bekanntheit;
 	private Kuehlraum kuehlraum;
 	
-	public Standort(int miete, int traffic, int bekanntheit, Kuehlraum kuehlraum){
+	public Standort(String lage, double miete, int traffic, int bekanntheit){
+		this.lage = lage;
 		this.miete = miete;
 		this.traffic  = traffic;
 		this.bekanntheit = bekanntheit;
-		this.kuehlraum = kuehlraum;
 	}
 	
-	
 	//Getter und Setter für Standort
-	public int getMiete() {
+	public String getLage() {
+		return lage;
+	}
+
+	public void setLage(String lage) {
+		this.lage = lage;
+	}
+
+	public double getMiete() {
 		return miete;
 	}
 
-	public void setMiete(int miete) {
+	public void setMiete(double miete) {
 		this.miete = miete;
 	}
 
@@ -41,9 +49,20 @@ public class Standort {
 	}
 	
 	
+	public Kuehlraum getKuehlraum() {
+		return kuehlraum;
+	}
+
+
+	public void setKuehlraum(Kuehlraum kuehlraum) {
+		this.kuehlraum = kuehlraum;
+	}
+
+
 	//berechneMiete des kompletten Standorts
-	public int berechneMiete(){
-		return 0;
+	public double berechneMiete(){
+		miete = miete + getKuehlraum().getMietZusatzKosten();
+		return miete;
 	}
 
 }
