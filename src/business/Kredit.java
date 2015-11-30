@@ -4,13 +4,13 @@ public class Kredit {
 	
 	private int laufzeit; //entspricht einer Periode = 3 Monate
 	private int zinssatz;
-	private int höhe; // Idee: Höhe des Kredits selber bestimmen
+	private int hoehe; // Idee: Hï¿½he des Kredits selber bestimmen
 	private double zinsen;
 
-	public Kredit(int laufzeit, int zinssatz, int höhe) {
+	public Kredit(int laufzeit, int zinssatz, int hoehe) {
 		this.laufzeit = laufzeit;
 		this.zinssatz = zinssatz;
-		this.höhe = höhe;
+		this.hoehe = hoehe;
 	}
 	
 	//Getter und Setter
@@ -21,8 +21,8 @@ public class Kredit {
 	public void setZinssatz(int zinssatz) {
 		this.zinssatz = zinssatz;
 	}	
-	public void setHöhe(int höhe) {
-		this.höhe = höhe;
+	public void setHoehe(int hoehe) {
+		this.hoehe = hoehe;
 	}
 	public void setZinsen(double zinsen){
 		this.zinsen = zinsen;
@@ -33,8 +33,8 @@ public class Kredit {
 	public int getZinssatz() {
 		return zinssatz;
 	}
-	public int getHöhe() {
-		return höhe;
+	public int getHoehe() {
+		return hoehe;
 	}
 	public double getZinsen(){
 		return zinsen;
@@ -42,7 +42,7 @@ public class Kredit {
 	
 	//Methoden
 	public double berechneZinsen(){
-		zinsen = (1+zinssatz*0.01)*höhe/laufzeit;
+		zinsen = (1+zinssatz*0.01)*hoehe/laufzeit;
 		return zinsen;
 	}
 }

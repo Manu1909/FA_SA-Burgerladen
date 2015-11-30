@@ -3,7 +3,7 @@ package business;
 public class Burger {
 	
 	int preis;
-	int qualität;
+	int qualitaet;
 	
 	public Burger() {
 		// TODO Auto-generated constructor stub
@@ -14,21 +14,21 @@ public class Burger {
 		this.preis = preis;
 	}
 	
-	public void setQualität(int qualität){
-		this.qualität = qualität;
+	public void setQualitaet(int qualitaet){
+		this.qualitaet = qualitaet;
 	}
 	
 	public int getPreis(){
 		return preis;
 	}
 	
-	public int getQualität(){
-		return qualität;
+	public int getQualitaet(){
+		return qualitaet;
 	}
 	
 	
-	public void berechneQualität(Unternehmen u){
-		qualität = (int) (((u.getFleischlieferant().getQualität() + u.getBrotlieferant().getQualität() + u.getSalatlieferant().getQualität() + u.getSossenlieferant().getQualität())/4.0) + 0.5);
+	public void berechneQualitaet(Unternehmen u){
+		qualitaet = (int) (((u.getFleischlieferant().getQualitaet() + u.getBrotlieferant().getQualitaet() + u.getSalatlieferant().getQualitaet() + u.getSossenlieferant().getQualitaet())/4.0) + 0.5);
 	}
 
 }

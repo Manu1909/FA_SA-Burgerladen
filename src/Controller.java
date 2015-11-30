@@ -11,7 +11,7 @@ public class Controller {
 	private static ArrayList<Standort> standorte = new ArrayList<>();
 	private static Standort s1 = new Standort("Planken",1400, 3, 5);
 	private static Standort s2 = new Standort("Jungbusch",1100, 2, 2);
-	private static Standort s3 = new Standort("Kurpfalzer Straße",1500, 4, 5);
+	private static Standort s3 = new Standort("Kurpfalzer Strasse",1500, 4, 5);
 	private static Standort s4 = new Standort("Quadrate",1300, 3, 4);
 	
 	private static ArrayList<Kuehlraum> kuehlraume = new ArrayList<>();
@@ -20,33 +20,33 @@ public class Controller {
 	private static Kuehlraum k3 = new Kuehlraum(2000, 0, 800);
 	
 	public static void main(String args[]){
-		//BufferedReader für Benutzereingabe
+		//BufferedReader fï¿½r Benutzereingabe
 		BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 		
 		try {
 			//Spielstart
 			System.out.println("Herzlich Wilkommen");
-			System.out.println("Bitte geben Sie für Ihren Burgerladen einen gwünschten Namen ein:" );
+			System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gwuenschten Namen ein:" );
 			
 			String nameUnternehmen = userIn.readLine();
 					
 			Unternehmen u1 = new Unternehmen(nameUnternehmen);
 			
-			System.out.println("Nachdem Sie Ihren Burgerladen benannt haben müssen Sie nun einen gegeigneten Standort auswählen");
+			System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
 			zeigeStandort();
-			System.out.print("Bitte wählen Sie hier: ");
+			System.out.print("Bitte wï¿½hlen Sie hier: ");
 			u1.setStandort(waehleStandort(userIn.readLine()));
 			
 			
-			System.out.println("Für ihren Standort müssen sie noch zusätzlich einen Kühlraum wählen in dem Sie Ihre Burger-Zutaten kühlen können");
-			System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
-			zeigeKühlraume();
-			System.out.print("Bitte wählen Sie hier: ");
+			System.out.println("Fï¿½r ihren Standort mï¿½ssen sie noch zusï¿½tzlich einen Kï¿½hlraum wï¿½hlen in dem Sie Ihre Burger-Zutaten kï¿½hlen kï¿½nnen");
+			System.out.println("Hierfï¿½r stehen Ihnen folgende Mï¿½glichkeiten zur Verfï¿½gung");
+			zeigeKuehlraume();
+			System.out.print("Bitte wï¿½hlen Sie hier: ");
 			u1.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
 			
-			System.out.println("Sie haben Sich für folgenden Standort entschieden: ");
-			System.out.println("Standort: " + u1.getStandort().getLage() + "; Kühlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
-			System.out.println("Die gesamten Mietkosten für diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
+			System.out.println("Sie haben Sich fï¿½r folgenden Standort entschieden: ");
+			System.out.println("Standort: " + u1.getStandort().getLage() + "; Kï¿½hlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
+			System.out.println("Die gesamten Mietkosten fï¿½r diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
 			
 			
 		} catch (Exception e) {
@@ -54,7 +54,7 @@ public class Controller {
 		}		
 	}
 	
-	//Funktionen zur Wahl eines Kühlraums und eines Standorts
+	//Funktionen zur Wahl eines Kï¿½hlraums und eines Standorts
 	public static Standort waehleStandort(String auswahl){
 		int index = Integer.parseInt(auswahl);
 		return standorte.get(index - 1);
@@ -65,16 +65,16 @@ public class Controller {
 		return kuehlraume.get(index -1);
 	}
 	
-	//Methoden für die Anzeige der unterschiedlichen Optionen
-	private static void zeigeKühlraume() {
+	//Methoden fï¿½r die Anzeige der unterschiedlichen Optionen
+	private static void zeigeKuehlraume() {
 		kuehlraume.add(k1);
 		kuehlraume.add(k2);
 		kuehlraume.add(k3);
 		
 		for (int i = 0; i < kuehlraume.size(); i++) {
-			System.out.println("Kühlraum " + (i+1) + ":");
+			System.out.println("Kï¿½hlraum " + (i+1) + ":");
 			System.out.println("Lagerplatz: " + kuehlraume.get(i).getLagerGroesse());
-			System.out.println("Zusätzliche Mietkosten: " + kuehlraume.get(i).getMietZusatzKosten());
+			System.out.println("Zusï¿½tzliche Mietkosten: " + kuehlraume.get(i).getMietZusatzKosten());
 			System.out.println();
 		}
 		

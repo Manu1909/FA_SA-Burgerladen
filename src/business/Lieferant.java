@@ -4,12 +4,12 @@ public class Lieferant {
 
 	private int RESSOURCEN;
 	private int verbrauchteRessourcen = 0;
-	private int qualität;
+	private int qualitaet;
 	private double preisProGut;
 	
-	public Lieferant(int RESSOURCEN, int qualität, double preisProGut) {
+	public Lieferant(int RESSOURCEN, int qualitaet, double preisProGut) {
 		this.RESSOURCEN = RESSOURCEN;
-		this.qualität = qualität;
+		this.qualitaet = qualitaet;
 		this.preisProGut = preisProGut;
 	}
 	
@@ -21,8 +21,8 @@ public class Lieferant {
 		this.verbrauchteRessourcen = verbrauchteRessourcen;
 	}
 	
-	public void setQualität(int qualität){
-		this.qualität = qualität;
+	public void setQualitaet(int qualitaet){
+		this.qualitaet = qualitaet;
 	}
 	
 	public void setPreisProGut(double PreisProGut){
@@ -33,8 +33,8 @@ public class Lieferant {
 		return verbrauchteRessourcen;
 	}
 	
-	public int getQualität(){
-		return qualität;
+	public int getQualitaet(){
+		return qualitaet;
 	}
 	
 	public double getPreisProGut(){
@@ -42,12 +42,12 @@ public class Lieferant {
 	}
 	
 
-	public int übrigeRessourcen(){
+	public int uebrigeRessourcen(){
 		return RESSOURCEN-verbrauchteRessourcen;
 	}
 	
 	public boolean checkRessourcen(int res){
-		if(res>übrigeRessourcen()){
+		if(res>uebrigeRessourcen()){
 			return false;
 		}
 		return true;

@@ -65,31 +65,31 @@ public class Bestellung {
 		boolean blok;
 		boolean salok;
 		boolean solok;
-		//ToDo Prüfe Lagerplatz im Kühlraum!!!!!!!!
+		//ToDo Prï¿½fe Lagerplatz im Kï¿½hlraum!!!!!!!!
 		
 		
-		if(Datenbank.fl1.übrigeRessourcen() >= bestellmenge || Datenbank.fl2.übrigeRessourcen() >= bestellmenge || Datenbank.fl3.übrigeRessourcen() >= bestellmenge){
+		if(Datenbank.fl1.uebrigeRessourcen() >= bestellmenge || Datenbank.fl2.uebrigeRessourcen() >= bestellmenge || Datenbank.fl3.uebrigeRessourcen() >= bestellmenge){
 			flok = true;
 		}
 		else{
 			flok = false;
 		}
 		
-		if(Datenbank.bl1.übrigeRessourcen() >= bestellmenge || Datenbank.bl2.übrigeRessourcen() >= bestellmenge || Datenbank.bl3.übrigeRessourcen() >= bestellmenge){
+		if(Datenbank.bl1.uebrigeRessourcen() >= bestellmenge || Datenbank.bl2.uebrigeRessourcen() >= bestellmenge || Datenbank.bl3.uebrigeRessourcen() >= bestellmenge){
 			blok = true;
 		}
 		else{
 			blok = false;
 		}
 		
-		if(Datenbank.sal1.übrigeRessourcen() >= bestellmenge || Datenbank.sal2.übrigeRessourcen() >= bestellmenge || Datenbank.sal3.übrigeRessourcen() >= bestellmenge){
+		if(Datenbank.sal1.uebrigeRessourcen() >= bestellmenge || Datenbank.sal2.uebrigeRessourcen() >= bestellmenge || Datenbank.sal3.uebrigeRessourcen() >= bestellmenge){
 			salok = true;
 		}
 		else{
 			salok = false;
 		}
 		
-		if(Datenbank.sol1.übrigeRessourcen() >= bestellmenge || Datenbank.sol2.übrigeRessourcen() >= bestellmenge || Datenbank.sol3.übrigeRessourcen() >= bestellmenge){
+		if(Datenbank.sol1.uebrigeRessourcen() >= bestellmenge || Datenbank.sol2.uebrigeRessourcen() >= bestellmenge || Datenbank.sol3.uebrigeRessourcen() >= bestellmenge){
 			solok = true;
 		}
 		else{
@@ -105,7 +105,7 @@ public class Bestellung {
 	}
 	
 	
-	public boolean prüfeAnzahlZutaten(int einzelneBestellmenge){
+	public boolean pruefeAnzahlZutaten(int einzelneBestellmenge){
 		if(einzelneBestellmenge==menge){
 			return true;
 		}

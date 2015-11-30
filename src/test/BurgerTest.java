@@ -22,10 +22,10 @@ public class BurgerTest {
 	}
 
 	@Test
-	public void testBerechneQualität() {
-		b.berechneQualität(u);
+	public void testBerechneQualitaet() {
+		b.berechneQualitaet(u);
 		
-		assertEquals(3, b.getQualität());
+		assertEquals(3, b.getQualitaet());
 	}
 
 }
