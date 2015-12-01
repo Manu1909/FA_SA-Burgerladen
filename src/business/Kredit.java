@@ -41,8 +41,8 @@ public class Kredit {
 	}
 	
 	// Methoden
-	public double berechneZinsen(Unternehmen u){
-		zinsen = (1+ u.getKredit().getZinssatz()*0.01 ) * u.getKredit().getHoehe() / u.getKredit().getLaufzeit();
+	public double berechneZinsen(){
+		zinsen = (1+zinssatz*0.01)*hoehe/laufzeit;
 		return zinsen;
 	}
 }
