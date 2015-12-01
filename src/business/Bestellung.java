@@ -9,9 +9,9 @@ public class Bestellung {
 	private Lieferant sossenlieferant;
 	private Unternehmen u;
 	
-	public Bestellung(Unternehmen u) {
+	/*public Bestellung(Unternehmen u) {
 		this.u = u;
-	}
+	}*/
 	
 	public int getMenge(){
 		return menge;
@@ -60,18 +60,18 @@ public class Bestellung {
 		setSossenlieferant(sossenlieferant);
 	}
 	
-	public void setzeBestellmenge(int bestellmenge){
+	public void setzeBestellmenge(int bestellmenge, int freierLagerplatz){
 		boolean flok;
 		boolean blok;
 		boolean salok;
 		boolean solok;
-		boolean krok;
+		boolean lagerPlatzOK;
 
-		if(u.getStandort().getKuehlraum().berechneFreienLagerplatz()>=bestellmenge){
-			krok = true;
+		if(freierLagerplatz>=bestellmenge){
+			lagerPlatzOK = true;
 		}
 		else{
-			krok = false;
+			lagerPlatzOK = false;
 		}
 		
 		
@@ -103,7 +103,7 @@ public class Bestellung {
 			solok = false;
 		}
 		
-		if(flok && blok && salok && solok && krok){
+		if(flok && blok && salok && solok && lagerPlatzOK){
 			menge = bestellmenge;
 		}
 		else{
@@ -125,7 +125,8 @@ public class Bestellung {
 	public void bestelleFleisch(Lieferant fl){
 		if(fl.checkRessourcen(menge)){
 			fl.setVerbrauchteRessourcen(fl.getVertrauchteRessourcen()+menge);
-			u.setFleischlieferant(fl);
+			fleischlieferant = fl;
+			//u.setFleischlieferant(fl);
 		}
 	}
 	
@@ -133,7 +134,8 @@ public class Bestellung {
 	public void bestelleBrot(Lieferant bl){
 		if(bl.checkRessourcen(menge)){
 			bl.setVerbrauchteRessourcen(bl.getVertrauchteRessourcen()+menge);
-			u.setBrotlieferant(bl);
+			brotlieferant = bl;
+			//u.setBrotlieferant(bl);
 		}
 	}
 	
@@ -141,14 +143,16 @@ public class Bestellung {
 	public void bestelleSalat(Lieferant sal){
 		if(sal.checkRessourcen(menge)){
 			sal.setVerbrauchteRessourcen(sal.getVertrauchteRessourcen()+menge);
-			u.setSalatlieferant(sal);
+			salatlieferant = sal;
+			//u.setSalatlieferant(sal);
 		}
 	}
 	
 	public void bestelleSosse(Lieferant sol){
 		if(sol.checkRessourcen(menge)){
 			sol.setVerbrauchteRessourcen(sol.getVertrauchteRessourcen()+menge);
-			u.setSossenlieferant(sol);
+			sossenlieferant = sol;
+			//u.setSossenlieferant(sol);
 		}
 	}
 	
@@ -161,7 +165,9 @@ public class Bestellung {
 	}
 
 	public double berechneGesamtpreis(){
-		return (u.getFleischlieferant().getPreisProGut() + u.getBrotlieferant().getPreisProGut() + u.getSalatlieferant().getPreisProGut() + u.getSossenlieferant().getPreisProGut())*menge;
+		double preis = (fleischlieferant.getPreisProGut() + brotlieferant.getPreisProGut() + salatlieferant.getPreisProGut() + sossenlieferant.getPreisProGut())*menge;
+		preis = Math.round(100.0*preis)/100.0;
+		return preis;
 	}
 	
 

@@ -16,16 +16,15 @@ public class BurgerTest {
 	
 	@Before
 	public void init(){
-		b = new Burger();
 		u = new Unternehmen("test");
 		u.setzeLieferanten(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
 	}
 
 	@Test
 	public void testBerechneQualitaet() {
-		b.berechneQualitaet(u);
 		
-		assertEquals(3, b.getQualitaet());
+		//assertEquals(3, b.getQualitaet());
+		assertTrue("Teste Qualität", 3==u.berechneBurgerQualität());
 	}
 
 }

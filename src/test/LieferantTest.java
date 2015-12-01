@@ -18,7 +18,7 @@ public class LieferantTest {
 	public void init(){
 		l = new Lieferant(1000, 3, 0.3);
 		u = new Unternehmen("test");
-		b = new Bestellung(u);
+		//b = new Bestellung(u);
 		
 		l.setVerbrauchteRessourcen(920);
 	}

@@ -16,14 +16,18 @@ public class Unternehmen {
 	private Lieferant salatlieferant;
 	private Lieferant sossenlieferant;
 	private Kredit kredit;
+	private Bestellung bestellung;
+	private Burger burger;
 	
 	
-	// Konstruktor mit Übergabe von name
+	// Konstruktor mit ï¿½bergabe von name
 	public Unternehmen(String name) {
 		this.name = name;
+		bestellung = new Bestellung();
+		burger = new Burger();
 	}
 	
-	//Getter und Setter für alle Attribute
+	//Getter und Setter fï¿½r alle Attribute
 	public double getGewinn() {
 		return gewinn;
 	}
@@ -119,7 +123,15 @@ public class Unternehmen {
 	public void setKredit(Kredit kredit) {
 		this.kredit = kredit;
 	}
-	
+
+	public Bestellung getBestellung() {
+		return bestellung;
+	}
+
+	public Burger getBurger() {
+		return burger;
+	}
+
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
 		setBrotlieferant(brotlieferant);
@@ -137,5 +149,36 @@ public class Unternehmen {
 
 	public void waehleKredit(Kredit k){
 		setKredit(kredit);
+	}
+
+	public void bestelleFleisch(Lieferant fl){
+		bestellung.bestelleFleisch(fl);
+		fleischlieferant = fl;
+	}
+
+	public void bestelleBrot(Lieferant bl){
+		bestellung.bestelleBrot(bl);
+		brotlieferant = bl;
+	}
+
+	public void bestelleSalat(Lieferant sal){
+		bestellung.bestelleSalat(sal);
+		salatlieferant = sal;
+	}
+
+	public void bestelleSosse(Lieferant sol){
+		bestellung.bestelleSosse(sol);
+		sossenlieferant = sol;
+	}
+
+	public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
+		bestelleFleisch(fl);
+		bestelleBrot(bl);
+		bestelleSalat(sal);
+		bestelleSosse(sol);
+	}
+
+	public int berechneBurgerQualitÃ¤t(){
+		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
 	}
 }

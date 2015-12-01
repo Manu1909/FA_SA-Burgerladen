@@ -54,39 +54,23 @@ public class Controller {
 
 			int bestellMenge = userIn.read();
 
-			Bestellung b = new Bestellung(u1);
-			b.setzeBestellmenge(bestellMenge);
+			u1.getBestellung().setzeBestellmenge(bestellMenge, u1.getStandort().getKuehlraum().berechneFreienLagerplatz());
+
 
 			zeigeLieferant(0);
-			b.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+			u1.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
 
 			zeigeLieferant(1);
-			b.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+			u1.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
 			zeigeLieferant(2);
-			b.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+			u1.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
 
 			zeigeLieferant(3);
-			b.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+			u1.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
-			System.out.println("Ihre Bestellung kostet: " + b.berechneGesamtpreis() + "€");
-			Burger burger = new Burger();
-			System.out.println("Die Qualitaet ihrer Burger betraegt: " + burger.berechneQualitaet(u1));
-
-			/*
-			int[] wahl = new int[4];
-
-			for (int i = 0; i < 4; i++) {
-				zeigeLieferant(i);
-				wahl[i] = userIn.read();
-			}
-
-			b.bestelleFleisch(Datenbank.fl[wahl[0]]);
-			b.bestelleBrot(Datenbank.bl[wahl[1]]);
-			b.bestelleSalat(Datenbank.sal[wahl[2]]);
-			b.bestelleSosse(Datenbank.sol[wahl[3]]);
-
-			*/
+			System.out.println("Ihre Bestellung kostet: " + u1.getBestellung().berechneGesamtpreis() + "€");
+			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualität() + "/10");
 			
 		} catch (Exception e) {
 			System.err.println(e);
