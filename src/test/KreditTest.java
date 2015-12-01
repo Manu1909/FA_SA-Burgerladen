@@ -1,6 +1,6 @@
 package test;
 
-import static org.junit.Assert.*; //assertEquals bei double nicht notwendig
+import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +24,7 @@ public class KreditTest {
 	@Test
 	public void testBerechneZinsen() {
 		k.berechneZinsen();
-		k.getZinsen();
+		assertEquals(1100.0, k.getZinsen(), 1);
 	}
 
 }
