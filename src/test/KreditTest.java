@@ -23,8 +23,8 @@ public class KreditTest {
 
 	@Test
 	public void testBerechneZinsen() {
-		k.berechneZinsen();
-		assertEquals(1100.0, k.getZinsen(), 1);
+		double zins = k.berechneZinsen(u);
+		assertEquals(1100.0, zins, 1);
 	}
 
 }

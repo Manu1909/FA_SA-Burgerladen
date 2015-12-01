@@ -4,7 +4,7 @@ public class Kredit {
 	
 	private int laufzeit; //entspricht einer Periode = 3 Monate
 	private int zinssatz;
-	private int hoehe; // Idee: Hï¿½he des Kredits selber bestimmen
+	private int hoehe; // Idee: Höhe des Kredits selber bestimmen
 	private double zinsen;
 
 	public Kredit(int laufzeit, int zinssatz, int hoehe) {
@@ -40,9 +40,9 @@ public class Kredit {
 		return zinsen;
 	}
 	
-	//Methoden
-	public double berechneZinsen(){
-		zinsen = (1+zinssatz*0.01)*hoehe/laufzeit;
+	// Methoden
+	public double berechneZinsen(Unternehmen u){
+		zinsen = (1+ u.getKredit().getZinssatz()*0.01 ) * u.getKredit().getHoehe() / u.getKredit().getLaufzeit();
 		return zinsen;
 	}
 }
