@@ -16,15 +16,16 @@ public class KreditTest {
 	
 	@Before
 	public void init(){
-		k = new Kredit(8, 10, 8000);
+		Datenbank db = new Datenbank();
+		k = db.getK1();
 		u = new Unternehmen("test");
-		u.waehleKredit(Datenbank.k1);
+		u.waehleKredit(k);
 	}
 
 	@Test
 	public void testBerechneZinsen() {
-		k.berechneZinsen();
-		assertEquals(1100.0, k.getZinsen(), 1);
+		double zins = k.berechneZinsen();
+		assertEquals(1100.0, zins, 1);
 	}
 
 }

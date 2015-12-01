@@ -75,4 +75,13 @@ public class Datenbank {
 	public Lieferant getSol3() {
 		return sol3;
 	}
+	public Kredit getK1() {
+		return k1;
+	}
+	public Kredit getK2() {
+		return k2;
+	}
+	public Kredit getK3() {
+		return k3;
+	}
 }
