@@ -26,7 +26,7 @@ public class Controller {
 		try {
 			//Spielstart
 			System.out.println("Herzlich Wilkommen");
-			System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gwuenschten Namen ein:" );
+			System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gewünschten Namen ein:" );
 			
 			String nameUnternehmen = userIn.readLine();
 					
@@ -34,14 +34,14 @@ public class Controller {
 			
 			System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
 			zeigeStandort();
-			System.out.print("Bitte waehlen Sie hier: ");
+			System.out.print("Bitte wählen Sie hier: ");
 			u1.setStandort(waehleStandort(userIn.readLine()));
 			
 			
-			System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum w�hlen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
-			System.out.println("Hierf�r stehen Ihnen folgende M�glichkeiten zur Verf�gung");
+			System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum wählen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
+			System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
 			zeigeKuehlraume();
-			System.out.print("Bitte w�hlen Sie hier: ");
+			System.out.print("Bitte wählen Sie hier: ");
 			u1.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
 			
 			System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");

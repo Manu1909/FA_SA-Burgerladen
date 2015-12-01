@@ -131,9 +131,9 @@ public class Unternehmen {
 		
 	}
 	
-	public void waehleStandort(){
-		
-	}
+//	public void waehleStandort(){
+//	
+//	}
 
 	public void waehleKredit(Kredit k){
 		setKredit(kredit);
