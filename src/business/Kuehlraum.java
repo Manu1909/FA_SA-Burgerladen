@@ -33,22 +33,22 @@ public class Kuehlraum {
 	}
 	
 	
-	public boolean wareEinlagern(int menge){
+	public int wareEinlagern(int menge){
 		//Wenn bestellte Menge und aktueller Inhalt die Lagergöße übertreffen muss eine Fehlermeldung ausgegeben werden
-		if((inhalt + menge) > lagerGroesse){
-			return false;
+		if((inhalt + menge) > lagerGroesse || menge <= 0){
+			return inhalt;
 		}
 		//Dem Inhalt die neu bestellte Menge hinzufügen
-		inhalt = inhalt + menge;
+		int newInhalt = inhalt + menge;
 		
-		return true;
+		return newInhalt;
 	}
 	
 	
 	//Entnehme Ware aus dem Lager
 	public int wareEntnehmen(int entnahme){
-		if(entnahme > lagerGroesse){
-			return 0;
+		if(entnahme > lagerGroesse || entnahme > inhalt || entnahme <= 0){
+			return inhalt;
 		}
 		int newInhalt = inhalt - entnahme;
 		
