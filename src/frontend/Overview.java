@@ -16,6 +16,8 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 	private JMenu overview = new JMenu("Übersicht");
 	private JMenu orders = new JMenu("Bestellungen");
 	private JMenu interior = new JMenu("Einrichtung");
+	private JMenu catering = new JMenu("Catering");
+	private JMenu marketing = new JMenu("Marketing");
 	
 	public Overview()
 	{
@@ -31,16 +33,16 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		JPanel panel = new JPanel();
 		JPanel panelContent = new JPanel();
 		
-		
-		menu.add(overview);
 		menu.add(orders);
 		menu.add(interior);
+		menu.add(catering);
+		menu.add(marketing);
 		
-		overview.setSelected(true);
-		
-		overview.addMouseListener(this);
+		//Listener
 		orders.addMouseListener(this);
 		interior.addMouseListener(this);
+		catering.addMouseListener(this);
+		marketing.addMouseListener(this);
 		panel.add(menu);
 		
 		//panelContent
@@ -58,23 +60,19 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		Object s = e.getSource();
 		if(s == interior) 
 		{
-			overview.setSelected(false);
-			interior.setSelected(true);
-			orders.setSelected(false);
+			Innenausstattung interior = new Innenausstattung();
+		}
+		if(s == marketing)
+		{
+			Marketing marketing = new Marketing();
 		}
 		if(s == orders) 
 		{
-			overview.setSelected(false);
-			interior.setSelected(false);
-			orders.setSelected(true);
-			//Popup öffnen, muss noch gelockt werden( unterfenster darf nicht geschlossen werden)
-			Bestellungen orders = new Bestellungen();
+			Bestellungen orders = new Bestellungen();	
 		}
-		if(s == overview) 
+		if(s == catering) 
 		{
-			overview.setSelected(true);
-			interior.setSelected(false);
-			orders.setSelected(false);
+			Catering orders = new Catering();	
 		}
 	}
 	@Override
