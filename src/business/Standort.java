@@ -6,6 +6,7 @@ public class Standort {
 	private double miete;
 	private int traffic;
 	private int bekanntheit;
+	private Innenausstattung innenausstattung;
 	private Kuehlraum kuehlraum;
 	
 	public Standort(String lage, double miete, int traffic, int bekanntheit){
@@ -48,6 +49,13 @@ public class Standort {
 		this.bekanntheit = bekanntheit;
 	}
 	
+	public Innenausstattung getInnenausstattung() {
+		return innenausstattung;
+	}
+
+	public void setInnenausstattung(Innenausstattung innenausstattung) {
+		this.innenausstattung = innenausstattung;
+	}
 	
 	public Kuehlraum getKuehlraum() {
 		return kuehlraum;
