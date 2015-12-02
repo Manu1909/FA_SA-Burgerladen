@@ -1,12 +1,11 @@
 package frontend;
 import java.awt.BorderLayout;
+import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
@@ -18,14 +17,26 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 	private JMenu interior = new JMenu("Einrichtung");
 	private JMenu catering = new JMenu("Catering");
 	private JMenu marketing = new JMenu("Marketing");
+	public static JFrame window = new JFrame();
 	
 	public Overview()
 	{
 		buildWindow();
 	}
+	
+	public Overview(String player)//noch weitere wichtige Attribute ergänzen
+	{
+		
+	}
+	
 	public static void main(String args[])
 	{
 		Overview test = new Overview();
+	}
+	
+	public void setFokus(boolean p)
+	{
+		window.setFocusableWindowState(p);
 	}
 	
 	public void buildWindow()
@@ -46,8 +57,8 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		panel.add(menu);
 		
 		//panelContent
-		JFrame window = new JFrame();
 		window.setBounds(10, 10, 600, 400);
+		window.setExtendedState(Frame.MAXIMIZED_BOTH);
 		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		window.setVisible(true);
 		window.add(panel, BorderLayout.NORTH);
@@ -65,6 +76,7 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		if(s == marketing)
 		{
 			Marketing marketing = new Marketing();
+			window.setFocusableWindowState(false);
 		}
 		if(s == orders) 
 		{
