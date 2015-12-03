@@ -23,8 +23,11 @@ public class Marketing extends JFrame implements ActionListener{
 		JLabel heading = new JLabel("Hier können Sie Marketing-Aktionen wählen.");
 		head.add(heading);
 		
+		JButton b = new JButton("test");
+		
 		JPanel body = new JPanel();
 		body.add(back);
+		body.add(b);
 		back.addActionListener(this);
 		
 		
