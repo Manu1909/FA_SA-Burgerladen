@@ -18,7 +18,7 @@ public class Unternehmen {
 	private Kredit kredit;
 	private Bestellung bestellung;
 	private Burger burger;
-	
+	private Catering catering;
 	
 	// Konstruktor mit ï¿½bergabe von name
 	public Unternehmen(String name) {
@@ -131,6 +131,14 @@ public class Unternehmen {
 	public Burger getBurger() {
 		return burger;
 	}
+	
+	public Catering getCatering() {
+		return catering;
+	}
+
+	public void setCatering(Catering catering) {
+		this.catering = catering;
+	}
 
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
@@ -178,7 +186,13 @@ public class Unternehmen {
 		bestelleSosse(sol);
 	}
 
-	public int berechneBurgerQualitÃ¤t(){
+	public int berechneBurgerQualität(){
 		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
+	}
+	
+	public void gebeCateringAngebote(String name, double angebot, int qualität){
+		catering.addName(name);
+		catering.addPreis(angebot);
+		catering.addQualitaet(qualität);
 	}
 }

@@ -7,16 +7,15 @@ import business.*;
 
 public class Controller {
 
-	private static ArrayList<Standort> standorte = new ArrayList<>();
-	private static Standort s1 = new Standort("Planken",1400, 3, 5);
-	private static Standort s2 = new Standort("Jungbusch",1100, 2, 2);
-	private static Standort s3 = new Standort("Kurpfalzer Strasse",1500, 4, 5);
-	private static Standort s4 = new Standort("Quadrate",1300, 3, 4);
+	//Variablen für Spielablauf
+	private static final int gesamtSpielRunden = 12;
+	private static int spielRunde = 0;
 	
-	private static ArrayList<Kuehlraum> kuehlraume = new ArrayList<>();
-	private static Kuehlraum k1 = new Kuehlraum(1000, 0, 300);
-	private static Kuehlraum k2 = new Kuehlraum(1500, 0, 500);
-	private static Kuehlraum k3 = new Kuehlraum(2000, 0, 800);
+	//Hier werden alle teilnehmende Unternehmen gespeichert
+	private static ArrayList<Unternehmen> unternehmen = new ArrayList<>();
+	
+	private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
+	private static Standort[] standorte = Datenbank.standorte;
 	
 	public static void main(String args[]){
 		//BufferedReader f�r Benutzereingabe
@@ -77,43 +76,41 @@ public class Controller {
 		}		
 	}
 	
+	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
+	private void berechneKunden(){
+		
+		for (int i = 0; i < unternehmen.size(); i++) {
+			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden	
+		}		
+	}
+	
 	//Funktionen zur Wahl eines K�hlraums und eines Standorts
 	public static Standort waehleStandort(String auswahl){
 		int index = Integer.parseInt(auswahl);
-		return standorte.get(index - 1);
+		return standorte[index - 1];
 	}
 	
 	public static Kuehlraum waehleKuhlraum(String auswahl){
 		int index = Integer.parseInt(auswahl);
-		return kuehlraume.get(index -1);
+		return kuehlraeume[index -1];
 	}
 	
-	//Methoden f�r die Anzeige der unterschiedlichen Optionen
+	//Methoden f�r die Anzeige der unterschiedlichen Optionen --> werden mit UI nicht mehr benötigt
 	private static void zeigeKuehlraume() {
-		kuehlraume.add(k1);
-		kuehlraume.add(k2);
-		kuehlraume.add(k3);
-		
-		for (int i = 0; i < kuehlraume.size(); i++) {
-			System.out.println("K�hlraum " + (i+1) + ":");
-			System.out.println("Lagerplatz: " + kuehlraume.get(i).getLagerGroesse());
-			System.out.println("Zus�tzliche Mietkosten: " + kuehlraume.get(i).getMietZusatzKosten());
+		for (int i = 0; i < kuehlraeume.length; i++) {
+			System.out.println("Kühlraum " + (i+1) + ":");
+			System.out.println("Lagerplatz: " + kuehlraeume[i].getLagerGroesse());
+			System.out.println("Zusätzliche Mietkosten: " + kuehlraeume[i].getMietZusatzKosten());
 			System.out.println();
 		}
-		
 	}
 
 	private static void zeigeStandort() {
-		standorte.add(s1);
-		standorte.add(s2);
-		standorte.add(s3);
-		standorte.add(s4);
-
-		for (int i = 0; i < standorte.size(); i++) {
-			System.out.println("Standort " + (i + 1) + ": " + standorte.get(i).getLage());
-			System.out.println("Miete: " + standorte.get(i).getMiete());
-			System.out.println("Bekanntheit: " + standorte.get(i).getBekanntheit());
-			System.out.println("Traffic (Laufkundschaft): " + standorte.get(i).getTraffic());
+		for (int i = 0; i < standorte.length; i++) {
+			System.out.println("Standort " + (i + 1) + ": " + standorte[i].getLage());
+			System.out.println("Miete: " + standorte[i].getMiete());
+			System.out.println("Bekanntheit: " + standorte[i].getBekanntheit());
+			System.out.println("Traffic (Laufkundschaft): " + standorte[i].getTraffic());
 			System.out.println();
 		}
 	}

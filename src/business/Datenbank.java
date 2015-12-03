@@ -1,5 +1,24 @@
 package business;
 public class Datenbank {
+		
+	//Konstanten für den Kundenpool
+	private static final int kundenpool = 10000;
+	private static final int kundenpoolModern = 2000;
+	private static final int kundenpoolKlassisch = 1000;
+	private static final int kundenpoolAlternativ = 1500;
+	
+	//Daten für Standorte
+	private static Standort s1 = new Standort("Planken",1400, 3, 5);
+	private static Standort s2 = new Standort("Jungbusch",1100, 2, 2);
+	private static Standort s3 = new Standort("Kurpfalzer Strasse",1500, 4, 5);
+	private static Standort s4 = new Standort("Quadrate",1300, 3, 4);
+	public static Standort[] standorte = {s1, s2, s3, s4};
+	
+	//Daten für Kühlräume
+	private static Kuehlraum kr1 = new Kuehlraum(1000, 0, 300);
+	private static Kuehlraum kr2 = new Kuehlraum(1500, 0, 500);
+	private static Kuehlraum kr3 = new Kuehlraum(2000, 0, 800);
+	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
 	public static Lieferant fl1 = new Lieferant(1000, 3, 0.3);
 	public static Lieferant fl2 = new Lieferant(1500, 5, 0.5);
