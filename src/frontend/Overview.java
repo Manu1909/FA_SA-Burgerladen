@@ -24,7 +24,7 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		buildWindow();
 	}
 	
-	public Overview(String player)//noch weitere wichtige Attribute ergänzen
+	public Overview(String player, String location, String interior)//noch weitere wichtige Attribute ergänzen
 	{
 		
 	}
