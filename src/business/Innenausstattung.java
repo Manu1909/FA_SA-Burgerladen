@@ -33,8 +33,4 @@ public class Innenausstattung {
 	public void setKosten(double kosten) {
 		this.kosten = kosten;
 	}
-	
-	
-	
-
 }

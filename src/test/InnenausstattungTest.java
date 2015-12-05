@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import business.Standort;
 
-public class Innenausstattung {
+public class InnenausstattungTest {
 
 	Standort s1;
 	

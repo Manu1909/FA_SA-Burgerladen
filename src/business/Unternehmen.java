@@ -151,10 +151,6 @@ public class Unternehmen {
 		
 	}
 	
-//	public void waehleStandort(){
-//	
-//	}
-
 	public void waehleKredit(Kredit k){
 		setKredit(kredit);
 	}
@@ -188,11 +184,5 @@ public class Unternehmen {
 
 	public int berechneBurgerQualität(){
 		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
-	}
-	
-	public void gebeCateringAngebote(String name, double angebot, int qualität){
-		catering.addName(name);
-		catering.addPreis(angebot);
-		catering.addQualitaet(qualität);
 	}
 }

@@ -11,7 +11,7 @@ import business.Kredit;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({StandortTest.class, KuehlraumTest.class, BurgerTest.class, KreditTest.class, BestellungTest.class, LieferantTest.class})
+@SuiteClasses({StandortTest.class, KuehlraumTest.class, BurgerTest.class, KreditTest.class, BestellungTest.class, LieferantTest.class, CateringTest.class, InnenausstattungTest.class})
 public class BurgerladenTestAll {
 	
 }
