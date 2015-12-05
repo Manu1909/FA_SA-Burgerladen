@@ -20,7 +20,7 @@ public class Controller {
 	private static Innenausstattung[] innenausstattung = Datenbank.i;
 	
 	public static void main(String args[]){
-		//BufferedReader f�r Benutzereingabe
+		//BufferedReader für Benutzereingabe
 		BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
 		Scanner scanner = new Scanner(System.in);
 		
@@ -85,11 +85,30 @@ public class Controller {
 		}		
 	}
 	
-	private static Innenausstattung waehleInnenausstattung(String auswahl) {
-		int index = Integer.parseInt(auswahl);
-		return innenausstattung[index - 1];
+	
+	//Methoden die das Spiel simulieren
+	public void simuliereSpiel(){
+		int anzahlRunden = 0;
+		
+		while(anzahlRunden < 12){
+			if(anzahlRunden == 0){
+				startGame();
+			}else{
+				//Hier muss restliche Spiellogik entstehen
+			}
+			
+			
+			anzahlRunden++;
+		}
 	}
+	
+	//Methode die den Start des Spiels behandelt
+	public void startGame(){
+		
+	}
+	
 
+	//Hilfsmehtoden um elementare Spielergebnisse zu berechnen
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
 	private void berechneKunden(){
 		
@@ -98,7 +117,14 @@ public class Controller {
 		}		
 	}
 	
-	//Funktionen zur Wahl eines Kühlraums und eines Standorts
+	
+	
+	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
+	private static Innenausstattung waehleInnenausstattung(String auswahl) {
+		int index = Integer.parseInt(auswahl);
+		return innenausstattung[index - 1];
+	}
+	
 	public static Standort waehleStandort(String auswahl){
 		int index = Integer.parseInt(auswahl);
 		return standorte[index - 1];
