@@ -14,8 +14,10 @@ public class Controller {
 	//Hier werden alle teilnehmende Unternehmen gespeichert
 	private static ArrayList<Unternehmen> unternehmen = new ArrayList<>();
 	
+	//Daten aus der Datenbank
 	private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
 	private static Standort[] standorte = Datenbank.standorte;
+	private static Innenausstattung[] innenausstattung = Datenbank.i;
 	
 	public static void main(String args[]){
 		//BufferedReader f�r Benutzereingabe
@@ -43,10 +45,17 @@ public class Controller {
 			System.out.print("Bitte wählen Sie hier: ");
 			u1.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
 			
+			System.out.println("Damit ihr Burgerladen entsprechend eingerichtet werden kann müssen Sie sich noch für eine Innenausstattung entscheiden");
+			System.out.println("Mit der Innenausstattung Ihres Burgerladen ist es Ihnen möglich den Kundenpool individuell zu erweitern");
+			System.out.println("Folgende Einrichtungsarten stehen zur Verfügung");
+			zeigeInnenausstattung();
+			System.out.print("Bitte wählen Sie hier: ");
+			u1.getStandort().setInnenausstattung(waehleInnenausstattung(userIn.readLine()));
+			
 			System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");
-			System.out.println("Standort: " + u1.getStandort().getLage() + "; K�hlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
+			System.out.println("Standort: " + u1.getStandort().getLage() + "; Kühlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
 			System.out.println("Die gesamten Mietkosten f�r diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
-
+			System.out.println("Zusätzlich haben Sie sich für folgende Innenausstattung entschieden: " + u1.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u1.getStandort().getInnenausstattung().getKosten());
 
 			//LieferantenBestellung
 			System.out.println("\nBitte wählen sie im Folgenden, für wie viele Burger sie Zutaten in dieser Periode kaufen wollen");
@@ -76,6 +85,11 @@ public class Controller {
 		}		
 	}
 	
+	private static Innenausstattung waehleInnenausstattung(String auswahl) {
+		int index = Integer.parseInt(auswahl);
+		return innenausstattung[index - 1];
+	}
+
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
 	private void berechneKunden(){
 		
@@ -84,7 +98,7 @@ public class Controller {
 		}		
 	}
 	
-	//Funktionen zur Wahl eines K�hlraums und eines Standorts
+	//Funktionen zur Wahl eines Kühlraums und eines Standorts
 	public static Standort waehleStandort(String auswahl){
 		int index = Integer.parseInt(auswahl);
 		return standorte[index - 1];
@@ -95,7 +109,17 @@ public class Controller {
 		return kuehlraeume[index -1];
 	}
 	
-	//Methoden f�r die Anzeige der unterschiedlichen Optionen --> werden mit UI nicht mehr benötigt
+	//Methoden für die Anzeige der unterschiedlichen Optionen --> werden mit UI nicht mehr benötigt
+	private static void zeigeInnenausstattung() {
+		for (int i = 0; i < innenausstattung.length; i++) {
+			System.out.println("Art der Einrichtung: " + innenausstattung[i].getBezeichnung());
+			System.out.println("Zusätzlicher Kundenpool: " + innenausstattung[i].getGroeßeKundenpool());
+			System.out.println("Einmalige Kosten: " + innenausstattung[i].getKosten());
+			System.out.println();
+		}
+		
+	}
+	
 	private static void zeigeKuehlraume() {
 		for (int i = 0; i < kuehlraeume.length; i++) {
 			System.out.println("Kühlraum " + (i+1) + ":");

@@ -20,6 +20,12 @@ public class Datenbank {
 	private static Kuehlraum kr3 = new Kuehlraum(2000, 0, 800);
 	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
+	//Daten für Innenausstattung
+	private static Innenausstattung i1 = new Innenausstattung("Modern", kundenpoolModern, 50000);
+	private static Innenausstattung i2 = new Innenausstattung("Klassisch", kundenpoolKlassisch, 40000);
+	private static Innenausstattung i3 = new Innenausstattung("Alternativ", kundenpoolAlternativ, 30000);
+	public static Innenausstattung[] i = {i1,i2,i3};
+	
 	public static Lieferant fl1 = new Lieferant(1000, 3, 0.3);
 	public static Lieferant fl2 = new Lieferant(1500, 5, 0.5);
 	public static Lieferant fl3 = new Lieferant(1300, 8, 0.7);
