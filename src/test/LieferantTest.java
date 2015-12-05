@@ -16,7 +16,7 @@ public class LieferantTest {
 	
 	@Before
 	public void init(){
-		l = new Lieferant(1000, 3, 0.3);
+		l = new Lieferant(1000, 3, 0.3, 0.05);
 		u = new Unternehmen("test");
 		//b = new Bestellung(u);
 		

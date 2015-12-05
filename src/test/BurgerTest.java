@@ -24,7 +24,7 @@ public class BurgerTest {
 	public void testBerechneQualitaet() {
 		
 		//assertEquals(3, b.getQualitaet());
-		assertTrue("Teste Qualit√§t", 3==u.berechneBurgerQualit‰t());
+		assertTrue("Teste Qualit‰t", 3==u.berechneBurgerQualit‰t());
 	}
 
 }

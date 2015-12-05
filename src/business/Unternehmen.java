@@ -19,15 +19,16 @@ public class Unternehmen {
 	private Bestellung bestellung;
 	private Burger burger;
 	private Catering catering;
+	private Personal personal;
 	
-	// Konstruktor mit ï¿½bergabe von name
+	// Konstruktor mit Übergabe von name
 	public Unternehmen(String name) {
 		this.name = name;
 		bestellung = new Bestellung();
 		burger = new Burger();
 	}
 	
-	//Getter und Setter fï¿½r alle Attribute
+	//Getter und Setter für alle Attribute
 	public double getGewinn() {
 		return gewinn;
 	}
@@ -140,6 +141,14 @@ public class Unternehmen {
 		this.catering = catering;
 	}
 
+	public Personal getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(Personal personal) {
+		this.personal = personal;
+	}
+	
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
 		setBrotlieferant(brotlieferant);

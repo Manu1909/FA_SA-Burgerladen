@@ -108,7 +108,7 @@ public class Controller {
 	}
 	
 
-	//Hilfsmehtoden um elementare Spielergebnisse zu berechnen
+	//Hilfsmethoden um elementare Spielergebnisse zu berechnen
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
 	private void berechneKunden(){
 		
@@ -116,9 +116,7 @@ public class Controller {
 			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden	
 		}		
 	}
-	
-	
-	
+		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
 	private static Innenausstattung waehleInnenausstattung(String auswahl) {
 		int index = Integer.parseInt(auswahl);
