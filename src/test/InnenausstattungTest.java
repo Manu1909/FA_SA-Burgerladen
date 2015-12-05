@@ -29,14 +29,14 @@ public class InnenausstattungTest {
 	}
 	
 	@Test
-	public void testGetGroeßeKundenpool() {
-		assertTrue("Test getGroeßeKundenpool", 3000 == s1.getInnenausstattung().getGroeßeKundenpool());
+	public void testGetGroesseKundenpool() {
+		assertTrue("Test getGroeï¿½eKundenpool", 3000 == s1.getInnenausstattung().getGroesseKundenpool());
 	}
 
 	@Test
-	public void testSetGroeßeKundenpool() {
-		s1.getInnenausstattung().setGroeßeKundenpool(4000);
-		assertTrue("Test setGroeßeKundenpool", 4000 == s1.getInnenausstattung().getGroeßeKundenpool());
+	public void testSetGroesseKundenpool() {
+		s1.getInnenausstattung().setGroesseKundenpool(4000);
+		assertTrue("Test setGroeï¿½eKundenpool", 4000 == s1.getInnenausstattung().getGroesseKundenpool());
 	}
 
 	@Test
@@ -47,7 +47,7 @@ public class InnenausstattungTest {
 	@Test
 	public void testSetKosten() {
 		s1.getInnenausstattung().setKosten(40000);
-		assertTrue("Test setGroeßeKundenpool", 40000 == s1.getInnenausstattung().getKosten());
+		assertTrue("Test setGroeï¿½eKundenpool", 40000 == s1.getInnenausstattung().getKosten());
 	}
 
 }

@@ -1,0 +1,33 @@
+package business;
+
+/**
+ * Created by kochsiek on 05.12.2015.
+ */
+public class FlyerWerbung extends Marketing {
+
+    public FlyerWerbung() {
+        bekanntheitssteigerung = 7;
+        kundenzufriednenheitssteigerung = 0;
+        kundenprozentsatz = 10;
+        kosten = 100;
+        prozent = 0.1;
+        bezeichnung = "Flyer";
+    }
+
+    @Override
+    public int berechneBekanntheit(int bekanntheit) {
+        if(bekanntheit*prozent>=bekanntheitssteigerung){
+            bekanntheit += 1;
+        }
+        else {
+            bekanntheit = (int)(bekanntheit + bekanntheitssteigerung - bekanntheit*prozent + 0.5);
+        }
+        return bekanntheit;
+    }
+
+    @Override
+    public int berechneKundenzufriedenheit(int kundenzufriedenheit) {
+        kundenzufriedenheit = (int)(kundenzufriedenheit + kundenzufriednenheitssteigerung + 0.5);
+        return kundenzufriedenheit;
+    }
+}

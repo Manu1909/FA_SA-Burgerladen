@@ -78,7 +78,7 @@ public class Controller {
 			u1.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
 			System.out.println("Ihre Bestellung kostet: " + u1.getBestellung().berechneGesamtpreis() + "€");
-			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualität() + "/10");
+			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualitaet() + "/10");
 			
 		} catch (Exception e) {
 			System.err.println(e);
@@ -111,10 +111,23 @@ public class Controller {
 	//Hilfsmethoden um elementare Spielergebnisse zu berechnen
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
 	private void berechneKunden(){
-		
+		int gesamtAnteil = 0;
+
 		for (int i = 0; i < unternehmen.size(); i++) {
-			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden	
-		}		
+			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden
+            //Kundenberechnung abhängig von der Innenausstattung fehlt noch
+            gesamtAnteil += unternehmen.get(i).berechnteKundenanteil();
+		}
+        if(gesamtAnteil<=100){
+            for (int i = 0; i < unternehmen.size(); i++) {
+                unternehmen.get(i).setKunden((unternehmen.get(i).berechnteKundenanteil()/100)*Datenbank.kundenpool);
+            }
+        }
+        else{
+            for (int i = 0; i < unternehmen.size(); i++) {
+                unternehmen.get(i).setKunden((unternehmen.get(i).berechnteKundenanteil()/gesamtAnteil)*Datenbank.kundenpool);
+            }
+        }
 	}
 		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
@@ -137,7 +150,7 @@ public class Controller {
 	private static void zeigeInnenausstattung() {
 		for (int i = 0; i < innenausstattung.length; i++) {
 			System.out.println("Art der Einrichtung: " + innenausstattung[i].getBezeichnung());
-			System.out.println("Zusätzlicher Kundenpool: " + innenausstattung[i].getGroeßeKundenpool());
+			System.out.println("Zusätzlicher Kundenpool: " + innenausstattung[i].getGroesseKundenpool());
 			System.out.println("Einmalige Kosten: " + innenausstattung[i].getKosten());
 			System.out.println();
 		}
@@ -191,4 +204,5 @@ public class Controller {
 		}
 		
 	}
+
 }

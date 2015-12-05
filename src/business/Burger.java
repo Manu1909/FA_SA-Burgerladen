@@ -32,4 +32,9 @@ public class Burger {
 		return qualitaet;
 	}
 
+	public int berechnePreisleistung(){
+	//Formel frü PreisLeistung muss hier rein
+			return 50;
+	}
+
 }

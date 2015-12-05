@@ -7,6 +7,8 @@ public class Unternehmen {
 	private double gewinn;
 	private double kapital;
 	private double umsatz;
+	private int kunden;
+	public int kundenAnteil;
 	private int bekanntheit;
 	private int kundenzufriedenheit;
 	private String name;
@@ -19,16 +21,17 @@ public class Unternehmen {
 	private Bestellung bestellung;
 	private Burger burger;
 	private Catering catering;
+	private Marketing marketing;
 	private Personal personal;
-	
-	// Konstruktor mit Übergabe von name
+
+	// Konstruktor mit ï¿½bergabe von name
 	public Unternehmen(String name) {
 		this.name = name;
 		bestellung = new Bestellung();
 		burger = new Burger();
 	}
 	
-	//Getter und Setter für alle Attribute
+	//Getter und Setter fï¿½r alle Attribute
 	public double getGewinn() {
 		return gewinn;
 	}
@@ -75,6 +78,22 @@ public class Unternehmen {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setMarketing(Marketing marketing) {
+		this.marketing = marketing;
+	}
+
+	public Marketing getMarketing() {
+		return marketing;
+	}
+
+	public void setKunden(int kunden) {
+		this.kunden = kunden;
+	}
+
+	public int getKunden() {
+		return kunden;
 	}
 
 	public Standort getStandort() {
@@ -148,7 +167,7 @@ public class Unternehmen {
 	public void setPersonal(Personal personal) {
 		this.personal = personal;
 	}
-	
+
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
 		setBrotlieferant(brotlieferant);
@@ -191,7 +210,39 @@ public class Unternehmen {
 		bestelleSosse(sol);
 	}
 
-	public int berechneBurgerQualität(){
+	public int berechneBurgerQualitaet(){
 		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
+	}
+
+
+	public void betreibeMarketing(){
+		if(marketing!=null){
+			bekanntheit = marketing.berechneBekanntheit(bekanntheit);
+			kundenzufriedenheit = marketing.berechneKundenzufriedenheit(kundenzufriedenheit);
+		}
+	}
+
+	public int berechnteKundenanteil(){
+		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
+		if(marketing!=null){
+			kundenAnteil *= marketing.getKundenprozentsatz();
+		}
+		return kundenAnteil;
+	}
+
+	public double berechneGewinn(){
+		gewinn = burger.preis * kunden - berechneKosten();
+
+		if(marketing.getBezeichnung().equals("Werbung21")){
+			kunden *= 2;
+		}
+		standort.getKuehlraum().wareEntnehmen(kunden);
+
+		return gewinn;
+	}
+
+	public double berechneKosten(){
+		double kosten = standort.getMiete() + bestellung.berechneGesamtpreis() + kredit.berechneZinsen();
+		return kosten;
 	}
 }

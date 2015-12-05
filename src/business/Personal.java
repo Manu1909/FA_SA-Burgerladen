@@ -6,9 +6,9 @@ public class Personal {
 	public int [] gefeuerteNachPeriode = new int[2];
 	public int anzahlGefeuerte = gefeuerteNachPeriode[0]+gefeuerteNachPeriode[1];
 	public double kosten; //Kosten pro Personal...
-	public int höchstanzahl = 30;
+	public int hoechstanzahl = 30;
 	public int mindestanzahl = 5;
-	public int burgerKapazität; // ...sowie Burger pro Personal müssen noch recherchiert werden
+	public int burgerKapazitaet; // ...sowie Burger pro Personal mï¿½ssen noch recherchiert werden
 	
 	public Personal(int anzahlAngestellte){
 		this.anzahlAngestellte = anzahlAngestellte;
@@ -23,8 +23,8 @@ public class Personal {
 	public void setKosten(int kosten) {
 		this.kosten = kosten;
 	}
-	public void setBurgerKapazität(int burgerKapazität) {
-		this.burgerKapazität = burgerKapazität;
+	public void setBurgerKapazitaet(int burgerKapazitaet) {
+		this.burgerKapazitaet = burgerKapazitaet;
 	}
 	public int getAnzahlAngestellte() {
 		return anzahlAngestellte;
@@ -35,15 +35,15 @@ public class Personal {
 	public double getKosten() {
 		return kosten;
 	}
-	public int getBurgerKapazität() {
-		return burgerKapazität;
+	public int getBurgerKapazitaet() {
+		return burgerKapazitaet;
 	}
 
-	public int erhöheAnzahl(){
-		if (anzahlAngestellte < höchstanzahl){
+	public int erhoeheAnzahl(){
+		if (anzahlAngestellte < hoechstanzahl){
 			anzahlAngestellte ++;
 		} else {
-			System.out.println("Höchstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
+			System.out.println("Hï¿½chstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
 		}
 		return anzahlAngestellte;
 	}
@@ -66,7 +66,7 @@ public class Personal {
 		return gefeuerteNachPeriode[0];
 	}
 	public int berechneAnzahlBurger(){
-		burgerKapazität = anzahlAngestellte*100; //Beispielwert: Anzahl Burger pro Personal
-		return burgerKapazität;
+		burgerKapazitaet = anzahlAngestellte*100; //Beispielwert: Anzahl Burger pro Personal
+		return burgerKapazitaet;
 	}
 }

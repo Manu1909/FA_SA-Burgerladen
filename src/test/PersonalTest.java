@@ -50,19 +50,19 @@ public class PersonalTest {
 	}
 
 	@Test
-	public void testGetBurgerKapazität(){
-		assertTrue("Test getBurgerKapazität", 0 ==p.getBurgerKapazität());
+	public void testGetBurgerKapazitaet(){
+		assertTrue("Test getBurgerKapazitï¿½t", 0 ==p.getBurgerKapazitaet());
 	}
 	
 	@Test 
-	public void testSetBurgerKapazität(){
-		p.setBurgerKapazität(11);;
-		assertTrue("Test setBurgerKapazität", 11 == p.getBurgerKapazität());
+	public void testSetBurgerKapazitaet(){
+		p.setBurgerKapazitaet(11);;
+		assertTrue("Test setBurgerKapazitï¿½t", 11 == p.getBurgerKapazitaet());
 	}
 
 	@Test
-	public void testErhöheAnzahl(){
-		assertTrue("Test erhöheAnzahl", 11 == p.erhöheAnzahl());
+	public void testErhoeheAnzahl(){
+		assertTrue("Test erhï¿½heAnzahl", 11 == p.erhoeheAnzahl());
 	}
 	
 	@Test 
