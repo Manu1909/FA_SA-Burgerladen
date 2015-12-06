@@ -18,6 +18,7 @@ public class Controller {
 	private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
 	private static Standort[] standorte = Datenbank.standorte;
 	private static Innenausstattung[] innenausstattung = Datenbank.i;
+	private static Ereignis[] ereignis = Datenbank.e;
 	
 	public static void main(String args[]){
 		//BufferedReader für Benutzereingabe
@@ -95,9 +96,8 @@ public class Controller {
 				startGame();
 			}else{
 				//Hier muss restliche Spiellogik entstehen
-			}
-			
-			
+				//ereignisTrittEin();
+				}
 			anzahlRunden++;
 		}
 	}
@@ -144,6 +144,31 @@ public class Controller {
 	public static Kuehlraum waehleKuhlraum(String auswahl){
 		int index = Integer.parseInt(auswahl);
 		return kuehlraeume[index -1];
+	}
+	
+	//Methode für das Auftreten von Ereignissen
+	private static void ereignisTrittEin() {
+		for (int i = 0; i < unternehmen.size(); i++) {
+			int zufallszahl = (int)(Math.random() * 100) + 1;
+			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
+				System.out.println("Das Adler Mannheim-Team war bei Ihnen zu Besuch!");
+				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
+				unternehmen.get(i).setKundenzufriedenheit(unternehmen.get(i).getKundenzufriedenheit() + unternehmen.get(i).getKundenzufriedenheit()/100*ereignis[0].getKundenzufriedenheit());
+				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + "und ihre Kundenzufriedenheit auf" + unternehmen.get(i).getKundenzufriedenheit() + "gesteigert.");
+			
+			} else if (zufallszahl-3 <= 2){ //Ereignis Brandunfall
+				System.out.println("In der Küche kam es zu einem Brandunfall.");
+				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
+				unternehmen.get(i).setKundenzufriedenheit(unternehmen.get(i).getKundenzufriedenheit() + unternehmen.get(i).getKundenzufriedenheit()/100*ereignis[1].getKundenzufriedenheit());
+				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + "gesteigert und ihre Kundenzufriedenheit auf" + unternehmen.get(i).getKundenzufriedenheit() + "gesenkt");
+			
+			} else if (zufallszahl-3-unternehmen.get(i).getFleischlieferant().getRisikoQuote() <= 2){ //Ereignis Gammelfleisch
+				System.out.println("Es hat sich herausgestellt, dass ihr Lieferant Teil eines Gammelfleischskandals ist.");
+				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
+				unternehmen.get(i).setKundenzufriedenheit(unternehmen.get(i).getKundenzufriedenheit() + unternehmen.get(i).getKundenzufriedenheit()/100*ereignis[2].getKundenzufriedenheit());
+				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + "gesteigert und ihre Kundenzufriedenheit auf" + unternehmen.get(i).getKundenzufriedenheit() + "gesenkt");
+			}
+		}
 	}
 	
 	//Methoden für die Anzeige der unterschiedlichen Optionen --> werden mit UI nicht mehr benötigt
@@ -200,6 +225,9 @@ public class Controller {
 			System.out.println("Uebrige Ressourcen " + (i + 1) + ": " + lieferanten[i].uebrigeRessourcen());
 			System.out.println("Qualitaet: " + lieferanten[i].getQualitaet());
 			System.out.println("Preis pro Gut: " + lieferanten[i].getPreisProGut());
+			if (index == 0){
+				System.out.println("Gammelfleischrisiko: " + lieferanten[i].getRisikoQuote() + "Prozent");
+			}
 			System.out.println();
 		}
 		

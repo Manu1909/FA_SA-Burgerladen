@@ -6,10 +6,10 @@ public class Lieferant {
 	private int verbrauchteRessourcen = 0;
 	private int qualitaet;
 	private double preisProGut;
-	private double risikoQuote;
+	private int risikoQuote;
 
 	
-	public Lieferant(int RESSOURCEN, int qualitaet, double preisProGut, double risikoQuote) {
+	public Lieferant(int RESSOURCEN, int qualitaet, double preisProGut, int risikoQuote) {
 		this.RESSOURCEN = RESSOURCEN;
 		this.qualitaet = qualitaet;
 		this.risikoQuote = risikoQuote;
@@ -50,7 +50,7 @@ public class Lieferant {
 		return preisProGut;
 	}
 	
-	public double getRisikoQuote(){
+	public int getRisikoQuote(){
 		return risikoQuote;
 	}
 	

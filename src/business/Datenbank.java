@@ -27,9 +27,9 @@ public class Datenbank {
 	public static Innenausstattung[] i = {i1,i2,i3};
 	
 	//Daten für Lieferante
-	public static Lieferant fl1 = new Lieferant(1000, 3, 0.3, 0.05);
-	public static Lieferant fl2 = new Lieferant(1500, 5, 0.5, 0.04);
-	public static Lieferant fl3 = new Lieferant(1300, 8, 0.7, 0.02);
+	public static Lieferant fl1 = new Lieferant(1000, 3, 0.3, 5);
+	public static Lieferant fl2 = new Lieferant(1500, 5, 0.5, 4);
+	public static Lieferant fl3 = new Lieferant(1300, 8, 0.7, 2);
 	public static Lieferant[] fl = {fl1, fl2, fl3};
 	  
 	public static Lieferant bl1 = new Lieferant(1000, 3, 0.25, 0);
@@ -54,9 +54,9 @@ public class Datenbank {
 	public static Kredit[] k = {k1, k2, k3};
 	
 	//Daten für Ereignisse
-	public static Ereignis e1 = new Ereignis(10, -20);
+	public static Ereignis e1 = new Ereignis(30, 10);
 	public static Ereignis e2 = new Ereignis(5, -10);
-	public static Ereignis e3 = new Ereignis(20, 10);
+	public static Ereignis e3 = new Ereignis(10, -20);
 	public static Ereignis[] e = {e1, e2, e3};
 	
 	//private int konstante = 

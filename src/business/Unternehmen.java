@@ -159,7 +159,7 @@ public class Unternehmen {
 	public void setCatering(Catering catering) {
 		this.catering = catering;
 	}
-
+	
 	public Personal getPersonal() {
 		return personal;
 	}
