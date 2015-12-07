@@ -7,27 +7,28 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class NewPlayer extends JFrame implements ActionListener, ChangeListener, MouseListener{
 	private JFrame spielerAufbau = new JFrame("Burgerplanspiel - Neuer Spieler");
+	private String[] avLocations = {"Planken", "Jungbusch", "Paradeplatz"};
 	
 	private JPanel panelTop = new JPanel();
 	private JPanel panelBody = new JPanel();
 	private JPanel panelBottom = new JPanel();
 	
-	private JComboBox cLocation = new JComboBox();
-	
-	private JScrollPane sLocation = new JScrollPane();
-	
 	private JTextField name = new JTextField(15);
 	
+	private JList lLocation = new JList(avLocations);
+	
+	private JLabel locationInfo = new JLabel("Index 0");
 	
 	private JButton confirm = new JButton("Eingaben bestätigen");
 	private JButton go = new JButton("Los geht's");
@@ -50,10 +51,11 @@ public class NewPlayer extends JFrame implements ActionListener, ChangeListener,
 	public void buildWindow()
 	{	
 		panelBody.add(name);
-		panelBody.add(cLocation);
-		cLocation.addItem("Planken");
-		cLocation.addItem("Jungbusch");
+		panelBody.add(lLocation);
+		panelBody.add(locationInfo);
 		
+		lLocation.setSelectedIndex(0);
+		lLocation.addMouseListener(this);
 		panelBottom.add(go);
 		
 		
@@ -87,7 +89,22 @@ public class NewPlayer extends JFrame implements ActionListener, ChangeListener,
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
-	
+		Object s = e.getSource();
+		if(s == lLocation)
+		{
+			if(lLocation.getSelectedIndex() == 0)
+			{
+				locationInfo.setText("Index 0");
+			}
+			if(lLocation.getSelectedIndex() == 1)
+			{
+				locationInfo.setText("Index 1");
+			}
+			if(lLocation.getSelectedIndex() == 2)
+			{
+				locationInfo.setText("Index 2");
+			}
+		}
 	}
 
 	@Override
