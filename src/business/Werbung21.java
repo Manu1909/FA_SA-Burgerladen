@@ -9,7 +9,7 @@ public class Werbung21 extends Marketing{
         bekanntheitssteigerung = 10;
         kundenzufriednenheitssteigerung = 10;
         kundenprozentsatz = 0.1;
-        kosten = 10;
+        kosten = 19;
         prozent = 0.1;
         bezeichnung = "Werbung21";
 

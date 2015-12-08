@@ -22,4 +22,20 @@ public abstract class Marketing {
     public String getBezeichnung() {
         return bezeichnung;
     }
+
+    public double getKosten() {
+        return kosten;
+    }
+
+    public double getProzent() {
+        return prozent;
+    }
+
+    public int getBekanntheitssteigerung() {
+        return bekanntheitssteigerung;
+    }
+
+    public int getKundenzufriednenheitssteigerung() {
+        return kundenzufriednenheitssteigerung;
+    }
 }

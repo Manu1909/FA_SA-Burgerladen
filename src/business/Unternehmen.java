@@ -29,6 +29,7 @@ public class Unternehmen {
 		this.name = name;
 		bestellung = new Bestellung();
 		burger = new Burger();
+		this.personal = new Personal(5);
 	}
 	
 	//Getter und Setter f�r alle Attribute
@@ -218,11 +219,17 @@ public class Unternehmen {
 	public void betreibeMarketing(){
 		if(marketing!=null){
 			bekanntheit = marketing.berechneBekanntheit(bekanntheit);
+			if(bekanntheit>100){
+				bekanntheit = 100;
+			}
 			kundenzufriedenheit = marketing.berechneKundenzufriedenheit(kundenzufriedenheit);
+			if(kundenzufriedenheit>100){
+				kundenzufriedenheit = 100;
+			}
 		}
 	}
 
-	public int berechnteKundenanteil(){
+	public int berechneKundenanteil(){
 		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
 		if(marketing!=null){
 			kundenAnteil *= marketing.getKundenprozentsatz();
@@ -242,7 +249,7 @@ public class Unternehmen {
 	}
 
 	public double berechneKosten(){
-		double kosten = standort.getMiete() + bestellung.berechneGesamtpreis() + kredit.berechneZinsen();
+		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + kredit.berechneZinsen() + personal.berechneKosten() + marketing.getKosten();
 		return kosten;
 	}
 }

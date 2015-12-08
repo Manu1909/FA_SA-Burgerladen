@@ -1,17 +1,19 @@
 package business;
 public class Datenbank {
-		
+
+
+	public static final int startKapital = 90000;
 	//Konstanten fï¿½r den Kundenpool
 	public static final int kundenpool = 10000;
-	private static final int kundenpoolModern = 2000;
-	private static final int kundenpoolKlassisch = 1000;
-	private static final int kundenpoolAlternativ = 1500;
+	public static final int kundenpoolModern = 1500;
+	public static final int kundenpoolKlassisch = 1000;
+	public static final int kundenpoolAmerican = 2000;
 	
 	//Daten fï¿½r Standorte
-	private static Standort s1 = new Standort("Planken",1400, 3, 5);
-	private static Standort s2 = new Standort("Jungbusch",1100, 2, 2);
-	private static Standort s3 = new Standort("Kurpfalzer Strasse",1500, 4, 5);
-	private static Standort s4 = new Standort("Quadrate",1300, 3, 4);
+	private static Standort s1 = new Standort("Planken",3200, 75, 25);
+	private static Standort s2 = new Standort("Jungbusch",1500, 40, 15);
+	private static Standort s3 = new Standort("Kurpfalzer Strasse",3000, 70, 25);
+	private static Standort s4 = new Standort("Quadrate",2500, 60, 20);
 	public static Standort[] standorte = {s1, s2, s3, s4};
 	
 	//Daten fï¿½r Kï¿½hlrï¿½ume
@@ -21,39 +23,45 @@ public class Datenbank {
 	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
 	//Daten fï¿½r Innenausstattung
-	private static Innenausstattung i1 = new Innenausstattung("Modern", kundenpoolModern, 50000);
-	private static Innenausstattung i2 = new Innenausstattung("Klassisch", kundenpoolKlassisch, 40000);
-	private static Innenausstattung i3 = new Innenausstattung("Alternativ", kundenpoolAlternativ, 30000);
+	private static Innenausstattung i1 = new Innenausstattung("Modern", kundenpoolModern, 40000);
+	private static Innenausstattung i2 = new Innenausstattung("Klassisch", kundenpoolKlassisch, 33000);
+	private static Innenausstattung i3 = new Innenausstattung("American", kundenpoolAmerican, 45000);
 	public static Innenausstattung[] i = {i1,i2,i3};
 	
-	//Daten für Lieferante
-	public static Lieferant fl1 = new Lieferant(1000, 3, 0.3, 5);
-	public static Lieferant fl2 = new Lieferant(1500, 5, 0.5, 4);
-	public static Lieferant fl3 = new Lieferant(1300, 8, 0.7, 2);
+	//Daten fï¿½r Lieferante
+	public static Lieferant fl1 = new Lieferant(6000, 30, 0.68, 5);
+	public static Lieferant fl2 = new Lieferant(5000, 50, 1.08, 4);
+	public static Lieferant fl3 = new Lieferant(4000, 80, 1.66, 2);
 	public static Lieferant[] fl = {fl1, fl2, fl3};
 	  
-	public static Lieferant bl1 = new Lieferant(1000, 3, 0.25, 0);
-	public static Lieferant bl2 = new Lieferant(1500, 6, 0.35, 0);
-	public static Lieferant bl3 = new Lieferant(1300, 9, 0.45, 0);
+	public static Lieferant bl1 = new Lieferant(6000, 30, 0.23, 0);
+	public static Lieferant bl2 = new Lieferant(5000, 60, 0.30, 0);
+	public static Lieferant bl3 = new Lieferant(4000, 90, 0.36, 0);
 	public static Lieferant[] bl = {bl1, bl2, bl3};
 	  
-	public static Lieferant sal1 = new Lieferant(1000, 2, 0.05, 0);
-	public static Lieferant sal2 = new Lieferant(1500, 5, 0.1, 0);
-	public static Lieferant sal3 = new Lieferant(1300, 8, 0.2, 0);
+	public static Lieferant sal1 = new Lieferant(6000, 20, 0.05, 0);
+	public static Lieferant sal2 = new Lieferant(5000, 50, 0.1, 0);
+	public static Lieferant sal3 = new Lieferant(4000, 80, 0.2, 0);
 	public static Lieferant[] sal = {sal1, sal2, sal3};
 	  
-	public static Lieferant sol1 = new Lieferant(1000, 2, 0.05, 0);
-	public static Lieferant sol2 = new Lieferant(1500, 6, 0.1, 0);
-	public static Lieferant sol3 = new Lieferant(1300, 9, 0.15, 0);
+	public static Lieferant sol1 = new Lieferant(6000, 20, 0.01, 0);
+	public static Lieferant sol2 = new Lieferant(5000, 60, 0.03, 0);
+	public static Lieferant sol3 = new Lieferant(4000, 90, 0.06, 0);
 	public static Lieferant[] sol = {sol1, sol2, sol3};
+
+	//Daten fÃ¼r Marketing
+	public static Marketing flyer = new FlyerWerbung();
+	public static Marketing werbung21 = new Werbung21();
+	public static Marketing radio = new RadioWerbung();
+	public static Marketing[] marketing = {flyer, werbung21, radio};
 	
-	//Daten für Kredite
-	public static Kredit k1 = new Kredit(8, 10, 8000);
-	public static Kredit k2 = new Kredit(6, 8, 5000);
-	public static Kredit k3 = new Kredit(4, 6, 2000);
+	//Daten fï¿½r Kredite
+	public static Kredit k1 = new Kredit(8, 3.49, 20000);
+	public static Kredit k2 = new Kredit(8, 3.49, 30000);
+	public static Kredit k3 = new Kredit(10, 3.46, 40000);
 	public static Kredit[] k = {k1, k2, k3};
 	
-	//Daten für Ereignisse
+	//Daten fï¿½r Ereignisse
 	public static Ereignis e1 = new Ereignis(30, 10);
 	public static Ereignis e2 = new Ereignis(5, -10);
 	public static Ereignis e3 = new Ereignis(10, -20);

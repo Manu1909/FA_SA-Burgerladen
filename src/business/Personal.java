@@ -9,6 +9,7 @@ public class Personal {
 	public int hoechstanzahl = 30;
 	public int mindestanzahl = 5;
 	public int burgerKapazitaet; // ...sowie Burger pro Personal m�ssen noch recherchiert werden
+	public int gehalt = 2040;
 	
 	public Personal(int anzahlAngestellte){
 		this.anzahlAngestellte = anzahlAngestellte;
@@ -54,7 +55,7 @@ public class Personal {
 		return anzahlAngestellte;
 	}
 	public double berechneKosten(){
-		kosten = anzahlAngestellte*1000; // Beispielwert: Kosten pro Personal
+		kosten = anzahlAngestellte*gehalt; // Beispielwert: Kosten pro Personal
 		return kosten;
 	}
 	public int feuern(int anzahl){

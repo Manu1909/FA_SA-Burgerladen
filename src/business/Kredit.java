@@ -3,11 +3,11 @@ package business;
 public class Kredit {
 	
 	private int laufzeit; //entspricht einer Periode = 3 Monate
-	private int zinssatz;
-	private int hoehe; // Idee: Höhe des Kredits selber bestimmen
+	private double zinssatz;
+	private int hoehe; // Idee: Hï¿½he des Kredits selber bestimmen
 	private double zinsen;
 
-	public Kredit(int laufzeit, int zinssatz, int hoehe) {
+	public Kredit(int laufzeit, double zinssatz, int hoehe) {
 		this.laufzeit = laufzeit;
 		this.zinssatz = zinssatz;
 		this.hoehe = hoehe;
@@ -30,7 +30,7 @@ public class Kredit {
 	public int getLaufzeit() {
 		return laufzeit;
 	}
-	public int getZinssatz() {
+	public double getZinssatz() {
 		return zinssatz;
 	}
 	public int getHoehe() {

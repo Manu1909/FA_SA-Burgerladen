@@ -5,10 +5,10 @@ package business;
  */
 public class RadioWerbung extends Marketing {
     public RadioWerbung() {
-        bekanntheitssteigerung = 20;
+        bekanntheitssteigerung = 30;
         kundenzufriednenheitssteigerung = 0;
         kundenprozentsatz = 0.15;
-        kosten = 500;
+        kosten = 6300;
         prozent = 0.1;
         bezeichnung = "Radio";
     }

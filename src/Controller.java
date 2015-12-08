@@ -21,42 +21,76 @@ public class Controller {
 	private static Ereignis[] ereignis = Datenbank.e;
 	
 	public static void main(String args[]){
+		startGame();
+	}
+	
+	
+	//Methoden die das Spiel simulieren
+	public void simuliereSpiel(){
+		int anzahlRunden = 0;
+		
+		while(anzahlRunden < 12){
+			if(anzahlRunden == 0){
+				startGame();
+			}else{
+				//Hier muss restliche Spiellogik entstehen
+				//ereignisTrittEin();
+				}
+			anzahlRunden++;
+		}
+	}
+	
+	//Methode die den Start des Spiels behandelt
+	public static void startGame(){
 		//BufferedReader für Benutzereingabe
 		BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-		Scanner scanner = new Scanner(System.in);
-		
+		Scanner scanner = new Scanner(System.in); //Todo macht manu
+
 		try {
 			//Spielstart
 			System.out.println("Herzlich Wilkommen");
 			System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gewünschten Namen ein:" );
-			
+
 			String nameUnternehmen = userIn.readLine();
-					
+
 			Unternehmen u1 = new Unternehmen(nameUnternehmen);
-			
+
 			System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
 			zeigeStandort();
 			System.out.print("Bitte wählen Sie hier: ");
 			u1.setStandort(waehleStandort(userIn.readLine()));
-			
-			
+
+
 			System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum wählen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
 			System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
 			zeigeKuehlraume();
 			System.out.print("Bitte wählen Sie hier: ");
 			u1.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
-			
+
 			System.out.println("Damit ihr Burgerladen entsprechend eingerichtet werden kann müssen Sie sich noch für eine Innenausstattung entscheiden");
 			System.out.println("Mit der Innenausstattung Ihres Burgerladen ist es Ihnen möglich den Kundenpool individuell zu erweitern");
 			System.out.println("Folgende Einrichtungsarten stehen zur Verfügung");
 			zeigeInnenausstattung();
 			System.out.print("Bitte wählen Sie hier: ");
 			u1.getStandort().setInnenausstattung(waehleInnenausstattung(userIn.readLine()));
-			
+
 			System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");
 			System.out.println("Standort: " + u1.getStandort().getLage() + "; Kühlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
 			System.out.println("Die gesamten Mietkosten f�r diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
 			System.out.println("Zusätzlich haben Sie sich für folgende Innenausstattung entschieden: " + u1.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u1.getStandort().getInnenausstattung().getKosten());
+
+			//Kreditwahl
+			System.out.println("Möchten sie einen Kredit wählen?");
+			zeigeKredite();
+			System.out.print("Bitte wählen sie: ");
+			u1.setKredit(waehleKredit(scanner.nextInt()-1));
+
+			//Personalwahl
+			System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
+			System.out.println("5 Miarbeiter können 1000 Burger im Monat produzieren");
+			System.out.println("Diese Kosten pro Mitarbeiter 2040€ im Monat");
+			System.out.println("Wollen Sie Ihre Mitarbeiterkapazität erweitern?");
+			u1.getPersonal().setAnzahlAngestellte(waehlePersonal(scanner.nextInt()));
 
 			//LieferantenBestellung
 			System.out.println("\nBitte wählen sie im Folgenden, für wie viele Burger sie Zutaten in dieser Periode kaufen wollen");
@@ -79,55 +113,68 @@ public class Controller {
 			u1.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
 			System.out.println("Ihre Bestellung kostet: " + u1.getBestellung().berechneGesamtpreis() + "€");
-			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualitaet() + "/10");
-			
+			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualitaet() + "/100");
+
+			//Marketingauswahl
+			System.out.println("\nMöchten Sie Marketing betreiben: ");
+			zeigeMarketing();
+			System.out.print("Wählen Sie hier: ");
+			u1.setMarketing(waehleMarketing(scanner.nextInt()-1));
+
+			System.out.println("Unternehmen gegründet: ");
+			System.out.println("Kosten: " + u1.berechneKosten());
+
 		} catch (Exception e) {
 			System.err.println(e);
-		}		
-	}
-	
-	
-	//Methoden die das Spiel simulieren
-	public void simuliereSpiel(){
-		int anzahlRunden = 0;
-		
-		while(anzahlRunden < 12){
-			if(anzahlRunden == 0){
-				startGame();
-			}else{
-				//Hier muss restliche Spiellogik entstehen
-				//ereignisTrittEin();
-				}
-			anzahlRunden++;
 		}
 	}
-	
-	//Methode die den Start des Spiels behandelt
-	public void startGame(){
-		
-	}
-	
+
+
+
 
 	//Hilfsmethoden um elementare Spielergebnisse zu berechnen
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
 	private void berechneKunden(){
 		int gesamtAnteil = 0;
+		int[] anteileInnenausstattung = new int[3];
+		int kunden = 0;
+		int kundenanteil = 0;
 
 		for (int i = 0; i < unternehmen.size(); i++) {
 			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden
             //Kundenberechnung abhängig von der Innenausstattung fehlt noch
-            gesamtAnteil += unternehmen.get(i).berechnteKundenanteil();
+            gesamtAnteil += unternehmen.get(i).berechneKundenanteil();
+			for (int j = 0; j < anteileInnenausstattung.length; j++) {
+				if (unternehmen.get(i).getStandort().getInnenausstattung() == Datenbank.i[j]){
+					anteileInnenausstattung[j] += unternehmen.get(i).berechneKundenanteil();
+				}
+			}
+
 		}
-        if(gesamtAnteil<=100){
-            for (int i = 0; i < unternehmen.size(); i++) {
-                unternehmen.get(i).setKunden((unternehmen.get(i).berechnteKundenanteil()/100)*Datenbank.kundenpool);
-            }
-        }
-        else{
-            for (int i = 0; i < unternehmen.size(); i++) {
-                unternehmen.get(i).setKunden((unternehmen.get(i).berechnteKundenanteil()/gesamtAnteil)*Datenbank.kundenpool);
-            }
-        }
+		for (int i = 0; i < unternehmen.size(); i++) {
+			kundenanteil = unternehmen.get(i).berechneKundenanteil();
+			if(gesamtAnteil<=100){
+				kunden = kundenanteil/100*Datenbank.kundenpool;
+			}
+			else{
+				kunden = kundenanteil/gesamtAnteil*Datenbank.kundenpool;
+			}
+
+			for (int j = 0; j < anteileInnenausstattung.length; j++) {
+				if(anteileInnenausstattung[j]<=100){
+					kunden += kundenanteil/100*Datenbank.i[j].getGroesseKundenpool();
+				}
+				else{
+					kunden += kundenanteil/anteileInnenausstattung[j]*Datenbank.i[j].getGroesseKundenpool();
+				}
+			}
+			unternehmen.get(i).setKunden(kunden);
+			kunden = 0;
+		}
+
+
+
+
 	}
 		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
@@ -144,6 +191,34 @@ public class Controller {
 	public static Kuehlraum waehleKuhlraum(String auswahl){
 		int index = Integer.parseInt(auswahl);
 		return kuehlraeume[index -1];
+	}
+
+	public static Kredit waehleKredit(int auswahl){
+		if(auswahl>=0){
+			return Datenbank.k[auswahl];
+		}
+		else{
+			return null;
+		}
+
+	}
+
+	public static Marketing waehleMarketing(int auswahl){
+		if(auswahl>=0){
+			return Datenbank.marketing[auswahl];
+		}
+		else{
+			return null;
+		}
+	}
+
+	//Personal zu Beginn waehlen
+	private static int waehlePersonal(int i) {
+		if(i == 0){
+			return 5;
+		}else{
+			return  5 + i;
+		}
 	}
 	
 	//Methode für das Auftreten von Ereignissen
@@ -231,6 +306,27 @@ public class Controller {
 			System.out.println();
 		}
 		
+	}
+
+	public static void zeigeKredite(){
+		for (int i = 0; i < Datenbank.k.length; i++) {
+			System.out.println("Kredit " + (i+1));
+			System.out.println("Laufzeit: " + Datenbank.k[i].getLaufzeit());
+			System.out.println("Zinsatz: " + Datenbank.k[i].getZinssatz());
+			System.out.println("Betrag: " + Datenbank.k[i].getHoehe());
+			System.out.println();
+		}
+	}
+
+	public static void zeigeMarketing(){
+		for (int i = 0; i < Datenbank.marketing.length; i++) {
+			System.out.println("Art: " + Datenbank.marketing[i].getBezeichnung());
+			System.out.println("Bekanntheitssteigerung: " + Datenbank.marketing[i].getBekanntheitssteigerung() + " - 10%");
+			System.out.println("Kundenzufriedenheitssteigerung: " + Datenbank.marketing[i].getKundenzufriednenheitssteigerung() + " - 10%");
+			System.out.println("Kosten: " + Datenbank.marketing[i].getKosten());
+			System.out.println("Sofortige Steigerung: " + Datenbank.marketing[i].getProzent());
+			System.out.println();
+		}
 	}
 
 }
