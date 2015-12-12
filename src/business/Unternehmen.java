@@ -238,7 +238,12 @@ public class Unternehmen {
 	}
 
 	public double berechneGewinn(){
-		gewinn = burger.preis * kunden - berechneKosten();
+		if(kredit != null){
+			gewinn = burger.preis * kunden - berechneKostenMitKredit();
+		}else{
+			gewinn = burger.preis * kunden - berechneKostenOhneKredit();
+		}
+		
 
 		if(marketing.getBezeichnung().equals("Werbung21")){
 			kunden *= 2;
@@ -248,7 +253,12 @@ public class Unternehmen {
 		return gewinn;
 	}
 
-	public double berechneKosten(){
+	public double berechneKostenOhneKredit(){
+		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + personal.berechneKosten() + marketing.getKosten();
+		return kosten;
+	}
+	
+	public double berechneKostenMitKredit(){
 		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + kredit.berechneZinsen() + personal.berechneKosten() + marketing.getKosten();
 		return kosten;
 	}

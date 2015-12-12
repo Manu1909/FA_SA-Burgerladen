@@ -7,6 +7,7 @@ public class Catering {
 		private String bezeichnung;
 		private int anzahlBurger;
 		private double mindestAngebot;
+		private Unternehmen u;
 		
 		private double preis;
 		ArrayList<String> namenUnternehmen = new ArrayList<>();
@@ -19,6 +20,16 @@ public class Catering {
 			this.mindestAngebot = mindestAngebot;
 		}
 		
+		
+
+		public Unternehmen getU() {
+			return u;
+		}
+
+
+		public void setU(Unternehmen u) {
+			this.u = u;
+		}
 		
 		public String getBezeichnung() {
 			return bezeichnung;
@@ -95,8 +106,5 @@ public class Catering {
 			}
 			
 			return namenUnternehmen.get(index);
-		}
-
-		
-
+		}		
 }

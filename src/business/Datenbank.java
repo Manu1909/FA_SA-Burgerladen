@@ -1,7 +1,7 @@
 package business;
 public class Datenbank {
 
-
+	
 	public static final int startKapital = 90000;
 	//Konstanten f�r den Kundenpool
 	public static final int kundenpool = 10000;

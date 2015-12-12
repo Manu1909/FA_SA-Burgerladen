@@ -79,12 +79,6 @@ public class Controller {
 			System.out.println("Die gesamten Mietkosten f�r diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
 			System.out.println("Zusätzlich haben Sie sich für folgende Innenausstattung entschieden: " + u1.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u1.getStandort().getInnenausstattung().getKosten());
 
-			//Kreditwahl
-			System.out.println("Möchten sie einen Kredit wählen?");
-			zeigeKredite();
-			System.out.print("Bitte wählen sie: ");
-			u1.setKredit(waehleKredit(scanner.nextInt()-1));
-
 			//Personalwahl
 			System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
 			System.out.println("5 Miarbeiter können 1000 Burger im Monat produzieren");
@@ -122,7 +116,22 @@ public class Controller {
 			u1.setMarketing(waehleMarketing(scanner.nextInt()-1));
 
 			System.out.println("Unternehmen gegründet: ");
-			System.out.println("Kosten: " + u1.berechneKosten());
+			System.out.println("Kosten: " + u1.berechneKostenOhneKredit());
+			
+			//Kreditwahl
+			System.out.println("Sie haben jetzt die Möglichkeit einen Kredit zu wählen, damit Sie in den folgenden Perioden mehr finanziellen Spielraum haben: ");
+			zeigeKredite();
+			System.out.println("Bitte wählen sie: ");
+			
+			if((scanner.nextInt() - 1) == -1){
+				System.out.println("Kein Kredit");
+			}else{
+				u1.setKredit(waehleKredit(scanner.nextInt()-1));
+				System.out.println("Kosten: " + u1.berechneKostenMitKredit());
+			}
+		
+			
+			
 
 		} catch (Exception e) {
 			System.err.println(e);
