@@ -259,7 +259,7 @@ public class Unternehmen {
 	}
 	
 	public double berechneKostenMitKredit(){
-		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + kredit.berechneZinsen() + personal.berechneKosten() + marketing.getKosten();
+		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + kredit.berechneAnnuitaet() + personal.berechneKosten() + marketing.getKosten();
 		return kosten;
 	}
 }
