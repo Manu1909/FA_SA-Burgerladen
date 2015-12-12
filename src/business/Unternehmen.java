@@ -1,7 +1,5 @@
 package business;
 
-import backend.Client;
-
 public class Unternehmen {
 	
 	private double gewinn;
@@ -21,7 +19,7 @@ public class Unternehmen {
 	private Bestellung bestellung;
 	private Burger burger;
 	private Catering catering;
-	private Marketing marketing;
+	private Marketing marketing = null;
 	private Personal personal;
 
 	// Konstruktor mit �bergabe von name
@@ -187,6 +185,7 @@ public class Unternehmen {
 	public void bestelleFleisch(Lieferant fl){
 		bestellung.bestelleFleisch(fl);
 		fleischlieferant = fl;
+		standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
 	}
 
 	public void bestelleBrot(Lieferant bl){
@@ -232,34 +231,49 @@ public class Unternehmen {
 	public int berechneKundenanteil(){
 		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
 		if(marketing!=null){
-			kundenAnteil *= marketing.getKundenprozentsatz();
+			kundenAnteil *= (1+marketing.getKundenprozentsatz());
 		}
 		return kundenAnteil;
 	}
 
-	public double berechneGewinn(){
-		if(kredit != null){
-			gewinn = burger.preis * kunden - berechneKostenMitKredit();
+	public double berechneGewinn(int rundenZahl){
+		if(rundenZahl == 0){
+			gewinn = burger.preis * kunden - berechneGruendungsKosten();
 		}else{
-			gewinn = burger.preis * kunden - berechneKostenOhneKredit();
+			gewinn = burger.preis * kunden - berechneRundenkosten();
 		}
 		
 
-		if(marketing.getBezeichnung().equals("Werbung21")){
-			kunden *= 2;
+		if(marketing!=null){
+			if(marketing.getBezeichnung().equals("Werbung21")){
+				kunden *= 2;
+			}
 		}
 		standort.getKuehlraum().wareEntnehmen(kunden);
 
 		return gewinn;
 	}
 
-	public double berechneKostenOhneKredit(){
-		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + personal.berechneKosten() + marketing.getKosten();
+
+	public double berechneGruendungsKosten(){
+		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneAnnuitaet();
+		}
+		if(marketing != null){
+			kosten += marketing.getKosten();
+		}
 		return kosten;
 	}
-	
-	public double berechneKostenMitKredit(){
-		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis() + kredit.berechneAnnuitaet() + personal.berechneKosten() + marketing.getKosten();
+
+	public double berechneRundenkosten(){
+		double kosten = standort.getMiete() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneAnnuitaet();
+		}
+		if(marketing != null){
+			kosten += marketing.getKosten();
+		}
 		return kosten;
 	}
 }

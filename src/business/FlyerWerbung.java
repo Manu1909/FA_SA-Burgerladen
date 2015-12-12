@@ -8,7 +8,7 @@ public class FlyerWerbung extends Marketing {
     public FlyerWerbung() {
         bekanntheitssteigerung = 7;
         kundenzufriednenheitssteigerung = 0;
-        kundenprozentsatz = 10;
+        kundenprozentsatz = 0.1;
         kosten = 599;
         prozent = 0.1;
         bezeichnung = "Flyer";

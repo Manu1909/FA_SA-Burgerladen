@@ -40,9 +40,9 @@ public class Personal {
 		return burgerKapazitaet;
 	}
 
-	public int erhoeheAnzahl(){
-		if (anzahlAngestellte < hoechstanzahl){
-			anzahlAngestellte ++;
+	public int erhoeheAnzahl(int i){
+		if (anzahlAngestellte  + i <= hoechstanzahl){
+			anzahlAngestellte += i;
 		} else {
 			System.out.println("H�chstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
 		}
@@ -64,7 +64,7 @@ public class Personal {
 		} else {
 			System.out.println("Mindestanzahl an Personal unterschritten.");
 		}
-		return gefeuerteNachPeriode[0];
+		return gefeuerteNachPeriode[1];
 	}
 	public int berechneAnzahlBurger(){
 		burgerKapazitaet = anzahlAngestellte*100; //Beispielwert: Anzahl Burger pro Personal

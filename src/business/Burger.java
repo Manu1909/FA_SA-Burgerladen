@@ -4,6 +4,7 @@ public class Burger {
 	
 	int preis;
 	int qualitaet;
+	int preisPunkte;
 	
 	public Burger() {
 		// TODO Auto-generated constructor stub
@@ -33,8 +34,12 @@ public class Burger {
 	}
 
 	public int berechnePreisleistung(){
-	//Formel frü PreisLeistung muss hier rein
-			return 50;
+		return (qualitaet + berechnePreisPunkte())/2;
+	}
+
+	public int berechnePreisPunkte(){
+		preisPunkte = (int)(-4.5*preis + 122.5);
+		return preisPunkte;
 	}
 
 }

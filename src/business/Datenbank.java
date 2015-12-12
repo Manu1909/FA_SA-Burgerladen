@@ -17,9 +17,9 @@ public class Datenbank {
 	public static Standort[] standorte = {s1, s2, s3, s4};
 	
 	//Daten f�r K�hlr�ume
-	private static Kuehlraum kr1 = new Kuehlraum(1000, 0, 300);
-	private static Kuehlraum kr2 = new Kuehlraum(1500, 0, 500);
-	private static Kuehlraum kr3 = new Kuehlraum(2000, 0, 800);
+	private static Kuehlraum kr1 = new Kuehlraum(2000, 0, 300);
+	private static Kuehlraum kr2 = new Kuehlraum(3000, 0, 500);
+	private static Kuehlraum kr3 = new Kuehlraum(5000, 0, 800);
 	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
 	//Daten f�r Innenausstattung
