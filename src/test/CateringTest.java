@@ -11,7 +11,7 @@ import business.Unternehmen;
 
 public class CateringTest {
 	
-	Unternehmen u1;
+	/*Unternehmen u1;
 	Unternehmen u2;
 	Catering c1;
 	
@@ -122,6 +122,6 @@ public class CateringTest {
 		
 		assertTrue("Test vergleiche Catering Angebote ohne Wert", "Kein Angebot eingegangen" == ergebnis);
 		
-	}
+	}*/
 
 }

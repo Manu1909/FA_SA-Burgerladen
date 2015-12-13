@@ -53,13 +53,13 @@ public class Lieferant {
 	public int getRisikoQuote(){
 		return risikoQuote;
 	}
-	
-	public int uebrigeRessourcen(){
+
+	public int berechneUebrigeRessourcen(){
 		return RESSOURCEN-verbrauchteRessourcen;
 	}
 	
 	public boolean checkRessourcen(int res){
-		if(res>uebrigeRessourcen()){
+		if(res> berechneUebrigeRessourcen()){
 			return false;
 		}
 		return true;

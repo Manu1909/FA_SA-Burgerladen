@@ -182,26 +182,40 @@ public class Unternehmen {
 		setKredit(kredit);
 	}
 
-	public void bestelleFleisch(Lieferant fl){
-		bestellung.bestelleFleisch(fl);
-		fleischlieferant = fl;
-		standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
+	public boolean bestelleFleisch(Lieferant fl){
+		boolean ok;
+		ok = bestellung.bestelleFleisch(fl);
+		if(ok){
+			fleischlieferant = fl;
+			standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
+		}
+		return ok;
 	}
 
-	public void bestelleBrot(Lieferant bl){
-		bestellung.bestelleBrot(bl);
-		brotlieferant = bl;
+	public boolean bestelleBrot(Lieferant bl){
+		boolean ok = bestellung.bestelleBrot(bl);
+		if(ok){
+			brotlieferant = bl;
+		}
+		return ok;
 	}
 
-	public void bestelleSalat(Lieferant sal){
-		bestellung.bestelleSalat(sal);
-		salatlieferant = sal;
+	public boolean bestelleSalat(Lieferant sal){
+		boolean ok = bestellung.bestelleSalat(sal);
+		if(ok){
+			salatlieferant = sal;
+		}
+		return ok;
 	}
 
-	public void bestelleSosse(Lieferant sol){
-		bestellung.bestelleSosse(sol);
-		sossenlieferant = sol;
+	public boolean bestelleSosse(Lieferant sol){
+		boolean ok = bestellung.bestelleSosse(sol);
+		if(ok){
+			sossenlieferant = sol;
+		}
+		return ok;
 	}
+
 
 	public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
 		bestelleFleisch(fl);
@@ -228,6 +242,19 @@ public class Unternehmen {
 		}
 	}
 
+	public void berechneCatering(){
+		if(catering!=null){
+			bekanntheit = catering.berechneBekanntheit(bekanntheit);
+			if(bekanntheit>100){
+				bekanntheit = 100;
+			}
+			kundenzufriedenheit = catering.berechneKundenzufriedenheit(kundenzufriedenheit);
+			if(kundenzufriedenheit>100){
+				kundenzufriedenheit = 100;
+			}
+		}
+}
+
 	public int berechneKundenanteil(){
 		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
 		if(marketing!=null){
@@ -239,7 +266,11 @@ public class Unternehmen {
 	public double berechneGewinn(int rundenZahl){
 		if(rundenZahl == 0){
 			gewinn = burger.preis * kunden - berechneGruendungsKosten();
-		}else{
+		}
+		else if(catering != null){
+			gewinn = burger.preis * kunden - berechneRundenkosten() + berechneCateringKosten(catering);
+		}
+		else{
 			gewinn = burger.preis * kunden - berechneRundenkosten();
 		}
 		
@@ -275,5 +306,9 @@ public class Unternehmen {
 			kosten += marketing.getKosten();
 		}
 		return kosten;
+	}
+
+	public double berechneCateringKosten(Catering c){
+		return c.getAnzahlBurger()*(fleischlieferant.getPreisProGut()+brotlieferant.getPreisProGut()+salatlieferant.getPreisProGut()+sossenlieferant.getPreisProGut());
 	}
 }

@@ -38,7 +38,7 @@ public class Burger {
 	}
 
 	public int berechnePreisPunkte(){
-		preisPunkte = (int)(-4.5*preis + 122.5);
+		preisPunkte = (int)(Math.exp(-0.2*(preis-5))*100);
 		return preisPunkte;
 	}
 
