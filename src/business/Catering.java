@@ -7,6 +7,7 @@ public class Catering {
 		private String bezeichnung;
 		private int anzahlBurger;
 		private double mindestAngebot;
+		private Unternehmen u;
 		
 		private double preis;
 		ArrayList<String> namenUnternehmen = new ArrayList<>();
@@ -19,6 +20,16 @@ public class Catering {
 			this.mindestAngebot = mindestAngebot;
 		}
 		
+		
+
+		public Unternehmen getU() {
+			return u;
+		}
+
+
+		public void setU(Unternehmen u) {
+			this.u = u;
+		}
 		
 		public String getBezeichnung() {
 			return bezeichnung;
@@ -73,14 +84,27 @@ public class Catering {
 			qualitaet.add(quali);
 		}
 
-	
-		public String vergleichePreisLeistung(){
-			
-			//TODO vergleiche PreisLeistung und gebe bestes Angebot wieder zurück
-			
-			return "Unternehmensname";
-		}
-
 		
-
+		//Vergleicht die eingegangenen Angebote und entscheidet welches Unternehmen den Zuschlag bekommt
+		public String vergleichePreisLeistung(){
+			double bestesAngebot = 0;
+			int index = 0;
+				
+			if(namenUnternehmen.size() > 0){
+				bestesAngebot = preisAngebote.get(0) / qualitaet.get(0);
+			
+				for (int i = 0; i < namenUnternehmen.size(); i++) {
+					double preisLeistung = preisAngebote.get(i) / qualitaet.get(i);
+							
+					if(preisLeistung < bestesAngebot){
+								bestesAngebot = preisLeistung;
+								index = i;
+							}
+				}
+			}else{
+				return "Kein Angebot eingegangen";
+			}
+			
+			return namenUnternehmen.get(index);
+		}		
 }

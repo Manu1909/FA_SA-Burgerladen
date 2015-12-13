@@ -41,7 +41,7 @@ public class BestellungTest {
 	
 	@Test
 	public void testSetzeBestellmenge() {
-		u.getBestellung().setzeBestellmenge(700, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+		u.getBestellung().setzeBestellmenge(7000, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 		assertTrue("Bestellung zu groß", 0==u.getBestellung().getMenge());
 		u.getBestellung().setzeBestellmenge(50, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 		assertTrue("Bestellmenge ok", 50==u.getBestellung().getMenge());
@@ -55,6 +55,14 @@ public class BestellungTest {
 		assertEquals(950, u.getBrotlieferant().getVertrauchteRessourcen());
 		assertEquals(950, u.getSalatlieferant().getVertrauchteRessourcen());
 		assertEquals(950, u.getSossenlieferant().getVertrauchteRessourcen());
+	}
+
+	@Test
+	public void testBerechneKosten() {
+		u.getBestellung().setzeBestellmenge(2000, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+		u.bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
+		assertTrue("Test berechne Bestellkosten", 1940 == u.getBestellung().berechneGesamtpreis());
+
 	}
 	
 	

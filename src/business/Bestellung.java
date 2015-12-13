@@ -7,7 +7,7 @@ public class Bestellung {
 	private Lieferant brotlieferant;
 	private Lieferant salatlieferant;
 	private Lieferant sossenlieferant;
-	private Unternehmen u;
+
 	
 	/*public Bestellung(Unternehmen u) {
 		this.u = u;
@@ -67,6 +67,7 @@ public class Bestellung {
 		boolean solok;
 		boolean lagerPlatzOK;
 
+		menge = 0;
 		if(freierLagerplatz>=bestellmenge){
 			lagerPlatzOK = true;
 		}
@@ -105,6 +106,9 @@ public class Bestellung {
 		
 		if(flok && blok && salok && solok && lagerPlatzOK){
 			menge = bestellmenge;
+		}
+		else if(!lagerPlatzOK){
+			System.out.println("Nicht genügend Lagerplatz vorhanden");
 		}
 		else{
 			System.out.println("Die Ressourcen der Lieferanten reichen nicht aus, um so viele Burger zu bestellen");

@@ -1,12 +1,12 @@
 package business;
 
-import backend.Client;
-
 public class Unternehmen {
 	
 	private double gewinn;
 	private double kapital;
 	private double umsatz;
+	private int kunden;
+	public int kundenAnteil;
 	private int bekanntheit;
 	private int kundenzufriedenheit;
 	private String name;
@@ -19,12 +19,15 @@ public class Unternehmen {
 	private Bestellung bestellung;
 	private Burger burger;
 	private Catering catering;
-	
+	private Marketing marketing = null;
+	private Personal personal;
+
 	// Konstruktor mit ï¿½bergabe von name
 	public Unternehmen(String name) {
 		this.name = name;
 		bestellung = new Bestellung();
 		burger = new Burger();
+		this.personal = new Personal(5);
 	}
 	
 	//Getter und Setter fï¿½r alle Attribute
@@ -74,6 +77,22 @@ public class Unternehmen {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setMarketing(Marketing marketing) {
+		this.marketing = marketing;
+	}
+
+	public Marketing getMarketing() {
+		return marketing;
+	}
+
+	public void setKunden(int kunden) {
+		this.kunden = kunden;
+	}
+
+	public int getKunden() {
+		return kunden;
 	}
 
 	public Standort getStandort() {
@@ -139,6 +158,14 @@ public class Unternehmen {
 	public void setCatering(Catering catering) {
 		this.catering = catering;
 	}
+	
+	public Personal getPersonal() {
+		return personal;
+	}
+
+	public void setPersonal(Personal personal) {
+		this.personal = personal;
+	}
 
 	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
 		setFleischlieferant(fleischlieferant);
@@ -151,10 +178,6 @@ public class Unternehmen {
 		
 	}
 	
-//	public void waehleStandort(){
-//	
-//	}
-
 	public void waehleKredit(Kredit k){
 		setKredit(kredit);
 	}
@@ -162,6 +185,7 @@ public class Unternehmen {
 	public void bestelleFleisch(Lieferant fl){
 		bestellung.bestelleFleisch(fl);
 		fleischlieferant = fl;
+		standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
 	}
 
 	public void bestelleBrot(Lieferant bl){
@@ -186,13 +210,70 @@ public class Unternehmen {
 		bestelleSosse(sol);
 	}
 
-	public int berechneBurgerQualität(){
+	public int berechneBurgerQualitaet(){
 		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
 	}
-	
-	public void gebeCateringAngebote(String name, double angebot, int qualität){
-		catering.addName(name);
-		catering.addPreis(angebot);
-		catering.addQualitaet(qualität);
+
+
+	public void betreibeMarketing(){
+		if(marketing!=null){
+			bekanntheit = marketing.berechneBekanntheit(bekanntheit);
+			if(bekanntheit>100){
+				bekanntheit = 100;
+			}
+			kundenzufriedenheit = marketing.berechneKundenzufriedenheit(kundenzufriedenheit);
+			if(kundenzufriedenheit>100){
+				kundenzufriedenheit = 100;
+			}
+		}
+	}
+
+	public int berechneKundenanteil(){
+		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
+		if(marketing!=null){
+			kundenAnteil *= (1+marketing.getKundenprozentsatz());
+		}
+		return kundenAnteil;
+	}
+
+	public double berechneGewinn(int rundenZahl){
+		if(rundenZahl == 0){
+			gewinn = burger.preis * kunden - berechneGruendungsKosten();
+		}else{
+			gewinn = burger.preis * kunden - berechneRundenkosten();
+		}
+		
+
+		if(marketing!=null){
+			if(marketing.getBezeichnung().equals("Werbung21")){
+				kunden *= 2;
+			}
+		}
+		standort.getKuehlraum().wareEntnehmen(kunden);
+
+		return gewinn;
+	}
+
+
+	public double berechneGruendungsKosten(){
+		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneAnnuitaet();
+		}
+		if(marketing != null){
+			kosten += marketing.getKosten();
+		}
+		return kosten;
+	}
+
+	public double berechneRundenkosten(){
+		double kosten = standort.getMiete() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneAnnuitaet();
+		}
+		if(marketing != null){
+			kosten += marketing.getKosten();
+		}
+		return kosten;
 	}
 }

@@ -6,10 +6,13 @@ public class Lieferant {
 	private int verbrauchteRessourcen = 0;
 	private int qualitaet;
 	private double preisProGut;
+	private int risikoQuote;
+
 	
-	public Lieferant(int RESSOURCEN, int qualitaet, double preisProGut) {
+	public Lieferant(int RESSOURCEN, int qualitaet, double preisProGut, int risikoQuote) {
 		this.RESSOURCEN = RESSOURCEN;
 		this.qualitaet = qualitaet;
+		this.risikoQuote = risikoQuote;
 		this.preisProGut = preisProGut;
 	}
 	
@@ -25,8 +28,13 @@ public class Lieferant {
 		this.qualitaet = qualitaet;
 	}
 	
+	
 	public void setPreisProGut(double PreisProGut){
 		this.preisProGut = preisProGut;
+	}
+	
+	public void setRisikoQuote(int risikoQuote){
+		this.risikoQuote = risikoQuote;
 	}
 	
 	public int getVertrauchteRessourcen(){
@@ -37,11 +45,15 @@ public class Lieferant {
 		return qualitaet;
 	}
 	
+
 	public double getPreisProGut(){
 		return preisProGut;
 	}
 	
-
+	public int getRisikoQuote(){
+		return risikoQuote;
+	}
+	
 	public int uebrigeRessourcen(){
 		return RESSOURCEN-verbrauchteRessourcen;
 	}

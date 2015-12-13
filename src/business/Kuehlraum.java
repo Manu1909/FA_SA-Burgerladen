@@ -34,14 +34,15 @@ public class Kuehlraum {
 	
 	
 	public int wareEinlagern(int menge){
-		//Wenn bestellte Menge und aktueller Inhalt die Lagergöße übertreffen muss eine Fehlermeldung ausgegeben werden
+		//Wenn bestellte Menge und aktueller Inhalt die Lagergï¿½ï¿½e ï¿½bertreffen muss eine Fehlermeldung ausgegeben werden
 		if((inhalt + menge) > lagerGroesse || menge <= 0){
 			return inhalt;
 		}
-		//Dem Inhalt die neu bestellte Menge hinzufügen
-		int newInhalt = inhalt + menge;
+		//Dem Inhalt die neu bestellte Menge hinzufï¿½gen
+
+		inhalt += menge;
 		
-		return newInhalt;
+		return inhalt;
 	}
 	
 	
@@ -55,14 +56,14 @@ public class Kuehlraum {
 		if(newInhalt >= 0){
 			inhalt = newInhalt;
 		}	
-		//Aufzurufende Funktion muss prüfen ob Wert negativ oder nicht
+		//Aufzurufende Funktion muss prï¿½fen ob Wert negativ oder nicht
 		//Wenn negativ dann muss Fehlermeldung kommen
 		//Wenn positiv wird Inhalt aktualisiert und Bestellung kann abgeschlossen werden.
 		
-		return newInhalt;
+		return inhalt;
 	}
 	
-	//Berechne den aktuell freiene Lagerplatz im Kühlraum
+	//Berechne den aktuell freiene Lagerplatz im Kï¿½hlraum
 	public int berechneFreienLagerplatz(){	
 		return lagerGroesse - inhalt;
 	}

@@ -3,15 +3,29 @@ package business;
 public class Innenausstattung {
 	
 	private String bezeichnung;
-	private int groeﬂeKundenpool;
+	private int groesseKundenpool;
 	private double kosten;
 	
 	
-	public int getGroeﬂeKundenpool() {
-		return groeﬂeKundenpool;
+	public Innenausstattung(String bezeichnung, int kundenpool, int kosten){
+		this.bezeichnung = bezeichnung;
+		this.groesseKundenpool = kundenpool;
+		this.kosten = kosten;
 	}
-	public void setGroeﬂeKundenpool(int groeﬂeKundenpool) {
-		this.groeﬂeKundenpool = groeﬂeKundenpool;
+	
+	public String getBezeichnung() {
+		return bezeichnung;
+	}
+
+	public void setBezeichnung(String bezeichnung) {
+		this.bezeichnung = bezeichnung;
+	}
+
+	public int getGroesseKundenpool() {
+		return groesseKundenpool;
+	}
+	public void setGroesseKundenpool(int groesseKundenpool) {
+		this.groesseKundenpool = groesseKundenpool;
 	}
 	public double getKosten() {
 		return kosten;
@@ -19,8 +33,4 @@ public class Innenausstattung {
 	public void setKosten(double kosten) {
 		this.kosten = kosten;
 	}
-	
-	
-	
-
 }
