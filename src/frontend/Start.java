@@ -6,56 +6,51 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-public class NewPlayer extends JFrame implements ActionListener, ChangeListener, MouseListener{
+public class Start extends JFrame implements ActionListener, ChangeListener, MouseListener{
 	private JFrame spielerAufbau = new JFrame("Burgerplanspiel - Neuer Spieler");
-	private String[] avLocations = {"Planken", "Jungbusch", "Paradeplatz"};
 	
 	private JPanel panelTop = new JPanel();
 	private JPanel panelBody = new JPanel();
 	private JPanel panelBottom = new JPanel();
+	private JLabel heading = new JLabel("<html><body><h1 align=center>Burger im Quadrat</h1></body></html>");
+	private JLabel info = new JLabel("<html><body><p>In diesem Unternehmensplanspiel "
+			+ "gründen Sie einen Burgerladen in der Innenstadt Mannheims."
+			+ "<br> "
+			+ "Dabei haben stehen X Standorte für ihren Laden zur Auswahl. "
+			+ "Das Spiel ist in 12 Spielrunden aufgeteilt,"
+			+ "<br> die jeweils 3 Monate im Leben des Unternehmens darstellen"
+			+ "<br> "
+			+ "<br>Klicken Sie auf den Button am unteren Bildschirmrand, um loszulegen"
+			+ "</p></html></body>");
 	
 	private JTextField name = new JTextField(15);
 	
-	private JList lLocation = new JList(avLocations);
-	
-	private JLabel locationInfo = new JLabel("Index 0");
-	
-	private JButton confirm = new JButton("Eingaben bestätigen");
 	private JButton go = new JButton("Los geht's");
-	
-	//Unternehmensinfos erstes Fenster
-	private String location;
-	private String cmpname;
-
 	
 	public static void main(String[] args) 
 	{
-		NewPlayer start = new NewPlayer();
+		Start start = new Start();
 	}
 
-	public NewPlayer()
+	public Start()
 	{
 		buildWindow();
 	}
 	
 	public void buildWindow()
 	{	
-		panelBody.add(name);
-		panelBody.add(lLocation);
-		panelBody.add(locationInfo);
-		
-		lLocation.setSelectedIndex(0);
-		lLocation.addMouseListener(this);
+		panelTop.add(heading);
+		panelBody.add(info);
 		panelBottom.add(go);
 		
 		
@@ -77,6 +72,13 @@ public class NewPlayer extends JFrame implements ActionListener, ChangeListener,
 	{
 		Object s = e.getSource();// TODO Auto-generated method stub
 		
+		if(s == go)
+		{
+			newStore store = new newStore();
+			spielerAufbau.setVisible(false);
+			spielerAufbau.dispose();
+		}
+		
 		
 	}
 
@@ -90,21 +92,7 @@ public class NewPlayer extends JFrame implements ActionListener, ChangeListener,
 	public void mouseClicked(MouseEvent e) 
 	{
 		Object s = e.getSource();
-		if(s == lLocation)
-		{
-			if(lLocation.getSelectedIndex() == 0)
-			{
-				locationInfo.setText("Index 0");
-			}
-			if(lLocation.getSelectedIndex() == 1)
-			{
-				locationInfo.setText("Index 1");
-			}
-			if(lLocation.getSelectedIndex() == 2)
-			{
-				locationInfo.setText("Index 2");
-			}
-		}
+		
 	}
 
 	@Override
