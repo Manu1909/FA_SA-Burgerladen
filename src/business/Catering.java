@@ -23,6 +23,7 @@ public class Catering {
         this.anzahlBurger = anzahlBurger;
         this.bekanntheitssteigerung = bekanntheitssteigerung;
         this.kundenzufriednenheitssteigerung = kundenzufriednenheitssteigerung;
+        this.prozent = 0.1;
     }
 
 

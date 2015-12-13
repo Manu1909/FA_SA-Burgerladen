@@ -7,121 +7,101 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import business.Catering;
+import business.Datenbank;
 import business.Unternehmen;
 
 public class CateringTest {
 	
-	/*Unternehmen u1;
-	Unternehmen u2;
+	Unternehmen u1;
 	Catering c1;
 	
 	@Before
 	public void init(){
-		c1 = new Catering("Catering Geburtstag", 500, 2000);
-		u1 = new Unternehmen("Burgerbude1");
-		u2 = new Unternehmen("Burgerbude2");
+		u1 = new Unternehmen("test1");
+		c1 = Datenbank.c1;
 	}
 
 	@Test
-	@Ignore
-	public void testCatering() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetBezeichnung() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetMindestAngebot() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetAnzahlBurger() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetPreis() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testSetPreis() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetNamenUnternehmen() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetPreisAngebote() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testSetPreisAngebote() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
-	public void testGetQualitaet() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	@Ignore
 	public void testAddName() {
-		fail("Not yet implemented");
+		c1.addName(u1.getName());
+		String nameUnternehmen = "";
+		
+		for (int i = 0; i < c1.getNamenUnternehmen().size(); i++) {
+			nameUnternehmen = c1.getNamenUnternehmen().get(i);
+		}
+		
+		assertTrue("Test addName", nameUnternehmen == "test1");
 	}
 
 	@Test
-	@Ignore
 	public void testAddPreis() {
-		fail("Not yet implemented");
+		c1.addPreis(5000);
+		double preisUnternehmen = 0;
+		
+		for (int i = 0; i < c1.getPreisAngebote().size(); i++) {
+			preisUnternehmen = c1.getPreisAngebote().get(i);
+		}
+		
+		assertTrue("Test addPreis", preisUnternehmen == 5000);
 	}
 
 	@Test
-	@Ignore
 	public void testAddQualitaet() {
-		fail("Not yet implemented");
+		c1.addQualitaet(67);
+		int qualitaetUnternehmen = 0;
+		
+		for (int i = 0; i < c1.getQualitaet().size(); i++) {
+			qualitaetUnternehmen = c1.getQualitaet().get(i);
+		}
+		
+		assertTrue("Test addQualität", qualitaetUnternehmen == 67);
+	}
+
+	@Test
+	public void testBerechneBekanntheit() {
+	
+		Catering c = Datenbank.c2;
+		int result = c.berechneBekanntheit(40);
+		
+		assertTrue("test berechneBekanntheit Catering", result == 46);
+	}
+	
+	
+
+
+	@Test
+	public void testBerechneKundenzufriedenheit() {
+		Catering c = Datenbank.c2;
+		int result = c.berechneKundenzufriedenheit(40);
+		
+		assertTrue("test berechneBekanntheit Catering", result == 46);
 	}
 
 	@Test
 	public void testVergleichePreisLeistung() {
+		Unternehmen u2 = new Unternehmen("test2");
+		
 		c1.addName(u1.getName());
-		c1.addPreis(5000);
-		c1.addQualitaet(60);
+		c1.addPreis(10000);
+		c1.addQualitaet(55);
 		
 		c1.addName(u2.getName());
-		c1.addPreis(3000);
-		c1.addQualitaet(50);
+		c1.addPreis(11000);
+		c1.addQualitaet(55);
 		
-		String ergebnis = c1.vergleichePreisLeistung();
+		String result = c1.vergleichePreisLeistung();
 		
-		assertTrue("Test vergleiche Catering Angebote", "Burgerbude2" == ergebnis);
-		
+		assertTrue("Test vergleichePreisLeistung", result == "test1");
+
 	}
 	
 	@Test
-	public void testVergleichePreisLeistungOhneAngebot() {	
-		String ergebnis = c1.vergleichePreisLeistung();
+	public void testVergleichePreisLeistungOhneAngebote() {
 		
-		assertTrue("Test vergleiche Catering Angebote ohne Wert", "Kein Angebot eingegangen" == ergebnis);
+		String result = Datenbank.c2.vergleichePreisLeistung();
 		
-	}*/
+		assertTrue("Test vergleichePreisLeistung", result == "Kein Angebot eingegangen");
+
+	}
 
 }

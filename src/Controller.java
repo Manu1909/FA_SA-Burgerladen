@@ -438,13 +438,17 @@ public class Controller {
 	}
 	
 	public static Standort waehleStandort(String auswahl){
+		Standort s;
 		int index = Integer.parseInt(auswahl);
-		return standorte[index - 1];
+		s = new Standort(standorte[index - 1].getLage(), standorte[index - 1].getMiete(), standorte[index - 1].getTraffic(), standorte[index - 1].getBekanntheit());
+		return s;
 	}
 	
 	public static Kuehlraum waehleKuhlraum(String auswahl){
+		Kuehlraum k;
 		int index = Integer.parseInt(auswahl);
-		return kuehlraeume[index -1];
+		k = new Kuehlraum(kuehlraeume[index -1].getLagerGroesse(), kuehlraeume[index -1].getInhalt(), kuehlraeume[index -1].getMietZusatzKosten());
+		return k;
 	}
 
 	public static Kredit waehleKredit(int auswahl){
