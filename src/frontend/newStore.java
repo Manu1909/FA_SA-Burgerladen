@@ -21,17 +21,14 @@ public class newStore extends JFrame{
 	private JTextField name = new JTextField(20);
 	
 	private JLabel heading = new JLabel("<html><body><h1 align=center>Neuen Laden gründen</h1></body></html>");
-	private JLabel infoName = new JLabel("<html><body><p align=center>Wählen Sie einen Namen für ihr Unternehmen.</p></body></html>");
-	private JLabel nameOptionInfo = new JLabel("Option 1");
 	private JLabel infoLocation = new JLabel("<html><body><p align=center>Wählen Sie einen Standort für ihr Unternehmen.</p></body></html>");
 	private JLabel locationOptionInfo = new JLabel("Option 1");
 	private JLabel infoInterior = new JLabel("<html><body><p align=center>Wählen Sie ihr Möbiliar.</p></body></html>");
 	private JLabel interiorOptionInfo = new JLabel("Option 1");
 	
 	private JPanel panelTop = new JPanel();
-	private JPanel panelBody = new JPanel();
+	private JPanel panelBody = new JPanel(new BorderLayout(1, 0));
 	private JPanel panelBottom = new JPanel();
-	private JPanel panelName = new JPanel();
 	private JPanel panelLocation = new JPanel();
 	private JPanel panelInterior = new JPanel();
 	
@@ -53,20 +50,16 @@ public class newStore extends JFrame{
 		panelTop.add(heading);
 		
 		panelLocation.add(infoLocation, BorderLayout.NORTH);
-		panelLocation.add(lLocation, BorderLayout.SOUTH);
+		panelLocation.add(lLocation, BorderLayout.CENTER);
 		panelLocation.add(locationOptionInfo);
 		
-		panelName.add(infoName);
-		panelName.add(name);
-		panelName.add(nameOptionInfo);
 		
 		panelInterior.add(infoInterior);
 		panelInterior.add(lInterior);
 		panelInterior.add(interiorOptionInfo);
 		
-		panelBody.add(panelName, BorderLayout.NORTH);
 		panelBody.add(panelLocation, BorderLayout.CENTER);
-		panelBody.add(panelInterior, BorderLayout.SOUTH);
+		panelBody.add(panelInterior, BorderLayout.NORTH);
 		
 		panelBottom.add(confirm);
 		
