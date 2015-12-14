@@ -1,32 +1,33 @@
 package frontend;
 import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
+import javax.swing.border.EmptyBorder;
 
 public class Overview extends JFrame implements MouseListener, MouseMotionListener{
-	private JMenuBar menu = new JMenuBar();
-	private JMenu overview = new JMenu("Übersicht");
-	private JMenu orders = new JMenu("Bestellungen");
-	private JMenu interior = new JMenu("Einrichtung");
-	private JMenu catering = new JMenu("Catering");
+	
+	private JTextField capital = new JTextField();
+	private JTextField debts = new JTextField();
+	private JPanel contentPane = new JPanel();
+	public static JFrame frame = new JFrame();
+	private JMenu catering = new JMenu("Ausstattung");
 	private JMenu marketing = new JMenu("Marketing");
-	public static JFrame window = new JFrame();
+	private JMenu price = new JMenu("Preis festlegen");
+	private JMenu orders = new JMenu("Bestellungen");
 	
 	public Overview()
 	{
 		buildWindow();
-	}
-	
-	public Overview(String player, String location, String interior)//noch weitere wichtige Attribute ergänzen
-	{
-		
 	}
 	
 	public static void main(String args[])
@@ -34,57 +35,88 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		Overview test = new Overview();
 	}
 	
-	public void setFokus(boolean p)
-	{
-		window.setFocusableWindowState(p);
-	}
-	
 	public void buildWindow()
 	{
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+
 		JPanel panel = new JPanel();
-		JPanel panelContent = new JPanel();
 		
-		menu.add(orders);
-		menu.add(interior);
-		menu.add(catering);
-		menu.add(marketing);
+		JLabel lblInsertTextHere = new JLabel("Insert Text here");
+		lblInsertTextHere.setBounds(10, 11, 295, 266);
+		panel.add(lblInsertTextHere);
 		
-		//Listener
-		orders.addMouseListener(this);
-		interior.addMouseListener(this);
+		JLabel lblKapital = new JLabel("Kapital");
+		lblKapital.setBounds(387, 66, 46, 14);
+		panel.add(lblKapital);
+		
+		JLabel lblSchulden = new JLabel("Schulden");
+		lblSchulden.setBounds(387, 149, 46, 14);
+		panel.add(lblSchulden);
+		
+		capital = new JTextField();
+		capital.setBounds(446, 63, 86, 20);
+		panel.add(capital);
+		capital.setColumns(10);
+		
+		debts = new JTextField();
+		debts.setBounds(446, 146, 86, 20);
+		panel.add(debts);
+		debts.setColumns(10);
+		
+		JLabel lblRangliste = new JLabel("Rangliste");
+		lblRangliste.setBounds(387, 197, 46, 14);
+		panel.add(lblRangliste);
+		
+		JTextPane txtpnText = new JTextPane();
+		txtpnText.setText("Text");
+		txtpnText.setBounds(381, 221, 151, 80);
+		panel.add(txtpnText);
+		
+		JTextPane txtpnText_1 = new JTextPane();
+		txtpnText_1.setText("Text");
+		txtpnText_1.setBounds(56, 248, 233, 69);
+		panel.add(txtpnText_1);
+		
+		JButton btnRundeBeenden = new JButton("Runde beenden");
+		btnRundeBeenden.setBounds(344, 390, 89, 23);
+		panel.add(btnRundeBeenden);
+		
+		JMenuBar bar = new JMenuBar();
+		bar.setBounds(280,10, 335,20);
+		
 		catering.addMouseListener(this);
+		price.addMouseListener(this);
 		marketing.addMouseListener(this);
-		panel.add(menu);
+		orders.addMouseListener(this);
 		
-		//panelContent
-		window.setBounds(10, 10, 600, 400);
-		window.setExtendedState(Frame.MAXIMIZED_BOTH);
-		window.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		window.setVisible(true);
-		window.add(panel, BorderLayout.NORTH);
-		window.add(panelContent, BorderLayout.SOUTH);
+		bar.add(catering);
+		bar.add(price);
+		bar.add(marketing);
+		bar.add(orders);
+		
+		panel.add(bar);
+		
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
+		
+		frame.setContentPane(contentPane);
+		frame.setResizable(false);
+		frame.add(panel);
+		frame.setBounds(1,1, 900, 500);
+		frame.setVisible(true);
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
 		Object s = e.getSource();
-		if(s == interior) 
-		{
-			Innenausstattung interior = new Innenausstattung();
-		}
+		
 		if(s == marketing)
 		{
+			frame.setFocusableWindowState(false);
 			Marketing marketing = new Marketing();
-			window.setFocusableWindowState(false);
-		}
-		if(s == orders) 
-		{
-			Bestellungen orders = new Bestellungen();	
-		}
-		if(s == catering) 
-		{
-			Catering orders = new Catering();	
 		}
 	}
 	@Override

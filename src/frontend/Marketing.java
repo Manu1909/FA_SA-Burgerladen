@@ -54,7 +54,7 @@ public class Marketing extends JFrame implements ActionListener{
 		if(s == back)
 		{
 			//alernativ setEnabled
-			frontend.Overview.window.setFocusableWindowState(true);
+			frontend.Overview.frame.setFocusableWindowState(true);
 			windowMarketing.setVisible(false);
 			windowMarketing.dispose();
 		}

@@ -1,38 +1,45 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
-public class newStore extends JFrame{
-	private JFrame windowNewStore = new JFrame("Burgerplanspiel - Marketing");
+public class newStore extends JFrame implements ActionListener, MouseListener{
+	private JFrame frame = new JFrame("Burgerplanspiel - Marketing");
+	private JPanel contentPane = new JPanel();
 	
-	private String[] locations = {"Planken","Jungbusch",""};
-	private String[] interiorOptions = {"Option1", "Option2"};
+	private String location = "";
+	private String interior = "";   //////////Wie werden diese Werte übergeben?
+	private String credit = "";
 	
-	private JList lLocation = new JList(locations);
-	private JList lInterior = new JList(interiorOptions);
+	private String[] locations = {"Planken","Jungbusch","Kurpfälzer Str.", "Option 4"};
+	private String[] interiorOptions = {"Option1", "Option2", "Opption 3"};
+	private String[] storageOptions = {"groß (+ X€ )","mittel (+ X€ )","klein (+ X€ )"};
+	private String[] creditOptions = {"€", "€", "€", "kein Kredit"};
 	
-	private JTextField name = new JTextField(20);
+	private JList listLocations = new JList(locations);
+	private JList listInterior = new JList(interiorOptions);
+	private JList listCredit = new JList(creditOptions);
 	
-	private JLabel heading = new JLabel("<html><body><h1 align=center>Neuen Laden gründen</h1></body></html>");
-	private JLabel infoLocation = new JLabel("<html><body><p align=center>Wählen Sie einen Standort für ihr Unternehmen.</p></body></html>");
-	private JLabel locationOptionInfo = new JLabel("Option 1");
-	private JLabel infoInterior = new JLabel("<html><body><p align=center>Wählen Sie ihr Möbiliar.</p></body></html>");
-	private JLabel interiorOptionInfo = new JLabel("Option 1");
+	private JButton btnConfirm = new JButton("Bestätigen");
 	
-	private JPanel panelTop = new JPanel();
-	private JPanel panelBody = new JPanel(new BorderLayout(1, 0));
-	private JPanel panelBottom = new JPanel();
-	private JPanel panelLocation = new JPanel();
-	private JPanel panelInterior = new JPanel();
-	
-	private JButton confirm= new JButton("Spiel starten");
+	private JLabel tipLocations = new JLabel("<html><body><p>Vorteil: Hoher Verkehr"
+			+ "<br>Nachteil: Lieferung"
+			+ "<br>Kosten: X€"
+			+ "</p></body></html>");
+	private JLabel tipInterior = new JLabel("Tet");
+	private JLabel tipCredit = new JLabel("Info");
 	
 	
 	public static void main(String[] args)
@@ -47,28 +54,171 @@ public class newStore extends JFrame{
 	
 	public void buildWindow()
 	{
-		panelTop.add(heading);
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.setLayout(new BorderLayout(0, 0));
+		frame.setContentPane(contentPane);
 		
-		panelLocation.add(infoLocation, BorderLayout.NORTH);
-		panelLocation.add(lLocation, BorderLayout.CENTER);
-		panelLocation.add(locationOptionInfo);
+		JPanel panel = new JPanel();
+		contentPane.add(panel, BorderLayout.CENTER);
+		panel.setLayout(null);
 		
+		JLabel heading = new JLabel("<html><body><h2>Neues Unternehmen</h2></body></html>");
+		heading.setBounds(381, 0, 220, 49);
+		panel.add(heading);
 		
-		panelInterior.add(infoInterior);
-		panelInterior.add(lInterior);
-		panelInterior.add(interiorOptionInfo);
+		//Abschnitt Standort
+		JLabel infoLocation = new JLabel("<html><body><h3>Schritt 2:</h3><p>Wählen Sie hier den Standort aus:</p></body></html>");
+		infoLocation.setBounds(300, 39, 257, 82);
+		panel.add(infoLocation);
 		
-		panelBody.add(panelLocation, BorderLayout.CENTER);
-		panelBody.add(panelInterior, BorderLayout.NORTH);
+		listLocations.setBounds(300, 109, 90, 75);
+		listLocations.setSelectedIndex(0);
+		listLocations.addMouseListener(this);
+		panel.add(listLocations);
+	
+		tipLocations.setBounds(400, 117, 138, 55);
+		panel.add(tipLocations);
+	
+		JComboBox comboBox = new JComboBox(storageOptions);
+		comboBox.setBounds(570, 126, 112, 25);
+		panel.add(comboBox);
 		
-		panelBottom.add(confirm);
+		///////Abschnitt Inneneinrichtung
+		JLabel infoInterior = new JLabel("<html><body><p>Wählen Sie die Inneneinrichtung:</p></body></html>");
+		infoInterior.setBounds(300, 170, 257, 82);
+		panel.add(infoInterior);
 		
-		windowNewStore.add(panelTop, BorderLayout.NORTH);
-		windowNewStore.add(panelBody, BorderLayout.CENTER);
-		windowNewStore.add(panelBottom, BorderLayout.SOUTH);
-		windowNewStore.setBounds(1,1,400,300);
-		windowNewStore.setExtendedState(MAXIMIZED_BOTH);
-		windowNewStore.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		windowNewStore.setVisible(true);
+		listInterior.setBounds(300, 222, 90, 56);
+		listInterior.setSelectedIndex(0);
+		listInterior.addMouseListener(this);
+		panel.add(listInterior);
+		
+		tipInterior.setBounds(400, 210, 138, 55);
+		panel.add(tipInterior);
+		
+		//Abschnitt Kredit
+		JLabel infoCredit = new JLabel("<html><body><p>Optional: Nehmen Sie einen Kredit auf:</p></body></html>");
+		infoCredit.setBounds(300, 268, 257, 82);
+		panel.add(infoCredit);
+		
+		listCredit.setSelectedIndex(0);
+		listCredit.addMouseListener(this);
+		listCredit.setBounds(300, 320, 90, 72);
+		panel.add(listCredit);
+		
+		tipCredit.setBounds(400, 319, 138, 55);
+		panel.add(tipCredit);
+		
+		/////////////////////
+		btnConfirm.setBounds(427, 420, 95, 23);
+		btnConfirm.addActionListener(this);
+		panel.add(btnConfirm);
+		
+		frame.setResizable(false);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setBounds(100, 100, 900, 500);
+		frame.setVisible(true);
+	}
+
+	/////////////////Listener-Methoden
+	@Override
+	public void mouseClicked(MouseEvent e) 
+	{
+		Object s = e.getSource();
+		if(s == listLocations)
+		{
+			int p = listLocations.getSelectedIndex();
+			
+			if(p == 0)
+			{
+				tipLocations.setText("");
+			}
+			else if(p == 1)
+			{
+				tipLocations.setText("");
+			}
+			else if(p == 2)
+			{
+				tipLocations.setText("");
+			}
+			else if(p == 3)
+			{
+				tipLocations.setText("");
+			}
+		}
+		if(s == listInterior)
+		{
+			int p = listInterior.getSelectedIndex();
+			
+			if(p == 0)
+			{
+				tipInterior.setText("");
+			}
+			else if(p == 1)
+			{
+				tipInterior.setText("");
+			}
+			else if(p == 2)
+			{
+				tipInterior.setText("");
+			}
+		}
+		if(s == listCredit)
+		{
+			int p = listCredit.getSelectedIndex();
+			
+			if(p == 0)
+			{
+				tipCredit.setText("");
+			}
+			else if(p == 1)
+			{
+				tipCredit.setText("");
+			}
+			else if(p == 2)
+			{
+				tipCredit.setText("");
+			}
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) 
+	{
+		Object s = e.getSource();
+		if(s == btnConfirm)
+		{
+			location = listLocations.getSelectedValue().toString();
+			interior = listInterior.getSelectedValue().toString();
+			credit = listCredit.getSelectedValue().toString();
+			Overview overview = new Overview();
+			frame.setVisible(false);
+			frame.dispose();
+		}
 	}
 }
