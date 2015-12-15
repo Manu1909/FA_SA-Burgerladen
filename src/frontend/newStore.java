@@ -5,45 +5,83 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Locale.LanguageRange;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import business.Datenbank;
+
 public class newStore extends JFrame implements ActionListener, MouseListener{
-	private JFrame frame = new JFrame("Burger im Quadrat -  Laden gr¸nden");
+	private JFrame frame = new JFrame("Burger im Quadrat -  Laden gr√ºnden");
 	private JPanel contentPane = new JPanel();
 	
 	private String location = "";
-	private String interior = "";   //////////Wie werden diese Werte ¸bergeben?
+	private String interior = "";   //////////Wie werden diese Werte ÔøΩbergeben?
 	private String credit;
 	private String storageArea ="";
 	private String name = "";
 	
-	private String[] locations = {"Planken","Jungbusch","Kurpf‰lzer Str.", "Option 4"};
-	private String[] interiorOptions = {"Option1", "Option2", "Opption 3"};
-	private String[] storageOptions = {"groﬂ (+ XÄ )","mittel (+ XÄ )","klein (+ XÄ )"};
-	private String[] creditOptions = {"Ä", "Ä", "Ä", "kein Kredit"};
+	private String[] locations = {Datenbank.standorte[0].getLage(), Datenbank.standorte[1].getLage(), Datenbank.standorte[2].getLage(), Datenbank.standorte[3].getLage()};
+	private String[] interiorOptions ={Datenbank.i[0].getBezeichnung(),Datenbank.i[1].getBezeichnung(), Datenbank.i[2].getBezeichnung() };
+	private String[] storageOptions = {"K√ºhlraum 1", "K√ºhlraum 2", "K√ºhlraum 3"};
+	private String[] creditOptions = {""+Datenbank.k[0].getHoehe(),""+Datenbank.k[1].getHoehe(),""+Datenbank.k[2].getHoehe() ,"kein Kredit"};
 	
 	private JList listLocations = new JList(locations);
 	private JList listInterior = new JList(interiorOptions);
 	private JList listCredit = new JList(creditOptions);
-	private JComboBox comboBox = new JComboBox(storageOptions);
+	private JList listStorage = new JList(storageOptions);
 	
-	private JButton btnConfirm = new JButton("Best‰tigen");
+	private JButton btnConfirm = new JButton("Best√§tigen");
 	
-	private JLabel tipLocations = new JLabel("<html><body><p>Vorteil: Hoher Verkehr"
-			+ "<br>Nachteil: Lieferung"
-			+ "<br>Kosten: XÄ"
-			+ "</p></body></html>");
-	private JLabel tipInterior = new JLabel("Tet");
-	private JLabel tipCredit = new JLabel("Info");
+	private business.Unternehmen un = new business.Unternehmen(name);
 	
+	//Werte f√ºr den Standort
+	private double[] miete = {Datenbank.standorte[0].getMiete(),
+			Datenbank.standorte[1].getMiete(),
+			Datenbank.standorte[2].getMiete(),
+			Datenbank.standorte[3].getMiete()};
+	private int traffic[] = {Datenbank.standorte[0].getTraffic(),
+			Datenbank.standorte[1].getTraffic(),
+			Datenbank.standorte[2].getTraffic(),
+			Datenbank.standorte[3].getTraffic()};
+	private int[] bekanntheit = {Datenbank.standorte[0].getBekanntheit(),
+			Datenbank.standorte[1].getBekanntheit(),
+			Datenbank.standorte[2].getBekanntheit(),
+			Datenbank.standorte[3].getBekanntheit()};
+	
+	//Werte f√ºr den Kredit
+	private double zins[] = {Datenbank.k[0].getZinssatz(),
+			Datenbank.k[1].getZinssatz(),
+			Datenbank.k[2].getZinssatz()};
+	private int laufzeit[] = {Datenbank.k[0].getLaufzeit(),
+			Datenbank.k[1].getLaufzeit(),
+			Datenbank.k[2].getLaufzeit()};
+	
+	//Werte f√ºr das Mobiliar
+	private double[] kostenMobiliar = {Datenbank.i[0].getKosten(),
+			Datenbank.i[1].getKosten(),
+			Datenbank.i[2].getKosten()};
+	
+	//Werte f√ºr das Lager
+	private int[] kapazitaet = {Datenbank.kuehlraeume[0].getLagerGroesse(), 
+			Datenbank.kuehlraeume[1].getLagerGroesse(), 
+			Datenbank.kuehlraeume[2].getLagerGroesse()};
+	private double[] lagerMiete = {Datenbank.kuehlraeume[0].getMietZusatzKosten(),
+			Datenbank.kuehlraeume[1].getMietZusatzKosten(),
+			Datenbank.kuehlraeume[2].getMietZusatzKosten()
+			};
+	
+	
+	private JLabel tipLocations = new JLabel();
+	private JLabel tipInterior = new JLabel();
+	private JLabel tipCredit = new JLabel();
+	private JLabel tipStorage = new JLabel();
 	
 	public static void main(String[] args)
 	{
@@ -72,7 +110,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		panel.add(heading);
 		
 		//Abschnitt Standort
-		JLabel infoLocation = new JLabel("<html><body><h3>Schritt 2:</h3><p>W‰hlen Sie hier den Standort aus:</p></body></html>");
+		JLabel infoLocation = new JLabel("<html><body><h3>Schritt 2:</h3><p>W√§hlen Sie hier den Standort aus:</p></body></html>");
 		infoLocation.setBounds(300, 39, 257, 82);
 		panel.add(infoLocation);
 		
@@ -81,14 +119,27 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		listLocations.addMouseListener(this);
 		panel.add(listLocations);
 	
+		int p = listLocations.getSelectedIndex();
+		tipLocations.setText("<html><body><p>Traffic: " + traffic[p] 
+				+ "<br> Bekanntheitgrad: " + bekanntheit[p]
+				+ "<br> Miete: " + miete[p] + "‚Ç¨</p></body></hmtl>");
 		tipLocations.setBounds(400, 117, 138, 55);
 		panel.add(tipLocations);
 	
-		comboBox.setBounds(570, 126, 112, 25);
-		panel.add(comboBox);
+		listStorage.setBounds(570, 122, 112, 54);
+		listStorage.addMouseListener(this);
+		listStorage.setSelectedIndex(0);
+		panel.add(listStorage);
+		
+		int x = listStorage.getSelectedIndex();
+		tipStorage.setBounds(690, 110, 120, 60);		
+		tipStorage.setText("<html><body><p>Lagereinheiten: " + kapazitaet[x]
+				+ "<br>Mietzusatz: "+ lagerMiete[x]
+				+ "</p></body></html>");
+		panel.add(tipStorage);
 		
 		///////Abschnitt Inneneinrichtung
-		JLabel infoInterior = new JLabel("<html><body><p>W‰hlen Sie die Inneneinrichtung:</p></body></html>");
+		JLabel infoInterior = new JLabel("<html><body><p>W√§hlen Sie die Inneneinrichtung:</p></body></html>");
 		infoInterior.setBounds(300, 170, 257, 82);
 		panel.add(infoInterior);
 		
@@ -97,7 +148,9 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		listInterior.addMouseListener(this);
 		panel.add(listInterior);
 		
-		tipInterior.setBounds(400, 210, 138, 55);
+		int n = listInterior.getSelectedIndex();
+		tipInterior.setText("<html><body><p>Kosten: " + kostenMobiliar[n] +"‚Ç¨</p></body></hmtl>");
+		tipInterior.setBounds(400, 220, 138, 55);
 		panel.add(tipInterior);
 		
 		//Abschnitt Kredit
@@ -110,7 +163,11 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		listCredit.setBounds(300, 320, 90, 72);
 		panel.add(listCredit);
 		
+		int m = listCredit.getSelectedIndex();
 		tipCredit.setBounds(400, 319, 138, 55);
+		tipCredit.setText("<html><body><p>Zins: " + zins[m] 
+				+"<br> Laufzeit: " + laufzeit[m]
+				+"</p></body></hmtl>");
 		panel.add(tipCredit);
 		
 		/////////////////////
@@ -133,56 +190,36 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		{
 			int p = listLocations.getSelectedIndex();
 			
-			if(p == 0)
-			{
-				tipLocations.setText("");
-			}
-			else if(p == 1)
-			{
-				tipLocations.setText("");
-			}
-			else if(p == 2)
-			{
-				tipLocations.setText("");
-			}
-			else if(p == 3)
-			{
-				tipLocations.setText("");
-			}
+			tipLocations.setText("<html><body><p>Traffic: " + traffic[p] 
+					+ "<br> Bekanntheitgrad: " + bekanntheit[p]
+					+ "<br> Miete: " + miete[p] + "‚Ç¨</p></body></hmtl>");
 		}
 		if(s == listInterior)
 		{
 			int p = listInterior.getSelectedIndex();
 			
-			if(p == 0)
-			{
-				tipInterior.setText("");
-			}
-			else if(p == 1)
-			{
-				tipInterior.setText("");
-			}
-			else if(p == 2)
-			{
-				tipInterior.setText("");
-			}
+			tipInterior.setText("<html><body><p>Kosten: " + kostenMobiliar[p] +"‚Ç¨</p></body></hmtl>");
 		}
 		if(s == listCredit)
 		{
 			int p = listCredit.getSelectedIndex();
-			
-			if(p == 0)
+			if(p < 3)
 			{
+				tipCredit.setText("<html><body><p>Zins: " + zins[p] 
+						+"<br> Laufzeit: " + laufzeit[p]
+						+"</p></body></hmtl>");
+			}
+			else{
 				tipCredit.setText("");
 			}
-			else if(p == 1)
-			{
-				tipCredit.setText("");
-			}
-			else if(p == 2)
-			{
-				tipCredit.setText("");
-			}
+		}
+		
+		if(s == listStorage)
+		{
+			int p = listStorage.getSelectedIndex();
+			tipStorage.setText("<html><body><p>Lagereinheiten: " + kapazitaet[p]
+					+ "<br>Mietzusatz: "+ lagerMiete[p]
+					+ "</p></body></html>"); 
 		}
 	}
 	
@@ -219,8 +256,14 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 			location = listLocations.getSelectedValue().toString();
 			interior = listInterior.getSelectedValue().toString();
 			credit = listCredit.getSelectedValue().toString();
-			storageArea = comboBox.getSelectedItem().toString(); 
-			Overview overview = new Overview(name,location, credit ,interior, storageArea);
+			storageArea = listStorage.getSelectedValue().toString(); 
+			un.setName(name);
+//			un.setStandort(Controller.Controller.waehleStandort(location));
+//			un.getStandort().setInnenausstattung(Controller.Controller.waehleInnenausstattung(interior));
+//			un.setKredit();
+//			un.setPersonal(personal);
+//			Controller.unternehmen.add(un); //Wie Controller adressieren?
+			Overview overview = new Overview(un);
 			frame.setVisible(false);
 			frame.dispose();
 		}

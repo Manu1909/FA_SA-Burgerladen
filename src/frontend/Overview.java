@@ -20,55 +20,56 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 	private String name = "";
 	private String location;
 	private String interior;
-	private String credit;
-	private String storageArea;
+	private int credit;
+	private int storageArea;
 	
 	private JTextField txtCapital = new JTextField();
 	private int capital;
 	private JTextField txtDebts = new JTextField();
 	private int debts;
 	private JPanel contentPane = new JPanel();
-	public static JFrame frame = new JFrame("Überblick für ");
+	public static JFrame frame = new JFrame("Ãœberblick fÃ¼r ");
 	private JMenu catering = new JMenu("Catering");
 	private JMenu marketing = new JMenu("Marketing");
 	private JMenu price = new JMenu("Preis festlegen");
 	private JMenu orders = new JMenu("Bestellungen");
+	private business.Unternehmen un;
 	
 	public void setActive(boolean p)
 	{
 		frame.setFocusableWindowState(p);
 	}
 	
-	public Overview(String name, String location, String credit, String interior, String storageArea)
+	public Overview(business.Unternehmen un)
 	{
-		this.credit = credit;
-		this.name=name;
-		this.location=location;
-		this.interior=interior;
-		this.storageArea = storageArea;
+		this.un = un;
+		this.name = un.getName();
+//		this.location = un.getStandort().getLage();
+//		this.interior = un.getStandort().getInnenausstattung().getBezeichnung();
+//		this.credit = un.getKredit().getHoehe();
+//		this.storageArea = un.getStandort().getKuehlraum().getLagerGroesse();
 		buildWindow();
 	}
 	
 	public static void main(String args[])
 	{
-		Overview test = new Overview("","", "", "", "");
+//		Overview test = new Overview();
 	}
 	
 	public void buildWindow()
 	{
-//		JOptionPane.showMessageDialog(this, "Name: " +name +" Location: "+ location + " Lager: "+ storageArea +" Einrichtung: " +interior +" Kredit: "+credit);
-		frame.setTitle(name);
+		frame.setTitle("Ãœberblick fÃ¼r " + name);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 
 		JPanel panel = new JPanel();
 		
-		JLabel infoText = new JLabel("<html><body><p>Dieses Fenster bietet ihnen eine Übersicht"
-				+ " über die wichtigsten "
+		JLabel infoText = new JLabel("<html><body><p>Dieses Fenster bietet ihnen eine Ãœbersicht"
+				+ " Ã¼ber die wichtigsten "
 				+ "Statistiken ihres Unternehmens. "
 				+ "Neben Kapital und Schulden erhalten Sie einen "
-				+ "Einblick in die Rangliste und können mit der oberen Menüleiste"
+				+ "Einblick in die Rangliste und kï¿½nnen mit der oberen Menï¿½leiste"
 				+ " zwischen den einzelnen Optionen navigieren"
 				+ "</p></body></html>");
 		infoText.setBounds(180, 11, 250, 266);
@@ -82,8 +83,8 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		lblSchulden.setBounds(580, 100, 75, 14);
 		panel.add(lblSchulden);
 		
-		JLabel lblLocation = new JLabel("Standort: " + location);
-		lblLocation.setBounds(580, 140, 75, 14);
+		JLabel lblLocation = new JLabel("Standort: " );
+		lblLocation.setBounds(580, 140, 90, 14);
 		panel.add(lblLocation);
 		
 		txtCapital = new JTextField();
@@ -107,7 +108,7 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		panel.add(lblLastPeriod);
 		
 		JTextPane txtLastPeriod = new JTextPane();
-		txtLastPeriod.setText("Umsatz:  €");
+		txtLastPeriod.setText("Umsatz:  ï¿½");
 		txtLastPeriod.setBounds(130, 250, 151, 80);
 		panel.add(txtLastPeriod);
 		

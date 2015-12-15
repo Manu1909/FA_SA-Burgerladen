@@ -1,3 +1,4 @@
+package Controller;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -432,7 +433,7 @@ public class Controller {
 	}
 		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
-	private static Innenausstattung waehleInnenausstattung(String auswahl) {
+	public static Innenausstattung waehleInnenausstattung(String auswahl) {
 		int index = Integer.parseInt(auswahl);
 		return innenausstattung[index - 1];
 	}
