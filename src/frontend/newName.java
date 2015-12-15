@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
@@ -16,6 +17,8 @@ public class newName extends JFrame implements ActionListener{
 	private JPanel contentPane = new JPanel();
 	private JTextField txtName = new JTextField();
 	private JButton btnNext = new JButton("Weiter");
+	
+	private String name;
 	
 	public static void main(String[] args)
 	{
@@ -73,7 +76,8 @@ public class newName extends JFrame implements ActionListener{
 		
 		if(s == btnNext)
 		{
-			newStore store = new newStore();
+			name = txtName.getText();
+			newStore store = new newStore(name);
 			frame.setVisible(false);
 			frame.dispose();
 		}

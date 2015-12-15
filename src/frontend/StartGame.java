@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -40,6 +41,10 @@ public class StartGame extends JFrame implements ActionListener{
 		JLabel heading = new JLabel("<html><body><h1>Burger im Quadrat</h1></body></html>");
 		heading.setBounds(102, 11, 220, 49);
 		panel.add(heading);
+		
+		JLabel img = new JLabel(new ImageIcon("rot.jpg"));
+		img.setBounds(1,1,20,40);
+		panel.add(img);
 		
 		btnGo.setBounds(164, 230, 89, 23);
 		btnGo.addActionListener(this);

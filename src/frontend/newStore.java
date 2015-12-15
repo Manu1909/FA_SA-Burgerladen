@@ -16,12 +16,14 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 public class newStore extends JFrame implements ActionListener, MouseListener{
-	private JFrame frame = new JFrame("Burgerplanspiel - Marketing");
+	private JFrame frame = new JFrame("Burger im Quadrat -  Laden gründen");
 	private JPanel contentPane = new JPanel();
 	
 	private String location = "";
 	private String interior = "";   //////////Wie werden diese Werte übergeben?
-	private String credit = "";
+	private String credit;
+	private String storageArea ="";
+	private String name = "";
 	
 	private String[] locations = {"Planken","Jungbusch","Kurpfälzer Str.", "Option 4"};
 	private String[] interiorOptions = {"Option1", "Option2", "Opption 3"};
@@ -31,6 +33,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 	private JList listLocations = new JList(locations);
 	private JList listInterior = new JList(interiorOptions);
 	private JList listCredit = new JList(creditOptions);
+	private JComboBox comboBox = new JComboBox(storageOptions);
 	
 	private JButton btnConfirm = new JButton("Bestätigen");
 	
@@ -44,11 +47,12 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 	
 	public static void main(String[] args)
 	{
-		newStore store = new newStore();
+		newStore store = new newStore("");
 	}
 	
-	public newStore()
+	public newStore(String name)
 	{
+		this.name = name;
 		buildWindow();
 	}
 	
@@ -63,7 +67,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 		
-		JLabel heading = new JLabel("<html><body><h2>Neues Unternehmen</h2></body></html>");
+		JLabel heading = new JLabel("<html><body><h2>"+name+"</h2></body></html>");
 		heading.setBounds(381, 0, 220, 49);
 		panel.add(heading);
 		
@@ -80,7 +84,6 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		tipLocations.setBounds(400, 117, 138, 55);
 		panel.add(tipLocations);
 	
-		JComboBox comboBox = new JComboBox(storageOptions);
 		comboBox.setBounds(570, 126, 112, 25);
 		panel.add(comboBox);
 		
@@ -120,7 +123,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		frame.setBounds(100, 100, 900, 500);
 		frame.setVisible(true);
 	}
-
+	
 	/////////////////Listener-Methoden
 	@Override
 	public void mouseClicked(MouseEvent e) 
@@ -182,7 +185,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 			}
 		}
 	}
-
+	
 	@Override
 	public void mouseEntered(MouseEvent e) {
 		// TODO Auto-generated method stub
@@ -216,7 +219,8 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 			location = listLocations.getSelectedValue().toString();
 			interior = listInterior.getSelectedValue().toString();
 			credit = listCredit.getSelectedValue().toString();
-			Overview overview = new Overview();
+			storageArea = comboBox.getSelectedItem().toString(); 
+			Overview overview = new Overview(name,location, credit ,interior, storageArea);
 			frame.setVisible(false);
 			frame.dispose();
 		}
