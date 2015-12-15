@@ -25,7 +25,7 @@ public class LieferantTest {
 	
 	@Test
 	public void testUebrigeRessourcen() {
-		assertEquals(80, l.uebrigeRessourcen());
+		assertEquals(80, l.berechneUebrigeRessourcen());
 	}
 	
 	@Test

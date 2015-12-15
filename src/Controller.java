@@ -21,6 +21,8 @@ public class Controller {
 	private static Ereignis[] ereignis = Datenbank.e;
 	private static Scanner scanner = new Scanner(System.in); //Todo macht manu
 	private static int anzahlRunden = 0;
+	private static boolean neuerSpieler = true;
+	private static boolean lieferantOK;
 	
 	public static void main(String args[]){
 		startGame();
@@ -37,7 +39,60 @@ public class Controller {
 				if(anzahlRunden == 0){
 					startGame();
 				}else{
+					for (int j = 0; j < Datenbank.fl.length; j++) {
+						Datenbank.fl[j].setVerbrauchteRessourcen(0);
+						Datenbank.bl[j].setVerbrauchteRessourcen(0);
+						Datenbank.sal[j].setVerbrauchteRessourcen(0);
+						Datenbank.sol[j].setVerbrauchteRessourcen(0);
+					}
+
 					Unternehmen u = unternehmen.get(i);
+
+
+					if(anzahlRunden == 3){
+						System.out.println("Für die " + Datenbank.c1.getBezeichnung() + "wurde angefragt ob Sie zusätzlich zu Ihrem Tagesgeschäft ein Caterin übernehmen wollen?");
+						System.out.println("Wollen Sie ein Angebot für das Catering abgeben Ja = 1 und Nein = 0");
+						int eingabe = scanner.nextInt();
+
+						System.out.println("Ihre aktuelle Burger Qualität: " + u.getBurger().getQualitaet() + "/100");
+						System.out.println("Bei Ihren aktuellen Lieferanten müssen Sie mit Kosten rechnen in Höhe von: " + u.berechneCateringKosten(Datenbank.c3));
+
+						if(eingabe == 1){
+							Datenbank.c1.addName(u.getName());
+							System.out.println("Geben Sie hier Ihr Angebot ab");
+							Datenbank.c1.addPreis(scanner.nextDouble());
+							Datenbank.c1.addQualitaet(u.getBurger().getQualitaet());
+						}
+					}else if(anzahlRunden == 6){
+						System.out.println("Für die " + Datenbank.c2.getBezeichnung() + "wurde angefragt ob Sie zusätzlich zu Ihrem Tagesgeschäft ein Caterin übernehmen wollen?");
+						System.out.println("Wollen Sie ein Angebot für das Catering abgeben Ja = 1 und Nein = 0");
+						int eingabe = scanner.nextInt();
+
+						System.out.println("Ihre aktuelle Burger Qualität: " + u.getBurger().getQualitaet() + "/100");
+						System.out.println("Bei Ihren aktuellen Lieferanten müssen Sie mit Kosten rechnen in Höhe von: " + u.berechneCateringKosten(Datenbank.c2));
+
+						if(eingabe == 1){
+							Datenbank.c2.addName(u.getName());
+							System.out.println("Geben Sie hier Ihr Angebot ab");
+							Datenbank.c2.addPreis(scanner.nextDouble());
+							Datenbank.c2.addQualitaet(u.getBurger().getQualitaet());
+						}
+
+					}else if(anzahlRunden == 9){
+						System.out.println("Für die " + Datenbank.c3.getBezeichnung() + "wurde angefragt ob Sie zusätzlich zu Ihrem Tagesgeschäft ein Caterin übernehmen wollen?");
+						System.out.println("Wollen Sie ein Angebot für das Catering abgeben Ja = 1 und Nein = 0");
+						int eingabe = scanner.nextInt();
+
+						System.out.println("Ihre aktuelle Burger Qualität: " + u.getBurger().getQualitaet() + "/100");
+						System.out.println("Bei Ihren aktuellen Lieferanten müssen Sie mit Kosten rechnen in Höhe von: " + u.berechneCateringKosten(Datenbank.c3));
+
+						if(eingabe == 1){
+							Datenbank.c3.addName(u.getName());
+							System.out.println("Geben Sie hier Ihr Angebot ab");
+							Datenbank.c3.addPreis(scanner.nextDouble());
+							Datenbank.c3.addQualitaet(u.getBurger().getQualitaet());
+						}
+					}
 
 					//Hier muss restliche Spiellogik entstehen
 					ereignisTrittEin();
@@ -68,17 +123,29 @@ public class Controller {
 
 
 
-					zeigeLieferant(0);
-					u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+					do{
+						zeigeLieferant(0);
+						lieferantOK = u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+					}while (!lieferantOK);
 
-					zeigeLieferant(1);
-					u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
-					zeigeLieferant(2);
-					u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+					do{
+						zeigeLieferant(1);
+						lieferantOK = u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+					}while (!lieferantOK);
 
-					zeigeLieferant(3);
-					u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+
+					do{
+						zeigeLieferant(2);
+						lieferantOK = u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+					}while (!lieferantOK);
+
+					do{
+						zeigeLieferant(3);
+						lieferantOK = u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+					}while (!lieferantOK);
+
+
 
 					System.out.println("Ihre Bestellung kostet: " + u.getBestellung().berechneGesamtpreis() + "€");
 					System.out.println("Die Qualitaet ihrer Burger betraegt: " + u.berechneBurgerQualitaet() + "/100");
@@ -91,11 +158,8 @@ public class Controller {
 					eingabe = scanner.nextInt()-1;
 					if(eingabe!=-1){
 						u.setMarketing(waehleMarketing(eingabe));
+						u.betreibeMarketing();
 					}
-
-
-
-
 
 					System.out.println("Gesamtkosten: " + u.berechneRundenkosten());
 
@@ -106,17 +170,49 @@ public class Controller {
 				}
 
 			}
+			if(anzahlRunden == 3 || anzahlRunden ==  6|| anzahlRunden == 9){
+				cateringAuswahlTreffen(anzahlRunden);
+			}
 			berechneKunden();
 			for (int i = 0; i < unternehmen.size(); i++) {
 				Unternehmen u = unternehmen.get(i);
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
 				System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
+
+				u.setCatering(null);
 			}
 
 			anzahlRunden++;
 		}
 	}
-	
+
+	//Methode die das Catering dem Unternehmen zuweist
+	private static void cateringAuswahlTreffen(int anzahlRunden) {
+		String wahlUnternehmen = "";
+		Catering c = null;
+
+		if(anzahlRunden ==3){
+			c = Datenbank.c1;
+			wahlUnternehmen = Datenbank.c1.vergleichePreisLeistung();
+		}else if(anzahlRunden == 6) {
+			c = Datenbank.c2;
+			wahlUnternehmen = Datenbank.c2.vergleichePreisLeistung();
+		}else if(anzahlRunden == 9){
+			c = Datenbank.c3;
+			wahlUnternehmen = Datenbank.c3.vergleichePreisLeistung();
+		}
+
+		if(wahlUnternehmen != "Kein Angebot eingegangen"){
+			for (int i = 0; i < unternehmen.size(); i++) {
+				if(wahlUnternehmen == unternehmen.get(i).getName()){
+					unternehmen.get(i).setCatering(c);
+					unternehmen.get(i).berechneCatering();
+					System.out.println(unternehmen.get(i).getName() + " hat Catering bekommen");
+				}
+			}
+		}
+	}
+
 	//Methode die den Start des Spiels behandelt
 	public static void startGame(){
 		//BufferedReader für Benutzereingabe
@@ -124,105 +220,130 @@ public class Controller {
 
 
 		try {
-			//Spielstart
-			System.out.println("Herzlich Wilkommen");
-			System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gewünschten Namen ein:" );
+			while (neuerSpieler){
+				//Spielstart
+				System.out.println("Herzlich Wilkommen");
+				System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gewünschten Namen ein:" );
 
-			String nameUnternehmen = userIn.readLine();
+				String nameUnternehmen = userIn.readLine();
 
-			Unternehmen u1 = new Unternehmen(nameUnternehmen);
-			unternehmen.add(u1);
+				Unternehmen u = new Unternehmen(nameUnternehmen);
+				unternehmen.add(u);
 
-			System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
-			zeigeStandort();
-			System.out.print("Bitte wählen Sie hier: ");
-			u1.setStandort(waehleStandort(userIn.readLine()));
-
-
-			System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum wählen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
-			System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
-			zeigeKuehlraume();
-			System.out.print("Bitte wählen Sie hier: ");
-			u1.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
-
-			System.out.println("Damit ihr Burgerladen entsprechend eingerichtet werden kann müssen Sie sich noch für eine Innenausstattung entscheiden");
-			System.out.println("Mit der Innenausstattung Ihres Burgerladen ist es Ihnen möglich den Kundenpool individuell zu erweitern");
-			System.out.println("Folgende Einrichtungsarten stehen zur Verfügung");
-			zeigeInnenausstattung();
-			System.out.print("Bitte wählen Sie hier: ");
-			u1.getStandort().setInnenausstattung(waehleInnenausstattung(userIn.readLine()));
-
-			System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");
-			System.out.println("Standort: " + u1.getStandort().getLage() + "; Kühlraum: " + u1.getStandort().getKuehlraum().getLagerGroesse());
-			System.out.println("Die gesamten Mietkosten f�r diesen Standort belaufen sich auf: " + u1.getStandort().berechneMiete());
-			System.out.println("Zusätzlich haben Sie sich für folgende Innenausstattung entschieden: " + u1.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u1.getStandort().getInnenausstattung().getKosten());
-
-			//Personalwahl
-			System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
-			System.out.println("5 Miarbeiter können 1000 Burger im Monat produzieren");
-			System.out.println("Diese Kosten pro Mitarbeiter 2040€ im Monat");
-			System.out.println("Wollen Sie Ihre Mitarbeiterkapazität erweitern?");
-			u1.getPersonal().setAnzahlAngestellte(waehlePersonal(scanner.nextInt()));
-
-			//LieferantenBestellung
-			System.out.println("\nBitte wählen sie im Folgenden, für wie viele Burger sie Zutaten in dieser Periode kaufen wollen");
-
-			int bestellMenge = 0;
-			do{
-				bestellMenge = scanner.nextInt();
-
-				u1.getBestellung().setzeBestellmenge(bestellMenge, u1.getStandort().getKuehlraum().berechneFreienLagerplatz());
-			}while (u1.getBestellung().getMenge() == 0 && bestellMenge !=0);
+				System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
+				zeigeStandort();
+				System.out.print("Bitte wählen Sie hier: ");
+				u.setStandort(waehleStandort(userIn.readLine()));
 
 
-			zeigeLieferant(0);
-			u1.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+				System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum wählen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
+				System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
+				zeigeKuehlraume();
+				System.out.print("Bitte wählen Sie hier: ");
+				u.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
 
-			zeigeLieferant(1);
-			u1.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+				System.out.println("Damit ihr Burgerladen entsprechend eingerichtet werden kann müssen Sie sich noch für eine Innenausstattung entscheiden");
+				System.out.println("Mit der Innenausstattung Ihres Burgerladen ist es Ihnen möglich den Kundenpool individuell zu erweitern");
+				System.out.println("Folgende Einrichtungsarten stehen zur Verfügung");
+				zeigeInnenausstattung();
+				System.out.print("Bitte wählen Sie hier: ");
+				u.getStandort().setInnenausstattung(waehleInnenausstattung(userIn.readLine()));
 
-			zeigeLieferant(2);
-			u1.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+				System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");
+				System.out.println("Standort: " + u.getStandort().getLage() + "; Kühlraum: " + u.getStandort().getKuehlraum().getLagerGroesse());
+				System.out.println("Die gesamten Mietkosten f�r diesen Standort belaufen sich auf: " + u.getStandort().berechneMiete());
+				System.out.println("Zusätzlich haben Sie sich für folgende Innenausstattung entschieden: " + u.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u.getStandort().getInnenausstattung().getKosten());
 
-			zeigeLieferant(3);
-			u1.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+				//Personalwahl
+				System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
+				System.out.println("5 Miarbeiter können 1000 Burger im Monat produzieren");
+				System.out.println("Diese Kosten pro Mitarbeiter 2040€ im Monat");
+				System.out.println("Wollen Sie Ihre Mitarbeiterkapazität erweitern?");
+				u.getPersonal().setAnzahlAngestellte(waehlePersonal(scanner.nextInt()));
 
-			System.out.println("Ihre Bestellung kostet: " + u1.getBestellung().berechneGesamtpreis() + "€");
-			System.out.println("Die Qualitaet ihrer Burger betraegt: " + u1.berechneBurgerQualitaet() + "/100");
+				//LieferantenBestellung
+				System.out.println("\nBitte wählen sie im Folgenden, für wie viele Burger sie Zutaten in dieser Periode kaufen wollen");
 
-			//Marketingauswahl
-			System.out.println("\nMöchten Sie Marketing betreiben: ");
-			zeigeMarketing();
-			System.out.print("Wählen Sie hier: ");
-			int eingabe = scanner.nextInt()-1;
-			if(eingabe!=-1){
-				u1.setMarketing(waehleMarketing(eingabe));
+				int bestellMenge = 0;
+				do{
+					bestellMenge = scanner.nextInt();
+
+					u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+				}while (u.getBestellung().getMenge() == 0 && bestellMenge !=0);
+
+
+
+				do{
+					zeigeLieferant(0);
+					lieferantOK = u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+				}while (!lieferantOK);
+
+
+				do{
+					zeigeLieferant(1);
+					lieferantOK = u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+				}while (!lieferantOK);
+
+
+				do{
+					zeigeLieferant(2);
+					lieferantOK = u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+				}while (!lieferantOK);
+
+				do{
+					zeigeLieferant(3);
+					lieferantOK = u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+				}while (!lieferantOK);
+
+
+				System.out.println("Ihre Bestellung kostet: " + u.getBestellung().berechneGesamtpreis() + "€");
+				System.out.println("Die Qualitaet ihrer Burger betraegt: " + u.berechneBurgerQualitaet() + "/100");
+
+				//Marketingauswahl
+				System.out.println("\nMöchten Sie Marketing betreiben: ");
+				zeigeMarketing();
+				System.out.print("Wählen Sie hier: ");
+				int eingabe = scanner.nextInt()-1;
+				if(eingabe!=-1){
+					u.setMarketing(waehleMarketing(eingabe));
+					u.betreibeMarketing();
+				}
+
+
+				System.out.println("Unternehmen gegründet: ");
+				System.out.println("Kosten: " + u.berechneGruendungsKosten());
+
+				//Kreditwahl
+				System.out.println("Sie haben jetzt die Möglichkeit einen Kredit zu wählen, damit Sie in den folgenden Perioden mehr finanziellen Spielraum haben: ");
+				zeigeKredite();
+				System.out.println("Bitte wählen sie: ");
+
+				eingabe = (scanner.nextInt() - 1);
+				if(eingabe == -1){
+					System.out.println("Kein Kredit");
+				}else{
+					u.setKredit(waehleKredit(eingabe));
+					System.out.println("Kosten: " + u.berechneGruendungsKosten());
+				}
+
+				System.out.println("Wählen sie einen Preis für ihren Burger zwischen 5-25€: ");
+				u.getBurger().setPreis(scanner.nextInt());
+
+				System.out.println("Soll ein weiteres Unternehmen gegründet werden? 1 = ja 0 = nein");
+				if(scanner.nextInt() == 0){
+					neuerSpieler = false;
+				}
 			}
-
-
-			System.out.println("Unternehmen gegründet: ");
-			System.out.println("Kosten: " + u1.berechneGruendungsKosten());
-			
-			//Kreditwahl
-			System.out.println("Sie haben jetzt die Möglichkeit einen Kredit zu wählen, damit Sie in den folgenden Perioden mehr finanziellen Spielraum haben: ");
-			zeigeKredite();
-			System.out.println("Bitte wählen sie: ");
-
-			eingabe = (scanner.nextInt() - 1);
-			if(eingabe == -1){
-				System.out.println("Kein Kredit");
-			}else{
-				u1.setKredit(waehleKredit(eingabe));
-				System.out.println("Kosten: " + u1.berechneGruendungsKosten());
-			}
-
-			System.out.println("Wählen sie einen Preis für ihren Burger zwischen 5-25€: ");
-			u1.getBurger().setPreis(scanner.nextInt());
-
 
 			berechneKunden();
-			System.out.println("Anzahl Kunden " + u1.getName() + ": " + u1.getKunden());
-			System.out.println("Gewinn " + u1.getName() + ": " + u1.berechneGewinn(anzahlRunden));
+
+			for (int i = 0; i < unternehmen.size(); i++) {
+				Unternehmen u = unternehmen.get(i);
+				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
+				System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
+			}
+
+
 
 
 		
@@ -244,6 +365,17 @@ public class Controller {
 		int[] anteileInnenausstattung = new int[3];
 		int kunden = 0;
 		int kundenanteil = 0;
+		int poolVariable;
+
+		if(anzahlRunden < 4){
+			poolVariable = 200;
+		}
+		if(anzahlRunden < 8){
+			poolVariable = 150;
+		}
+		else{
+			poolVariable = 100;
+		}
 
 		for (int i = 0; i < unternehmen.size(); i++) {
 			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden
@@ -258,16 +390,16 @@ public class Controller {
 		}
 		for (int i = 0; i < unternehmen.size(); i++) {
 			kundenanteil = unternehmen.get(i).berechneKundenanteil();
-			if(gesamtAnteil<=100){
-				kunden = (kundenanteil*Datenbank.kundenpool/100);
+			if(gesamtAnteil<=poolVariable){
+				kunden = (kundenanteil*Datenbank.kundenpool/poolVariable);
 			}
 			else{
 				kunden = kundenanteil*Datenbank.kundenpool/gesamtAnteil;
 			}
 
 			for (int j = 0; j < anteileInnenausstattung.length; j++) {
-				if(anteileInnenausstattung[j]<=100){
-					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/100;
+				if(anteileInnenausstattung[j]<=poolVariable){
+					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/poolVariable;
 				}
 				else{
 					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/anteileInnenausstattung[j];
@@ -306,13 +438,17 @@ public class Controller {
 	}
 	
 	public static Standort waehleStandort(String auswahl){
+		Standort s;
 		int index = Integer.parseInt(auswahl);
-		return standorte[index - 1];
+		s = new Standort(standorte[index - 1].getLage(), standorte[index - 1].getMiete(), standorte[index - 1].getTraffic(), standorte[index - 1].getBekanntheit());
+		return s;
 	}
 	
 	public static Kuehlraum waehleKuhlraum(String auswahl){
+		Kuehlraum k;
 		int index = Integer.parseInt(auswahl);
-		return kuehlraeume[index -1];
+		k = new Kuehlraum(kuehlraeume[index -1].getLagerGroesse(), kuehlraeume[index -1].getInhalt(), kuehlraeume[index -1].getMietZusatzKosten());
+		return k;
 	}
 
 	public static Kredit waehleKredit(int auswahl){
@@ -419,7 +555,7 @@ public class Controller {
 
 		for (int i = 0; i < lieferanten.length; i++) {
 			System.out.println("Lieferant " + (i+1));
-			System.out.println("Uebrige Ressourcen " + (i + 1) + ": " + lieferanten[i].uebrigeRessourcen());
+			System.out.println("Uebrige Ressourcen " + (i + 1) + ": " + lieferanten[i].berechneUebrigeRessourcen());
 			System.out.println("Qualitaet: " + lieferanten[i].getQualitaet());
 			System.out.println("Preis pro Gut: " + lieferanten[i].getPreisProGut());
 			if (index == 0){

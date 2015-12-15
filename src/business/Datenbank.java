@@ -66,7 +66,12 @@ public class Datenbank {
 	public static Ereignis e2 = new Ereignis(5, -10);
 	public static Ereignis e3 = new Ereignis(10, -20);
 	public static Ereignis[] e = {e1, e2, e3};
-	
+
+	//Daten für Catering
+	public static Catering c1 = new Catering("Mannheimer Morgen Firmenfeier", 1000, 5, 10);
+	public static Catering c2 = new Catering("Sommerfest DHBW Mannheim", 2000, 10, 10);
+	public static Catering c3 = new Catering("Meisterfeier Adler Mannheim", 5000, 15, 15);
+
 	//private int konstante = 
 	
 	public Lieferant getFl1() {

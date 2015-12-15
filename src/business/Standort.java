@@ -16,7 +16,7 @@ public class Standort {
 		this.bekanntheit = bekanntheit;
 	}
 	
-	//Getter und Setter für Standort
+	//Getter und Setter fï¿½r Standort
 	public String getLage() {
 		return lage;
 	}

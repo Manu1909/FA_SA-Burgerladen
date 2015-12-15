@@ -61,10 +61,10 @@ public class Bestellung {
 	}
 	
 	public void setzeBestellmenge(int bestellmenge, int freierLagerplatz){
-		boolean flok;
-		boolean blok;
-		boolean salok;
-		boolean solok;
+		boolean fleischOK;
+		boolean brotOK;
+		boolean salatOK;
+		boolean sosseOK;
 		boolean lagerPlatzOK;
 
 		menge = 0;
@@ -76,35 +76,35 @@ public class Bestellung {
 		}
 		
 		
-		if(Datenbank.fl1.uebrigeRessourcen() >= bestellmenge || Datenbank.fl2.uebrigeRessourcen() >= bestellmenge || Datenbank.fl3.uebrigeRessourcen() >= bestellmenge){
-			flok = true;
+		if(Datenbank.fl1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl3.berechneUebrigeRessourcen() >= bestellmenge){
+			fleischOK = true;
 		}
 		else{
-			flok = false;
+			fleischOK = false;
 		}
 		
-		if(Datenbank.bl1.uebrigeRessourcen() >= bestellmenge || Datenbank.bl2.uebrigeRessourcen() >= bestellmenge || Datenbank.bl3.uebrigeRessourcen() >= bestellmenge){
-			blok = true;
+		if(Datenbank.bl1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.bl2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.bl3.berechneUebrigeRessourcen() >= bestellmenge){
+			brotOK = true;
 		}
 		else{
-			blok = false;
+			brotOK = false;
 		}
 		
-		if(Datenbank.sal1.uebrigeRessourcen() >= bestellmenge || Datenbank.sal2.uebrigeRessourcen() >= bestellmenge || Datenbank.sal3.uebrigeRessourcen() >= bestellmenge){
-			salok = true;
+		if(Datenbank.sal1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sal2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sal3.berechneUebrigeRessourcen() >= bestellmenge){
+			salatOK = true;
 		}
 		else{
-			salok = false;
+			salatOK = false;
 		}
 		
-		if(Datenbank.sol1.uebrigeRessourcen() >= bestellmenge || Datenbank.sol2.uebrigeRessourcen() >= bestellmenge || Datenbank.sol3.uebrigeRessourcen() >= bestellmenge){
-			solok = true;
+		if(Datenbank.sol1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sol2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sol3.berechneUebrigeRessourcen() >= bestellmenge){
+			sosseOK = true;
 		}
 		else{
-			solok = false;
+			sosseOK = false;
 		}
 		
-		if(flok && blok && salok && solok && lagerPlatzOK){
+		if(fleischOK && brotOK && salatOK && sosseOK && lagerPlatzOK){
 			menge = bestellmenge;
 		}
 		else if(!lagerPlatzOK){
@@ -126,47 +126,53 @@ public class Bestellung {
 	}
 	
 	
-	public void bestelleFleisch(Lieferant fl){
+	public boolean bestelleFleisch(Lieferant fl){
 		if(fl.checkRessourcen(menge)){
 			fl.setVerbrauchteRessourcen(fl.getVertrauchteRessourcen()+menge);
 			fleischlieferant = fl;
-			//u.setFleischlieferant(fl);
+			return true;
+		}
+		else{
+			return false;
 		}
 	}
 	
 	
-	public void bestelleBrot(Lieferant bl){
+	public boolean bestelleBrot(Lieferant bl){
 		if(bl.checkRessourcen(menge)){
 			bl.setVerbrauchteRessourcen(bl.getVertrauchteRessourcen()+menge);
 			brotlieferant = bl;
-			//u.setBrotlieferant(bl);
+			return true;
 		}
+		return false;
 	}
 	
 	
-	public void bestelleSalat(Lieferant sal){
+	public boolean bestelleSalat(Lieferant sal){
 		if(sal.checkRessourcen(menge)){
 			sal.setVerbrauchteRessourcen(sal.getVertrauchteRessourcen()+menge);
 			salatlieferant = sal;
-			//u.setSalatlieferant(sal);
+			return true;
 		}
+		return false;
 	}
 	
-	public void bestelleSosse(Lieferant sol){
+	public boolean bestelleSosse(Lieferant sol){
 		if(sol.checkRessourcen(menge)){
 			sol.setVerbrauchteRessourcen(sol.getVertrauchteRessourcen()+menge);
 			sossenlieferant = sol;
-			//u.setSossenlieferant(sol);
+			return true;
 		}
+		return false;
 	}
 	
 	
-	public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
+	/*public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
 		bestelleFleisch(fl);
 		bestelleBrot(bl);
 		bestelleSalat(sal);
 		bestelleSosse(sol);
-	}
+	}*/
 
 	public double berechneGesamtpreis(){
 		double preis = (fleischlieferant.getPreisProGut() + brotlieferant.getPreisProGut() + salatlieferant.getPreisProGut() + sossenlieferant.getPreisProGut())*menge;
