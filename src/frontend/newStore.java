@@ -258,7 +258,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 			credit = listCredit.getSelectedValue().toString();
 			storageArea = listStorage.getSelectedValue().toString(); 
 			un.setName(name);
-//			un.setStandort(Controller.Controller.waehleStandort(location));
+			un.setStandort(Controller.Controller.waehleStandort(""+listLocations.getSelectedIndex()+1));
 //			un.getStandort().setInnenausstattung(Controller.Controller.waehleInnenausstattung(interior));
 //			un.setKredit();
 //			un.setPersonal(personal);

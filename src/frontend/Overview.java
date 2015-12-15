@@ -44,7 +44,7 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 	{
 		this.un = un;
 		this.name = un.getName();
-//		this.location = un.getStandort().getLage();
+		this.location = un.getStandort().getLage();
 //		this.interior = un.getStandort().getInnenausstattung().getBezeichnung();
 //		this.credit = un.getKredit().getHoehe();
 //		this.storageArea = un.getStandort().getKuehlraum().getLagerGroesse();
@@ -99,7 +99,7 @@ public class Overview extends JFrame implements MouseListener, MouseMotionListen
 		panel.add(txtDebts);
 		txtDebts.setColumns(10);
 		
-		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
+		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste: "+ location+ "</h3></body></html>" );
 		lblRangliste.setBounds(640, 197, 75, 40);
 		panel.add(lblRangliste);
 		
