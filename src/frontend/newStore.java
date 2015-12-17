@@ -20,22 +20,18 @@ import business.Datenbank;
 public class newStore extends JFrame implements ActionListener, MouseListener{
 	private JFrame frame = new JFrame("Burger im Quadrat -  Laden gründen");
 	private JPanel contentPane = new JPanel();
-	
-	private String location = "";
-	private String interior = "";   //////////Wie werden diese Werte �bergeben?
-	private String credit;
-	private String storageArea ="";
+
 	private String name = "";
 	
-	private String[] locations = {Datenbank.standorte[0].getLage(), Datenbank.standorte[1].getLage(), Datenbank.standorte[2].getLage(), Datenbank.standorte[3].getLage()};
-	private String[] interiorOptions ={Datenbank.i[0].getBezeichnung(),Datenbank.i[1].getBezeichnung(), Datenbank.i[2].getBezeichnung() };
-	private String[] storageOptions = {"Kühlraum 1", "Kühlraum 2", "Kühlraum 3"};
-	private String[] creditOptions = {""+Datenbank.k[0].getHoehe(),""+Datenbank.k[1].getHoehe(),""+Datenbank.k[2].getHoehe() ,""+0};
+	private String[] standortOptionen = {Datenbank.standorte[0].getLage(), Datenbank.standorte[1].getLage(), Datenbank.standorte[2].getLage(), Datenbank.standorte[3].getLage()};
+	private String[] innenausstattungOptionen ={Datenbank.i[0].getBezeichnung(),Datenbank.i[1].getBezeichnung(), Datenbank.i[2].getBezeichnung() };
+	private String[] lagerraumOptionen = {"Kühlraum 1", "Kühlraum 2", "Kühlraum 3"};
+	private String[] kreditOptionen = {""+Datenbank.k[0].getHoehe(),""+Datenbank.k[1].getHoehe(),""+Datenbank.k[2].getHoehe() ,""+0};
 	
-	private JList listLocations = new JList(locations);
-	private JList listInterior = new JList(interiorOptions);
-	private JList listCredit = new JList(creditOptions);
-	private JList listStorage = new JList(storageOptions);
+	private JList listLocations = new JList(standortOptionen);
+	private JList listInterior = new JList(innenausstattungOptionen);
+	private JList listCredit = new JList(kreditOptionen);
+	private JList listStorage = new JList(lagerraumOptionen);
 	
 	private JButton btnConfirm = new JButton("Bestätigen");
 	

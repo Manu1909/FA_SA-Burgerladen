@@ -24,20 +24,20 @@ import business.Datenbank;
 public class Overview extends JFrame implements ActionListener, MouseListener, MouseMotionListener {
 
 	private String name = "";
-	private String location;
-	private String interior;
+	private String standort;
+	private String innenausstattung;
 	private String werbung;
-	private int credit;
-	private int storageArea;
-	private int kuhlraum;
+	private int kredit;
+	private int lagerPlatzGroesse;
+	private int burgerPreis;
 	private double kapital;
 	private double schulden;
 	private double umsatz;
 	private double gewinn;
+	private static business.Unternehmen un;
 
-	private JTextField txtCapital = new JTextField();
-	private JTextField txtDebts = new JTextField();
-	private int debts;
+	private JTextField txtKapital = new JTextField();
+	private JTextField txtSchulden = new JTextField();
 	private JPanel contentPane = new JPanel();
 	private JFrame frame = new JFrame("Überblick für ");
 	private JMenuBar bar = new JMenuBar();
@@ -45,22 +45,22 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 	private JMenu menuMarketing = new JMenu("Marketing");
 	private JMenu menuPreis = new JMenu("Preis festlegen");
 	private JMenu menuBestellung = new JMenu("Bestellungen");
-	private static business.Unternehmen un;
-	private JLabel lblLocation = new JLabel();
+	private JMenu menuPersonal = new JMenu("Personal");
+	private JLabel lblStandort = new JLabel();
 	private JLabel lblMarketing = new JLabel();
 	private JLabel lblKapital = new JLabel();
 	private JLabel lblInfoText = new JLabel();
 	private JLabel lblSchulden = new JLabel();
 	private JLabel lblRangliste = new JLabel();
-	private JLabel lblLastPeriod = new JLabel();
+	private JLabel lblLetztePeriode = new JLabel();
 	private JPanel panel = new JPanel();
-	private JTextPane txtLastPeriod = new JTextPane();
-	private JTextPane txtLadder = new JTextPane();
+	private JTextPane txtLetztePeriode = new JTextPane();
+	private JTextPane txtRangliste = new JTextPane();
 
 	// Variablen Marketing
 	private JButton btnConfirm = new JButton("Bestätigen");
 	private JPanel contentPaneMarketing = new JPanel();
-	private String[] marketingOptions = { Datenbank.marketing[0].getBezeichnung(),
+	private String[] marketingOptionen = { Datenbank.marketing[0].getBezeichnung(),
 			Datenbank.marketing[1].getBezeichnung(), Datenbank.marketing[2].getBezeichnung() };
 	private int[] bekanntheitsPlus = { Datenbank.marketing[0].getBekanntheitssteigerung(),
 			Datenbank.marketing[1].getBekanntheitssteigerung(), Datenbank.marketing[2].getBekanntheitssteigerung() };
@@ -70,7 +70,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 	private double[] marketingKosten = { Datenbank.marketing[0].getKosten(), Datenbank.marketing[1].getKosten(),
 			Datenbank.marketing[2].getKosten() };
 
-	private JList listMarketing = new JList(marketingOptions);
+	private JList listMarketing = new JList(marketingOptionen);
 	private JTextPane txtEffekte = new JTextPane();
 	private JFrame frameMarketing = new JFrame("Burger im Quadrat - Marketing");
 
@@ -80,27 +80,35 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 	private JTextField txtPreis = new JTextField();
 	private JButton btnPreis = new JButton();
 
+	// Variabeln Personalfenster
+	private JFrame framePersonal = new JFrame();
+	private JPanel contentPanePersonal = new JPanel();
+
+	// Variablen Catering-Fenster
+	private JFrame frameCatering = new JFrame();
+	private JPanel contentPaneCatering = new JPanel();
+	private JButton btnAngebotAbgeben = new JButton();
+	private JButton btnAuftragAblehnen = new JButton();
+	private JTextField txtAngebotSumme = new JTextField();
+
 	public Overview(business.Unternehmen un) {
+		this.un = un;
+		this.name = un.getName();
+		this.standort = un.getStandort().getLage();
+		this.innenausstattung = un.getStandort().getInnenausstattung().getBezeichnung();
+		this.kredit = un.getKredit().getHoehe();
+		this.kapital = un.getKapital();
 		try {
-			this.un = un;
-			this.name = un.getName();
-			this.location = un.getStandort().getLage();
-			this.interior = un.getStandort().getInnenausstattung().getBezeichnung();
-			this.credit = un.getKredit().getHoehe();
-			this.kapital = un.getKapital();
 			this.umsatz = un.getUmsatz();
 			this.gewinn = un.getGewinn();
-			this.kuhlraum = un.getStandort().getKuehlraum().getLagerGroesse();
-			this.storageArea = un.getStandort().getKuehlraum().getLagerGroesse();
+			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
+			this.werbung = un.getMarketing().getBezeichnung();
+			this.burgerPreis = un.getBurger().getPreis();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		buildWindow();
-	}
-
-	public static void main(String args[]) {
-		 Overview test = new Overview(new business.Unternehmen("Test"));
 	}
 
 	public void buildWindow() {
@@ -131,15 +139,15 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 	}
 
 	private void positioniereTextPanesOverview() {
-		txtLastPeriod.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€");
-		txtLastPeriod.setBounds(130, 250, 151, 80);
-		txtLastPeriod.setEditable(false);
-		panel.add(txtLastPeriod);
+		txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€");
+		txtLetztePeriode.setBounds(130, 250, 151, 80);
+		txtLetztePeriode.setEditable(false);
+		panel.add(txtLetztePeriode);
 
-		txtLadder.setText("1. Spieler 1 \n2. Spieler 2\n3. Spieler 2\n4. Spieler 4");
-		txtLadder.setBounds(640, 248, 150, 69);
-		txtLadder.setEditable(false);
-		panel.add(txtLadder);
+		txtRangliste.setText("1. Spieler 1 \n2. Spieler 2\n3. Spieler 2\n4. Spieler 4");
+		txtRangliste.setBounds(640, 248, 150, 69);
+		txtRangliste.setEditable(false);
+		panel.add(txtRangliste);
 	}
 
 	public void positioniereMenuOverview() {
@@ -149,11 +157,13 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 		menuPreis.addMouseListener(this);
 		menuMarketing.addMouseListener(this);
 		menuBestellung.addMouseListener(this);
+		menuPersonal.addMouseListener(this);
 
 		bar.add(menuCatering);
 		bar.add(menuPreis);
 		bar.add(menuMarketing);
 		bar.add(menuBestellung);
+		bar.add(menuPersonal);
 		panel.add(bar);
 	}
 
@@ -173,9 +183,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 		lblSchulden.setBounds(580, 100, 75, 14);
 		panel.add(lblSchulden);
 
-		lblLocation.setText("<html><body><p>Standort: " + location + "</p></body></html>");
-		lblLocation.setBounds(580, 140, 130, 50);
-		panel.add(lblLocation);
+		lblStandort.setText("<html><body><p>Standort: " + standort + "</p></body></html>");
+		lblStandort.setBounds(580, 140, 130, 50);
+		panel.add(lblStandort);
 
 		lblMarketing.setText("Marketing-Aktion: " + werbung);
 		lblMarketing.setBounds(580, 160, 130, 50);
@@ -185,24 +195,24 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 		lblRangliste.setBounds(640, 197, 75, 40);
 		panel.add(lblRangliste);
 
-		lblLastPeriod.setText("<html><body><h3>Letzte Periode:</h3></body></html>");
-		lblLastPeriod.setBounds(130, 210, 120, 50);
-		panel.add(lblLastPeriod);
+		lblLetztePeriode.setText("<html><body><h3>Letzte Periode:</h3></body></html>");
+		lblLetztePeriode.setBounds(130, 210, 120, 50);
+		panel.add(lblLetztePeriode);
 	}
 
 	public void positioniereTextFieldsOverview() {
-		txtCapital = new JTextField();
-		txtCapital.setText("" + kapital);
-		txtCapital.setBounds(650, 63, 86, 20);
-		txtCapital.setEditable(false);
-		panel.add(txtCapital);
-		txtCapital.setColumns(10);
+		txtKapital = new JTextField();
+		txtKapital.setText("" + kapital);
+		txtKapital.setBounds(650, 63, 86, 20);
+		txtKapital.setEditable(false);
+		panel.add(txtKapital);
+		txtKapital.setColumns(10);
 
-		txtDebts = new JTextField();
-		txtDebts.setBounds(650, 100, 86, 20);
-		txtDebts.setEditable(false);
-		panel.add(txtDebts);
-		txtDebts.setColumns(10);
+		txtSchulden = new JTextField();
+		txtSchulden.setBounds(650, 100, 86, 20);
+		txtSchulden.setEditable(false);
+		panel.add(txtSchulden);
+		txtSchulden.setColumns(10);
 	}
 
 	public void showWindowPreis() {
@@ -264,8 +274,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 
 	@Override
 	public void mouseExited(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -283,30 +291,38 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 			showWindowPreis();
 		}
 		if (s == menuBestellung) {
-
+			zeigeFensterBestellung();
 		}
 		if (s == menuCatering) {
-
+			zeigeFensterCatering();
 		}
+		if (s == menuPersonal) {
+			zeigeFensterPersonal();
+		}
+	}
+
+	private void zeigeFensterPersonal() {
+
+	}
+
+	private void zeigeFensterCatering() {
+
+	}
+
+	private void zeigeFensterBestellung() {
 
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseDragged(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void mouseMoved(MouseEvent arg0) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -326,7 +342,5 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 			frame.setFocusableWindowState(true);
 			framePreis.dispose();
 		}
-
 	}
-
 }
