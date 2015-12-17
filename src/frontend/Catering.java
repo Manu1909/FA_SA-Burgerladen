@@ -1,4 +1,7 @@
 package frontend;
+
+import business.*;
+
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
@@ -18,6 +21,8 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 public class Catering extends JFrame implements ActionListener{
+	
+
 
 	private JPanel contentPane;
 	JTextField textField = new JTextField(300);
@@ -26,11 +31,6 @@ public class Catering extends JFrame implements ActionListener{
 	JLabel lblCateringtxt = new JLabel("CateringTxt");
 	
 	
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
