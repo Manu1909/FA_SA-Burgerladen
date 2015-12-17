@@ -81,21 +81,26 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 	private JButton btnPreis = new JButton();
 
 	public Overview(business.Unternehmen un) {
-		this.un = un;
-		this.name = un.getName();
-		this.location = un.getStandort().getLage();
-		this.interior = un.getStandort().getInnenausstattung().getBezeichnung();
-		this.credit = un.getKredit().getHoehe();
-		this.kapital = un.getKapital();
-		this.umsatz = un.getUmsatz();
-		this.gewinn = un.getGewinn();
-		this.kuhlraum = un.getStandort().getKuehlraum().getLagerGroesse();
-		this.storageArea = un.getStandort().getKuehlraum().getLagerGroesse();
+		try {
+			this.un = un;
+			this.name = un.getName();
+			this.location = un.getStandort().getLage();
+			this.interior = un.getStandort().getInnenausstattung().getBezeichnung();
+			this.credit = un.getKredit().getHoehe();
+			this.kapital = un.getKapital();
+			this.umsatz = un.getUmsatz();
+			this.gewinn = un.getGewinn();
+			this.kuhlraum = un.getStandort().getKuehlraum().getLagerGroesse();
+			this.storageArea = un.getStandort().getKuehlraum().getLagerGroesse();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		buildWindow();
 	}
 
 	public static void main(String args[]) {
-//		 Overview test = new Overview(new business.Unternehmen("Test"));
+		 Overview test = new Overview(new business.Unternehmen("Test"));
 	}
 
 	public void buildWindow() {
@@ -173,7 +178,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener, M
 		panel.add(lblLocation);
 
 		lblMarketing.setText("Marketing-Aktion: " + werbung);
-		lblMarketing.setBounds(580, 230, 130, 50);
+		lblMarketing.setBounds(580, 160, 130, 50);
 		panel.add(lblMarketing);
 
 		lblRangliste.setText("<html><body><h3>Rangliste:</h3></body></html>");
