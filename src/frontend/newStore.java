@@ -30,7 +30,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 	private String[] locations = {Datenbank.standorte[0].getLage(), Datenbank.standorte[1].getLage(), Datenbank.standorte[2].getLage(), Datenbank.standorte[3].getLage()};
 	private String[] interiorOptions ={Datenbank.i[0].getBezeichnung(),Datenbank.i[1].getBezeichnung(), Datenbank.i[2].getBezeichnung() };
 	private String[] storageOptions = {"Kühlraum 1", "Kühlraum 2", "Kühlraum 3"};
-	private String[] creditOptions = {""+Datenbank.k[0].getHoehe(),""+Datenbank.k[1].getHoehe(),""+Datenbank.k[2].getHoehe() ,"kein Kredit"};
+	private String[] creditOptions = {""+Datenbank.k[0].getHoehe(),""+Datenbank.k[1].getHoehe(),""+Datenbank.k[2].getHoehe() ,""+0};
 	
 	private JList listLocations = new JList(locations);
 	private JList listInterior = new JList(interiorOptions);
@@ -94,6 +94,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		buildWindow();
 	}
 	
+	/////////////Frame aufstellen////////////
 	public void buildWindow()
 	{
 		contentPane = new JPanel();
@@ -185,6 +186,23 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 	@Override
 	public void mouseClicked(MouseEvent e) 
 	{
+		
+	}
+	
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
 		Object s = e.getSource();
 		if(s == listLocations)
 		{
@@ -221,23 +239,6 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 					+ "<br>Mietzusatz: "+ lagerMiete[p]
 					+ "</p></body></html>"); 
 		}
-	}
-	
-	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
 		
 	}
 
@@ -253,16 +254,14 @@ public class newStore extends JFrame implements ActionListener, MouseListener{
 		Object s = e.getSource();
 		if(s == btnConfirm)
 		{
-			location = listLocations.getSelectedValue().toString();
-			interior = listInterior.getSelectedValue().toString();
-			credit = listCredit.getSelectedValue().toString();
-			storageArea = listStorage.getSelectedValue().toString(); 
 			un.setName(name);
-			un.setStandort(Controller.Controller.waehleStandort(""+listLocations.getSelectedIndex()+1));
-//			un.getStandort().setInnenausstattung(Controller.Controller.waehleInnenausstattung(interior));
-//			un.setKredit();
+			un.setKapital(90000.0);
+			un.setStandort(Controller.Controller.waehleStandort(""+(listLocations.getSelectedIndex()+1)));
+			un.getStandort().setInnenausstattung(Controller.Controller.waehleInnenausstattung(""+(listInterior.getSelectedIndex()+1)));
+			un.setKredit(Controller.Controller.waehleKredit(listCredit.getSelectedIndex()));
+			un.getStandort().setKuehlraum(Controller.Controller.waehleKuhlraum(""+(listStorage.getSelectedIndex()+1)));
+//			Controller.Controller.unternehmen.add(un); //Wie Controller adressieren?
 //			un.setPersonal(personal);
-//			Controller.unternehmen.add(un); //Wie Controller adressieren?
 			Overview overview = new Overview(un);
 			frame.setVisible(false);
 			frame.dispose();
