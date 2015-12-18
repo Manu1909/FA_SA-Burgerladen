@@ -34,12 +34,13 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private int kredit;
 	private int lagerPlatzGroesse;
 	private int burgerPreis;
+	private int anzahlPersonal;
 	private double kapital;
 	private double schulden;
 	private double umsatz;
 	private double gewinn;
 	private static business.Unternehmen un;
-	
+
 	private JTextField txtKapital = new JTextField();
 	private JTextField txtSchulden = new JTextField();
 	private JPanel contentPane = new JPanel();
@@ -52,6 +53,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private JMenu menuPersonal = new JMenu("Personal");
 	private JLabel lblStandort = new JLabel();
 	private JLabel lblMarketing = new JLabel();
+	private JLabel lblanzahlPersonal = new JLabel();
 	private JPanel panel = new JPanel();
 	private JTextPane txtLetztePeriode = new JTextPane();
 	private JTextPane txtRangliste = new JTextPane();
@@ -83,6 +85,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private JPanel contentPanePersonal = new JPanel();
 	private JTextField txtFeuern = new JTextField();
 	private JTextField txtEinstellen = new JTextField();
+	private JButton btnAbschicken = new JButton("Abschicken");
 
 	// Variablen Catering-Fenster
 	private JFrame frameCatering = new JFrame();
@@ -140,12 +143,14 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		this.innenausstattung = un.getStandort().getInnenausstattung().getBezeichnung();
 		this.kredit = un.getKredit().getHoehe();
 		this.kapital = un.getKapital();
+		this.anzahlPersonal = un.getPersonal().berechneAnzahl();
 		try {
 			this.umsatz = un.getUmsatz();
 			this.gewinn = un.getGewinn();
 			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
 			this.werbung = un.getMarketing().getBezeichnung();
 			this.burgerPreis = un.getBurger().getPreis();
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -182,6 +187,10 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblMarketing.setText("Marketing-Aktion: " + werbung);
 		lblMarketing.setBounds(580, 160, 130, 50);
 		panel.add(lblMarketing);
+		
+		lblanzahlPersonal.setText("Anzahl Mitarbeiter: " + anzahlPersonal);
+		lblanzahlPersonal.setBounds(300, 200, 120, 30);
+		panel.add(lblanzahlPersonal);
 
 		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
 		lblRangliste.setBounds(640, 197, 75, 40);
@@ -326,8 +335,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		contentPanePersonal.add(txtFeuern);
 		txtFeuern.setColumns(10);
 
-		JButton btnAbschicken = new JButton("Abschicken");
 		btnAbschicken.setBounds(199, 269, 89, 23);
+		btnAbschicken.addActionListener(this);
 		contentPanePersonal.add(btnAbschicken);
 
 		frame.setFocusableWindowState(false);
@@ -525,5 +534,18 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			frame.setFocusableWindowState(true);
 			framePreis.dispose();
 		}
+		if(s==btnAbschicken)
+		{
+			framePersonal.setVisible(false);
+//			int alt = un.getPersonal().getAnzahlAngestellte();
+//			int neu = Integer.parseIntInteger.parseInt(txtFeuern.getText());
+			un.getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
+			un.getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
+			
+//			lblanzahlPersonal.setText("Personal: " + un.getPersonal().berechneAnzahl());
+			frame.setFocusableWindowState(true);
+			framePersonal.dispose();
+		}
+//		if(s == btn)
 	}
 }
