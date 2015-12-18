@@ -101,13 +101,14 @@ public class Controller {
 					//Personal bearbeiten
 					System.out.println("Möchten sie Personal einstellen?");
 					System.out.println("Aktuelle Anzahl: " + u.getPersonal().berechneAnzahl());
+					System.out.println("Diesen Monat abgehauen: " + u.getPersonal().getAnzahlGefeuerte());
 					System.out.print("Wie viele?");
 					int eingabe = scanner.nextInt();
 					System.out.println("neue Anzahl: " + u.getPersonal().erhoeheAnzahl(eingabe));
 					System.out.println("Möchten Sie Leute feuern?\nSie werden nach einer Periode gefeuert.");
 					System.out.println("Wie viele?");
 					eingabe = scanner.nextInt();
-					System.out.println("Diesen Monat abgehauen: " + u.getPersonal().feuern(eingabe));
+					u.getPersonal().feuern(eingabe);
 					System.out.println("Neue Anzahl: " + u.getPersonal().berechneAnzahl());
 					System.out.println("Neue Personalkosten: " + u.getPersonal().berechneKosten());
 
@@ -257,10 +258,10 @@ public class Controller {
 
 				//Personalwahl
 				System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
-				System.out.println("5 Miarbeiter können 1000 Burger im Monat produzieren");
+				System.out.println("5 Mitarbeiter können 1000 Burger im Monat produzieren");
 				System.out.println("Diese Kosten pro Mitarbeiter 2040€ im Monat");
 				System.out.println("Wollen Sie Ihre Mitarbeiterkapazität erweitern?");
-				u.getPersonal().setAnzahlAngestellte(waehlePersonal(scanner.nextInt()));
+				u.getPersonal().erhoeheAnzahl((scanner.nextInt()));
 
 				//LieferantenBestellung
 				System.out.println("\nBitte wählen sie im Folgenden, für wie viele Burger sie Zutaten in dieser Periode kaufen wollen");

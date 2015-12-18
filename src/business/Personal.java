@@ -31,7 +31,7 @@ public class Personal {
 		return anzahlAngestellte;
 	}
 	public int getAnzahlGefeuerte() {
-		return anzahlGefeuerte;
+		return gefeuerteNachPeriode[0];
 	}
 	public double getKosten() {
 		return kosten;
@@ -42,7 +42,7 @@ public class Personal {
 
 	public int erhoeheAnzahl(int i){
 		if (anzahlAngestellte  + i <= hoechstanzahl){
-			anzahlAngestellte += i;
+			anzahlAngestellte = anzahlAngestellte + i;
 		} else {
 			System.out.println("H�chstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
 		}
@@ -50,7 +50,7 @@ public class Personal {
 	}
 	public int berechneAnzahl(){
 		anzahlAngestellte = anzahlAngestellte-gefeuerteNachPeriode[1];
-		gefeuerteNachPeriode[1] = gefeuerteNachPeriode[0];
+		gefeuerteNachPeriode[1] = gefeuerteNachPeriode[0]; //ex
 		gefeuerteNachPeriode[0] = 0;
 		return anzahlAngestellte;
 	}
@@ -64,7 +64,7 @@ public class Personal {
 		} else {
 			System.out.println("Mindestanzahl an Personal unterschritten.");
 		}
-		return gefeuerteNachPeriode[1];
+		return gefeuerteNachPeriode[0];
 	}
 	public int berechneAnzahlBurger(){
 		burgerKapazitaet = anzahlAngestellte*100; //Beispielwert: Anzahl Burger pro Personal
