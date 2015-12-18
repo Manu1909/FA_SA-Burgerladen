@@ -5,10 +5,7 @@ public class Burger {
 	int preis;
 	int qualitaet;
 	int preisPunkte;
-	
-	public Burger() {
-		// TODO Auto-generated constructor stub
-	}
+
 	
 	
 	public void setPreis(int preis){

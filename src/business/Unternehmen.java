@@ -182,38 +182,25 @@ public class Unternehmen {
 		setKredit(kredit);
 	}
 
-	public boolean bestelleFleisch(Lieferant fl){
-		boolean ok;
-		ok = bestellung.bestelleFleisch(fl);
-		if(ok){
-			fleischlieferant = fl;
-			standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
-		}
-		return ok;
+	public void bestelleFleisch(Lieferant fl){
+		bestellung.bestelleFleisch(fl);
+		fleischlieferant = fl;
+		standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
 	}
 
-	public boolean bestelleBrot(Lieferant bl){
-		boolean ok = bestellung.bestelleBrot(bl);
-		if(ok){
-			brotlieferant = bl;
-		}
-		return ok;
+	public void bestelleBrot(Lieferant bl){
+		bestellung.bestelleBrot(bl);
+		brotlieferant = bl;
 	}
 
-	public boolean bestelleSalat(Lieferant sal){
-		boolean ok = bestellung.bestelleSalat(sal);
-		if(ok){
-			salatlieferant = sal;
-		}
-		return ok;
+	public void bestelleSalat(Lieferant sal){
+		bestellung.bestelleSalat(sal);
+		salatlieferant = sal;
 	}
 
-	public boolean bestelleSosse(Lieferant sol){
-		boolean ok = bestellung.bestelleSosse(sol);
-		if(ok){
-			sossenlieferant = sol;
-		}
-		return ok;
+	public void bestelleSosse(Lieferant sol){
+		bestellung.bestelleSosse(sol);
+		sossenlieferant = sol;
 	}
 
 

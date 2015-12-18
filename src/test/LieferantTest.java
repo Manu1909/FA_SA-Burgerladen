@@ -22,16 +22,24 @@ public class LieferantTest {
 		
 		l.setVerbrauchteRessourcen(920);
 	}
-	
-	@Test
+
+	//Die beiden Tests wären nur von Nöten, wenn Lieferanten begrenzte Ressourcen hätten
+	/*@Test
 	public void testUebrigeRessourcen() {
 		assertEquals(80, l.berechneUebrigeRessourcen());
-	}
+	}*/
 	
-	@Test
+	/*@Test
 	public void testCheckRessourcen() {
 		assertEquals(false, l.checkRessourcen(100));
 		assertEquals(true, l.checkRessourcen(20));
+	}*/
+
+	@Test
+	public void testBerechneNeuenPreis() {
+		l.setVerbrauchteRessourcen(520);
+		assertTrue("Test Preisberechnung", 0.27==l.berechneNeuenPreis());
+
 	}
 
 }

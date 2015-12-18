@@ -125,27 +125,27 @@ public class Controller {
 
 
 
-					do{
-						zeigeLieferant(0);
-						lieferantOK = u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
-					}while (!lieferantOK);
+
+					zeigeLieferant(0);
+					u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
 
 
-					do{
-						zeigeLieferant(1);
-						lieferantOK = u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
-					}while (!lieferantOK);
 
 
-					do{
-						zeigeLieferant(2);
-						lieferantOK = u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
-					}while (!lieferantOK);
+					zeigeLieferant(1);
+					u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
-					do{
-						zeigeLieferant(3);
-						lieferantOK = u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
-					}while (!lieferantOK);
+
+
+
+					zeigeLieferant(2);
+					u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+
+
+
+					zeigeLieferant(3);
+					u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+
 
 
 
@@ -184,6 +184,12 @@ public class Controller {
 				u.setCatering(null);
 			}
 
+			for (int j = 0; j < Datenbank.fl.length; j++) {
+				Datenbank.fl[j].berechneNeuenPreis();
+				Datenbank.bl[j].berechneNeuenPreis();
+				Datenbank.sal[j].berechneNeuenPreis();
+				Datenbank.sol[j].berechneNeuenPreis();
+			}
 			anzahlRunden++;
 		}
 	}
@@ -275,27 +281,26 @@ public class Controller {
 
 
 
-				do{
-					zeigeLieferant(0);
-					lieferantOK = u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
-				}while (!lieferantOK);
+
+				zeigeLieferant(0);
+				u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
 
 
-				do{
-					zeigeLieferant(1);
-					lieferantOK = u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
-				}while (!lieferantOK);
 
 
-				do{
-					zeigeLieferant(2);
-					lieferantOK = u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
-				}while (!lieferantOK);
+				zeigeLieferant(1);
+				u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
-				do{
-					zeigeLieferant(3);
-					lieferantOK = u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
-				}while (!lieferantOK);
+
+
+
+				zeigeLieferant(2);
+				u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+
+
+
+				zeigeLieferant(3);
+				u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
 
 				System.out.println("Ihre Bestellung kostet: " + u.getBestellung().berechneGesamtpreis() + "€");
@@ -344,9 +349,6 @@ public class Controller {
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
 				System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
 			}
-
-
-
 
 		
 			anzahlRunden++;
@@ -428,10 +430,8 @@ public class Controller {
 			kunden = 0;
 		}
 
-
-
-
 	}
+
 		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
 	public static Innenausstattung waehleInnenausstattung(String auswahl) {
@@ -557,7 +557,7 @@ public class Controller {
 
 		for (int i = 0; i < lieferanten.length; i++) {
 			System.out.println("Lieferant " + (i+1));
-			System.out.println("Uebrige Ressourcen " + (i + 1) + ": " + lieferanten[i].berechneUebrigeRessourcen());
+			//System.out.println("Uebrige Ressourcen " + (i + 1) + ": " + lieferanten[i].berechneUebrigeRessourcen());
 			System.out.println("Qualitaet: " + lieferanten[i].getQualitaet());
 			System.out.println("Preis pro Gut: " + lieferanten[i].getPreisProGut());
 			if (index == 0){
