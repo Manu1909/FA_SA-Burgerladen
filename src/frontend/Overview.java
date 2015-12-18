@@ -31,6 +31,10 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private String standort;
 	private String innenausstattung;
 	private String werbung;
+	private String fleischLieferant;
+	private String brotLieferant;
+	private String salatLieferant;
+	private String saucenLieferant;
 	private int kredit;
 	private int lagerPlatzGroesse;
 	private int burgerPreis;
@@ -150,7 +154,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
 			this.werbung = un.getMarketing().getBezeichnung();
 			this.burgerPreis = un.getBurger().getPreis();
-			
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -187,7 +191,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblMarketing.setText("Marketing-Aktion: " + werbung);
 		lblMarketing.setBounds(580, 160, 130, 50);
 		panel.add(lblMarketing);
-		
+
 		lblanzahlPersonal.setText("Anzahl Mitarbeiter: " + anzahlPersonal);
 		lblanzahlPersonal.setBounds(300, 200, 120, 30);
 		panel.add(lblanzahlPersonal);
@@ -444,6 +448,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		// Abschicken
 		btnBestellungAbschicken.setBounds(222, 552, 147, 23);
+		btnBestellungAbschicken.addActionListener(this);
 		contentPaneBestellungen.add(btnBestellungAbschicken);
 
 		// Frame-Settings
@@ -534,18 +539,28 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			frame.setFocusableWindowState(true);
 			framePreis.dispose();
 		}
-		if(s==btnAbschicken)
-		{
+		if (s == btnAbschicken) {
 			framePersonal.setVisible(false);
-//			int alt = un.getPersonal().getAnzahlAngestellte();
-//			int neu = Integer.parseIntInteger.parseInt(txtFeuern.getText());
 			un.getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
 			un.getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
-			
-//			lblanzahlPersonal.setText("Personal: " + un.getPersonal().berechneAnzahl());
+			// lblanzahlPersonal.setText("Personal: " +
+			// un.getPersonal().berechneAnzahl());
 			frame.setFocusableWindowState(true);
 			framePersonal.dispose();
 		}
-//		if(s == btn)
+		if (s == btnBestellungAbschicken) {
+			frameBestellungen.setVisible(false);
+			un.setzeLieferanten(Datenbank.fl[listFleisch.getSelectedIndex()], 
+					Datenbank.bl[listBroetchen.getSelectedIndex()], 
+					Datenbank.sal[listSalat.getSelectedIndex()], 
+					Datenbank.sol[listSauce.getSelectedIndex()]);
+			fleischLieferant = listFleisch.getSelectedValue().toString();
+			brotLieferant = listBroetchen.getSelectedValue().toString();
+			salatLieferant = listSalat.getSelectedValue().toString();
+			saucenLieferant = listSauce.getSelectedValue().toString();
+			
+			frame.setFocusableWindowState(true);
+			frameBestellungen.dispose();
+		}
 	}
 }
