@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 public class StartGame extends JFrame implements ActionListener{
@@ -16,6 +17,7 @@ public class StartGame extends JFrame implements ActionListener{
 	private JFrame frame = new JFrame();
 	private JPanel contentPane = new JPanel();
 	private JButton btnGo = new JButton("Start");
+	private JTextField txtUNZahl = new JTextField();
 	
 	public static void main(String[] args)
 	{
@@ -36,25 +38,28 @@ public class StartGame extends JFrame implements ActionListener{
 		
 		JPanel panel = new JPanel();
 		contentPane.add(panel, BorderLayout.CENTER);
-		panel.setLayout(null);
+		contentPane.setLayout(null);
 		
 		JLabel heading = new JLabel("<html><body><h1>Burger im Quadrat</h1></body></html>");
 		heading.setBounds(102, 11, 220, 49);
-		panel.add(heading);
+		contentPane.add(heading);
 		
 		JLabel img = new JLabel(new ImageIcon("rot.jpg"));
 		img.setBounds(1,1,20,40);
-		panel.add(img);
+		contentPane.add(img);
 		
-		btnGo.setBounds(164, 230, 89, 23);
+		txtUNZahl.setBounds(200, 180, 50, 14);
+		contentPane.add(txtUNZahl);
+		
+		btnGo.setBounds(180, 230, 90, 23);
 		btnGo.addActionListener(this);
-		panel.add(btnGo);
+		contentPane.add(btnGo);
 		
 		JLabel info = new JLabel("<html><body><p1>In diesem Unternehmensplanspiel gr\u00FCnden"
 				+ "<br>Sie einen Burgerladen in der Innenstadt Mannheims."
 				+ "</p></body></html>");
 		info.setBounds(89, 71, 260, 82);
-		panel.add(info);
+		contentPane.add(info);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //		frame.setExtendedState(MAXIMIZED_BOTH);
@@ -69,8 +74,14 @@ public class StartGame extends JFrame implements ActionListener{
 		Object s = e.getSource();
 		if(s == btnGo)
 		{
-			newName giveName = new newName();
-			frame.setVisible(false);
+			int i = Integer.parseInt(txtUNZahl.getText());
+			for(int n = 0; n < i; n++)
+			{
+				Controller.Controller.neuesUnternehmen(new business.Unternehmen("un" + n));
+				frame.setVisible(false);
+				System.out.println(Controller.Controller.getUnternehmen(n).getName());
+				newName giveName = new newName();
+			}
 			frame.dispose();
 		}
 	}

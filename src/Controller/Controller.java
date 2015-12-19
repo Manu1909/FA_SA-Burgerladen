@@ -30,6 +30,15 @@ public class Controller {
 		simuliereSpiel();
 	}
 	
+	public static Unternehmen getUnternehmen(int n)
+	{
+		return unternehmen.get(n);
+	}
+	
+	public static void neuesUnternehmen(Unternehmen p)
+	{
+		unternehmen.add(p);
+	}
 	
 	//Methoden die das Spiel simulieren
 	public static void simuliereSpiel(){

@@ -101,7 +101,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	// Variablen Bestellungs-Fenster
 	private JFrame frameBestellungen = new JFrame();
 	private JPanel contentPaneBestellungen = new JPanel();
-	private JTextField BurgerZahl = new JTextField(300);
+	private JTextField txtBurgerZahl = new JTextField(300);
 	private JButton btnBestellungAbschicken = new JButton("Bestellung abschicken");
 	private String[] fleischOpt = { "Sutro Großlieferant", "Metzgerei Zorn", "Ernas Fleischerei" };
 	private JList listFleisch = new JList(fleischOpt);
@@ -193,7 +193,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(lblMarketing);
 
 		lblanzahlPersonal.setText("Anzahl Mitarbeiter: " + anzahlPersonal);
-		lblanzahlPersonal.setBounds(300, 200, 120, 30);
+		lblanzahlPersonal.setBounds(580, 190, 120, 30);
 		panel.add(lblanzahlPersonal);
 
 		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
@@ -372,9 +372,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		JLabel lblBestellung = new JLabel("Ich bestelle für");
 		lblBestellung.setBounds(27, 76, 116, 14);
 		contentPaneBestellungen.add(lblBestellung);
-		BurgerZahl.setBounds(120, 73, 86, 20);
-		contentPaneBestellungen.add(BurgerZahl);
-		BurgerZahl.setColumns(10);
+		txtBurgerZahl.setBounds(120, 73, 86, 20);
+		contentPaneBestellungen.add(txtBurgerZahl);
+		txtBurgerZahl.setColumns(10);
 		JLabel lblBurger = new JLabel("Burger");
 		lblBurger.setBounds(240, 76, 46, 14);
 		contentPaneBestellungen.add(lblBurger);
@@ -442,8 +442,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		// Gesamtkosten
 		btnGK.setBounds(120, 493, 179, 23);
+		btnGK.addActionListener(this);
 		contentPaneBestellungen.add(btnGK);
-		lblGK.setBounds(392, 497, 46, 14);
+		lblGK.setBounds(392, 497, 150, 14);
 		contentPaneBestellungen.add(lblGK);
 
 		// Abschicken
@@ -543,24 +544,33 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			framePersonal.setVisible(false);
 			un.getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
 			un.getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
-			// lblanzahlPersonal.setText("Personal: " +
-			// un.getPersonal().berechneAnzahl());
+			lblanzahlPersonal.setText("Personal: " + un.getPersonal().berechneAnzahl());
 			frame.setFocusableWindowState(true);
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
 			frameBestellungen.setVisible(false);
-			un.setzeLieferanten(Datenbank.fl[listFleisch.getSelectedIndex()], 
-					Datenbank.bl[listBroetchen.getSelectedIndex()], 
-					Datenbank.sal[listSalat.getSelectedIndex()], 
-					Datenbank.sol[listSauce.getSelectedIndex()]);
+			
+			// Bestellung übergeben
+			
 			fleischLieferant = listFleisch.getSelectedValue().toString();
 			brotLieferant = listBroetchen.getSelectedValue().toString();
 			salatLieferant = listSalat.getSelectedValue().toString();
 			saucenLieferant = listSauce.getSelectedValue().toString();
-			
 			frame.setFocusableWindowState(true);
 			frameBestellungen.dispose();
+		}
+		if (s == btnGK) {
+			if (txtBurgerZahl.getText().equals("")) {
+			} else {
+				double fleischKosten = Datenbank.fl[listFleisch.getSelectedIndex()].getPreisProGut();
+				double brotKosten = Datenbank.bl[listBroetchen.getSelectedIndex()].getPreisProGut();
+				double salatKosten = Datenbank.sal[listSalat.getSelectedIndex()].getPreisProGut();
+				double saucenKosten = Datenbank.sol[listSauce.getSelectedIndex()].getPreisProGut();
+				int anzahl = Integer.parseInt(txtBurgerZahl.getText());
+				double GK = fleischKosten * anzahl + brotKosten * anzahl + salatKosten * anzahl + saucenKosten * anzahl;
+				lblGK.setText("Bestellkosten: " + GK + "€");
+			}
 		}
 	}
 }
