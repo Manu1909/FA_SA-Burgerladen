@@ -35,6 +35,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private String brotLieferant;
 	private String salatLieferant;
 	private String saucenLieferant;
+	private int n;
 	private int kredit;
 	private int lagerPlatzGroesse;
 	private int burgerPreis;
@@ -61,6 +62,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private JPanel panel = new JPanel();
 	private JTextPane txtLetztePeriode = new JTextPane();
 	private JTextPane txtRangliste = new JTextPane();
+	private JButton btnRundeBeenden = new JButton("Runde beenden");
 
 	// Variablen Marketing
 	private JButton btnConfirm = new JButton("Bestätigen");
@@ -140,7 +142,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private int[] qualitaetSau = { Datenbank.sol[0].getQualitaet(), Datenbank.sol[1].getQualitaet(),
 			Datenbank.sol[2].getQualitaet() };
 
-	public Overview(business.Unternehmen un) {
+	public Overview(business.Unternehmen un, int n) {
+		this.n = n;
 		this.un = un;
 		this.name = un.getName();
 		this.standort = un.getStandort().getLage();
@@ -217,8 +220,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(txtSchulden);
 		txtSchulden.setColumns(10);
 
-		JButton btnRundeBeenden = new JButton("Runde beenden");
 		btnRundeBeenden.setBounds(344, 390, 150, 23);
+		btnRundeBeenden.addActionListener(this);
 		panel.add(btnRundeBeenden);
 
 		txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€");
@@ -528,7 +531,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		Object s = e.getSource();
 		if (s == btnConfirm) {
 			frameMarketing.setVisible(false);
-			un.setMarketing(Controller.Controller.waehleMarketing(listMarketing.getSelectedIndex()));
+			Controller.Controller.getUnternehmen(n)
+					.setMarketing(Controller.Controller.waehleMarketing(listMarketing.getSelectedIndex()));
+			un = Controller.Controller.getUnternehmen(n);
 			this.werbung = un.getMarketing().getBezeichnung();
 			lblMarketing.setText("Marketing-Aktion:" + werbung);
 			frame.setFocusableWindowState(true);
@@ -536,23 +541,27 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (s == btnPreis) {
 			framePreis.setVisible(false);
-			un.getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
+			Controller.Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
+			un = Controller.Controller.getUnternehmen(n);
 			frame.setFocusableWindowState(true);
 			framePreis.dispose();
 		}
 		if (s == btnAbschicken) {
 			framePersonal.setVisible(false);
-			un.getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
-			un.getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
+			Controller.Controller.getUnternehmen(n).getPersonal()
+					.erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
+			Controller.Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
+			un = Controller.Controller.getUnternehmen(n);
 			lblanzahlPersonal.setText("Personal: " + un.getPersonal().berechneAnzahl());
 			frame.setFocusableWindowState(true);
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
 			frameBestellungen.setVisible(false);
-			
+
 			// Bestellung übergeben
-			
+			un = Controller.Controller.getUnternehmen(n);
+
 			fleischLieferant = listFleisch.getSelectedValue().toString();
 			brotLieferant = listBroetchen.getSelectedValue().toString();
 			salatLieferant = listSalat.getSelectedValue().toString();
@@ -570,6 +579,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				int anzahl = Integer.parseInt(txtBurgerZahl.getText());
 				double GK = fleischKosten * anzahl + brotKosten * anzahl + salatKosten * anzahl + saucenKosten * anzahl;
 				lblGK.setText("Bestellkosten: " + GK + "€");
+			}
+		}
+		if (s == btnRundeBeenden) {
+			if (n < StartGame.getI() - 1) {
+				newName nextUN = new newName(n + 1);
 			}
 		}
 	}
