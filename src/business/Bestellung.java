@@ -1,7 +1,8 @@
 package business;
 
 public class Bestellung {
-	
+
+
 	private int menge = 0;
 	private Lieferant fleischlieferant;
 	private Lieferant brotlieferant;
@@ -61,10 +62,10 @@ public class Bestellung {
 	}
 	
 	public void setzeBestellmenge(int bestellmenge, int freierLagerplatz){
-		boolean fleischOK;
+		/*boolean fleischOK;
 		boolean brotOK;
 		boolean salatOK;
-		boolean sosseOK;
+		boolean sosseOK;*/
 		boolean lagerPlatzOK;
 
 		menge = 0;
@@ -74,8 +75,14 @@ public class Bestellung {
 		else{
 			lagerPlatzOK = false;
 		}
-		
-		
+
+		if(lagerPlatzOK){
+			menge=bestellmenge;
+		}
+		else if(!lagerPlatzOK){
+			System.out.println("Nicht genügend Lagerplatz vorhanden");
+		}
+		/*
 		if(Datenbank.fl1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl3.berechneUebrigeRessourcen() >= bestellmenge){
 			fleischOK = true;
 		}
@@ -106,73 +113,61 @@ public class Bestellung {
 		
 		if(fleischOK && brotOK && salatOK && sosseOK && lagerPlatzOK){
 			menge = bestellmenge;
-		}
-		else if(!lagerPlatzOK){
-			System.out.println("Nicht genügend Lagerplatz vorhanden");
-		}
-		else{
+		}*/
+
+	/*	else{
 			System.out.println("Die Ressourcen der Lieferanten reichen nicht aus, um so viele Burger zu bestellen");
-		}
+		}*/
 	}
 	
-	
-	public boolean pruefeAnzahlZutaten(int einzelneBestellmenge){
+
+	//Diese Methode wäre nötig, wenn man von mehreren Lieferanten gleichzeitig bestellen könnte
+	/*public boolean pruefeAnzahlZutaten(int einzelneBestellmenge){
 		if(einzelneBestellmenge==menge){
 			return true;
 		}
 		else{
 			return false;
 		}
-	}
+	}*/
 	
 	
-	public boolean bestelleFleisch(Lieferant fl){
-		if(fl.checkRessourcen(menge)){
+	public void bestelleFleisch(Lieferant fl){
+
 			fl.setVerbrauchteRessourcen(fl.getVertrauchteRessourcen()+menge);
 			fleischlieferant = fl;
-			return true;
-		}
-		else{
-			return false;
-		}
+
 	}
 	
 	
-	public boolean bestelleBrot(Lieferant bl){
-		if(bl.checkRessourcen(menge)){
+	public void bestelleBrot(Lieferant bl){
+
 			bl.setVerbrauchteRessourcen(bl.getVertrauchteRessourcen()+menge);
 			brotlieferant = bl;
-			return true;
-		}
-		return false;
+
 	}
 	
 	
-	public boolean bestelleSalat(Lieferant sal){
-		if(sal.checkRessourcen(menge)){
+	public void bestelleSalat(Lieferant sal){
+
 			sal.setVerbrauchteRessourcen(sal.getVertrauchteRessourcen()+menge);
 			salatlieferant = sal;
-			return true;
-		}
-		return false;
+
 	}
 	
-	public boolean bestelleSosse(Lieferant sol){
-		if(sol.checkRessourcen(menge)){
+	public void bestelleSosse(Lieferant sol){
+
 			sol.setVerbrauchteRessourcen(sol.getVertrauchteRessourcen()+menge);
 			sossenlieferant = sol;
-			return true;
-		}
-		return false;
 	}
 	
 	
-	/*public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
+	public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
 		bestelleFleisch(fl);
 		bestelleBrot(bl);
 		bestelleSalat(sal);
 		bestelleSosse(sol);
-	}*/
+	}
 
 	public double berechneGesamtpreis(){
 		double preis = (fleischlieferant.getPreisProGut() + brotlieferant.getPreisProGut() + salatlieferant.getPreisProGut() + sossenlieferant.getPreisProGut())*menge;
