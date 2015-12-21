@@ -7,14 +7,16 @@ public class Lieferant {
 	private int qualitaet;
 	private double preisProGut;
 	private int risikoQuote;
+	private int risikoEingetreten;
 	private int preisKonstante = 5;
 
 	
-	public Lieferant(int ressourcen, int qualitaet, double preisProGut, int risikoQuote) {
+	public Lieferant(int ressourcen, int qualitaet, double preisProGut, int risikoQuote, int risikoEingetreten) {
 		this.ressourcen = ressourcen;
 		this.qualitaet = qualitaet;
 		this.risikoQuote = risikoQuote;
 		this.preisProGut = preisProGut;
+		this.risikoEingetreten = risikoEingetreten;
 	}
 	
 	public void setRessourcen(int ressourcen){
@@ -38,6 +40,10 @@ public class Lieferant {
 		this.risikoQuote = risikoQuote;
 	}
 	
+	public void setRisikoEingetreten(int risikoEingetreten){
+		this.risikoEingetreten = risikoEingetreten;
+	}
+	
 	public int getVertrauchteRessourcen(){
 		return verbrauchteRessourcen;
 	}
@@ -53,6 +59,10 @@ public class Lieferant {
 	
 	public int getRisikoQuote(){
 		return risikoQuote;
+	}
+	
+	public int getRisikoEingetreten(){
+		return risikoEingetreten;
 	}
 
 
