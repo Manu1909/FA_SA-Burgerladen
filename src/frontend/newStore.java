@@ -226,14 +226,17 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnConfirm) {
-			un.setName(name);
-			un.setKapital(90000.0);
-			un.setStandort(Controller.Controller.waehleStandort("" + (listLocations.getSelectedIndex() + 1)));
-			un.getStandort().setInnenausstattung(
+			Controller.Controller.getUnternehmen(n).setName(name);
+			Controller.Controller.getUnternehmen(n).setKapital(90000.0);
+			Controller.Controller.getUnternehmen(n)
+					.setStandort(Controller.Controller.waehleStandort("" + (listLocations.getSelectedIndex() + 1)));
+			Controller.Controller.getUnternehmen(n).getStandort().setInnenausstattung(
 					Controller.Controller.waehleInnenausstattung("" + (listInterior.getSelectedIndex() + 1)));
-			un.setKredit(Controller.Controller.waehleKredit(listCredit.getSelectedIndex()));
-			un.getStandort()
+			Controller.Controller.getUnternehmen(n)
+					.setKredit(Controller.Controller.waehleKredit(listCredit.getSelectedIndex()));
+			Controller.Controller.getUnternehmen(n).getStandort()
 					.setKuehlraum(Controller.Controller.waehleKuhlraum("" + (listStorage.getSelectedIndex() + 1)));
+			un = Controller.Controller.getUnternehmen(n);
 			// Controller.Controller.unternehmen.add(un); //Wie Controller
 			// adressieren?
 			// un.setPersonal(personal);
