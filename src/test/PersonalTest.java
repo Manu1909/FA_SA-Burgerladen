@@ -38,16 +38,6 @@ public class PersonalTest {
 		assertTrue("Test setAnzahlGefeuerte", 11 == p.getAnzahlGefeuerte());
 	}
 	
-	@Test
-	public void testGetKosten(){
-		assertTrue("Test getKosten", 0 ==p.getKosten());
-	}
-	
-	@Test 
-	public void testSetKosten(){
-		p.setKosten(11);;
-		assertTrue("Test setKosten", 11 == p.getKosten());
-	}
 
 	@Test
 	public void testGetBurgerKapazitaet(){
@@ -78,10 +68,5 @@ public class PersonalTest {
 	@Test 
 	public void testFeuern(){
 		assertTrue("Test Feuern", 3 == p.feuern(3));
-	}
-
-	@Test
-	public void testBerechneAnzahlBurger(){
-		assertTrue("Test berechneAnzahlBurger", 1000 == p.berechneAnzahlBurger());
 	}
 }

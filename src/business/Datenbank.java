@@ -29,24 +29,24 @@ public class Datenbank {
 	public static Innenausstattung[] i = {i1,i2,i3};
 	
 	//Daten f�r Lieferante
-	public static Lieferant fl1 = new Lieferant(6000, 30, 0.68, 5);
-	public static Lieferant fl2 = new Lieferant(5000, 50, 1.08, 4);
-	public static Lieferant fl3 = new Lieferant(4000, 80, 1.66, 2);
+	public static Lieferant fl1 = new Lieferant(6000, 30, 0.68, 5, 0);
+	public static Lieferant fl2 = new Lieferant(5000, 50, 1.08, 4, 0);
+	public static Lieferant fl3 = new Lieferant(4000, 80, 1.66, 2, 0);
 	public static Lieferant[] fl = {fl1, fl2, fl3};
 	  
-	public static Lieferant bl1 = new Lieferant(6000, 30, 0.23, 0);
-	public static Lieferant bl2 = new Lieferant(5000, 60, 0.30, 0);
-	public static Lieferant bl3 = new Lieferant(4000, 90, 0.36, 0);
+	public static Lieferant bl1 = new Lieferant(6000, 30, 0.23, 0, 0);
+	public static Lieferant bl2 = new Lieferant(5000, 60, 0.30, 0, 0);
+	public static Lieferant bl3 = new Lieferant(4000, 90, 0.36, 0, 0);
 	public static Lieferant[] bl = {bl1, bl2, bl3};
 	  
-	public static Lieferant sal1 = new Lieferant(6000, 20, 0.05, 0);
-	public static Lieferant sal2 = new Lieferant(5000, 50, 0.1, 0);
-	public static Lieferant sal3 = new Lieferant(4000, 80, 0.2, 0);
+	public static Lieferant sal1 = new Lieferant(6000, 20, 0.05, 0, 0);
+	public static Lieferant sal2 = new Lieferant(5000, 50, 0.1, 0, 0);
+	public static Lieferant sal3 = new Lieferant(4000, 80, 0.2, 0, 0);
 	public static Lieferant[] sal = {sal1, sal2, sal3};
 	  
-	public static Lieferant sol1 = new Lieferant(6000, 20, 0.01, 0);
-	public static Lieferant sol2 = new Lieferant(5000, 60, 0.03, 0);
-	public static Lieferant sol3 = new Lieferant(4000, 90, 0.06, 0);
+	public static Lieferant sol1 = new Lieferant(6000, 20, 0.01, 0, 0);
+	public static Lieferant sol2 = new Lieferant(5000, 60, 0.03, 0, 0);
+	public static Lieferant sol3 = new Lieferant(4000, 90, 0.06, 0, 0);
 	public static Lieferant[] sol = {sol1, sol2, sol3};
 
 	//Daten für Marketing
