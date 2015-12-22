@@ -237,10 +237,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 			Controller.Controller.getUnternehmen(n).getStandort()
 					.setKuehlraum(Controller.Controller.waehleKuhlraum("" + (listStorage.getSelectedIndex() + 1)));
 			un = Controller.Controller.getUnternehmen(n);
-			// Controller.Controller.unternehmen.add(un); //Wie Controller
-			// adressieren?
-			// un.setPersonal(personal);
-			Overview overview = new Overview(un, n);
+			Overview overview = new Overview(n);
 			frame.setVisible(false);
 			frame.dispose();
 		}

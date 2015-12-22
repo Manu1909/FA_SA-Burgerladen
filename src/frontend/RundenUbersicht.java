@@ -12,7 +12,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	private business.Unternehmen un;
 	JFrame frame = new JFrame();
 	JPanel contentPane = new JPanel();
-	
+
 	public RundenUbersicht() {
 		buildWindow();
 	}
@@ -22,7 +22,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		btnWeiter.setText("Weiter");
 		btnWeiter.addActionListener(this);
 		contentPane.add(btnWeiter);
-		
+
 		frame.setContentPane(contentPane);
 		frame.setBounds(500, 400, 500, 400);
 		frame.setVisible(true);
@@ -32,8 +32,10 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnWeiter) {
-			un = new Controller.Controller().getUnternehmen(0);
-			Overview overview = new Overview(un, 0);
+			if (Controller.Controller.getRunde() < 12) {
+				Controller.Controller.setRunde(Controller.Controller.getRunde() + 1);
+				Overview overview = new Overview(0);
+			}
 		}
 	}
 }

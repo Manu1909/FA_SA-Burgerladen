@@ -24,6 +24,7 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import business.Datenbank;
+import business.Unternehmen;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
 
@@ -62,6 +63,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private JLabel lblBestellung = new JLabel();
 	private JLabel lblanzahlPersonal = new JLabel();
 	private JLabel lblPreis = new JLabel();
+	private JLabel lblInnenausstattung = new JLabel();
 	private JPanel panel = new JPanel();
 	private JTextPane txtLetztePeriode = new JTextPane();
 	private JTextPane txtRangliste = new JTextPane();
@@ -145,9 +147,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private int[] qualitaetSau = { Datenbank.sol[0].getQualitaet(), Datenbank.sol[1].getQualitaet(),
 			Datenbank.sol[2].getQualitaet() };
 
-	public Overview(business.Unternehmen un, int n) {
+	public Overview(int n) {
 		this.n = n;
-		this.un = un;
+		this.un = Controller.Controller.getUnternehmen(n);
 		this.name = un.getName();
 		this.standort = un.getStandort().getLage();
 		this.innenausstattung = un.getStandort().getInnenausstattung().getBezeichnung();
@@ -162,7 +164,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			this.burgerPreis = un.getBurger().getPreis();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		zeigeFensterOverview();
@@ -177,7 +178,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		JLabel lblInfoText = new JLabel(
 				"<html><body><p>Dieses Fenster bietet ihnen eine Übersicht" + " über die wichtigsten "
 						+ "Statistiken ihres Unternehmens. " + "Neben Kapital und Schulden erhalten Sie einen "
-						+ "Einblick in die Rangliste und k�nnen mit der oberen Men�leiste"
+						+ "Einblick in die Rangliste und k�nnen mit der oberen Menüleiste"
 						+ " zwischen den einzelnen Optionen navigieren" + "</p></body></html>");
 		lblInfoText.setBounds(180, 11, 250, 266);
 		panel.add(lblInfoText);
@@ -210,6 +211,10 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblPreis.setBounds(580, 230, 160, 30);
 		panel.add(lblPreis);
 
+		lblInnenausstattung.setText("Ausstattung: " + innenausstattung);
+		lblInnenausstattung.setBounds(580, 250, 160, 30);
+		panel.add(lblInnenausstattung);
+
 		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
 		lblRangliste.setBounds(640, 270, 75, 40);
 		panel.add(lblRangliste);
@@ -235,10 +240,15 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		btnRundeBeenden.addActionListener(this);
 		panel.add(btnRundeBeenden);
 
-		txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€");
-		txtLetztePeriode.setBounds(130, 250, 151, 80);
-		txtLetztePeriode.setEditable(false);
-		panel.add(txtLetztePeriode);
+		try {
+			txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€" + "\n"+Controller.Controller.getUnternehmen(n).getKunden());
+			txtLetztePeriode.setBounds(130, 250, 151, 80);
+			txtLetztePeriode.setEditable(false);
+			panel.add(txtLetztePeriode);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		txtRangliste.setText("1. Spieler 1 \n2. Spieler 2\n3. Spieler 2\n4. Spieler 4");
 		txtRangliste.setBounds(640, 300, 150, 69);
@@ -251,7 +261,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		menuMarketing.addMouseListener(this);
 		menuBestellung.addMouseListener(this);
 		menuPersonal.addMouseListener(this);
-		bar.add(menuCatering);
 		bar.add(menuPreis);
 		bar.add(menuMarketing);
 		bar.add(menuBestellung);
@@ -260,7 +269,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-
+		if(Controller.Controller.getRunde() == 3 || Controller.Controller.getRunde() == 6 || Controller.Controller.getRunde() == 9){
+			bar.add(menuCatering);
+			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
+			frame.repaint();
+		}
 		frame.setContentPane(contentPane);
 		frame.setResizable(false);
 		frame.add(panel);
@@ -362,6 +375,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		framePersonal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		framePersonal.setBounds(100, 100, 501, 364);
 		framePersonal.setVisible(true);
+		bar.remove(menuPersonal);
+		frame.repaint();
 	}
 
 	private void zeigeFensterCatering() {
@@ -570,21 +585,27 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
-			frameBestellungen.setVisible(false);
-			// Bestellung übergeben
-			Controller.Controller.getUnternehmen(n).bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
-					Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
-					Datenbank.sol[listSauce.getSelectedIndex()]);
-			Controller.Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
-					Integer.parseInt(txtBurgerZahl.getText()),
-					Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
-			un = Controller.Controller.getUnternehmen(n);
-			fleischLieferant = listFleisch.getSelectedValue().toString();
-			brotLieferant = listBroetchen.getSelectedValue().toString();
-			salatLieferant = listSalat.getSelectedValue().toString();
-			saucenLieferant = listSauce.getSelectedValue().toString();
+			if(Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal().berechneKapazitaet())
+			{
+				// Bestellung übergeben
+				Controller.Controller.getUnternehmen(n).bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
+						Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
+						Datenbank.sol[listSauce.getSelectedIndex()]);
+				Controller.Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
+						Integer.parseInt(txtBurgerZahl.getText()),
+						Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
+				un = Controller.Controller.getUnternehmen(n);
+				fleischLieferant = listFleisch.getSelectedValue().toString();
+				brotLieferant = listBroetchen.getSelectedValue().toString();
+				salatLieferant = listSalat.getSelectedValue().toString();
+				saucenLieferant = listSauce.getSelectedValue().toString();
+				lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
+			}
+			else{
+				JOptionPane.showMessageDialog(this, "Sie haben nicht genug Mitarbeiter");
+			}
 			frame.setFocusableWindowState(true);
-			lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
+			frameBestellungen.setVisible(false);
 			frameBestellungen.dispose();
 		}
 		if (s == btnGK) {
@@ -600,15 +621,26 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			}
 		}
 		if (s == btnRundeBeenden) {
-			// Bedingung finden: nur wenn runde 1
+			// Rundenabschlussberechnungen
+			Controller.Controller.getUnternehmen(n).betreibeMarketing();
+			Controller.Controller.getUnternehmen(n).getPersonal().berechneKosten();
+//			Controller.Controller.getUnternehmen(n).berechneCateringKosten(Datenbank.c1);
+			
+			//Neue Preise auf Grundlage der Verkaufszahlen der letzten Periode
 
-			if (n == StartGame.getI() - 1) {
+			if (n == StartGame.getI() - 1) { //
 				alleGegruendet = true;
+				Controller.Controller.berechneKunden();
+				for (int j = 0; j < Datenbank.fl.length; j++) {
+					Datenbank.fl[j].berechneNeuenPreis();
+					Datenbank.bl[j].berechneNeuenPreis();
+					Datenbank.sal[j].berechneNeuenPreis();
+					Datenbank.sol[j].berechneNeuenPreis();
+				}
 				RundenUbersicht ende = new RundenUbersicht();
-			}
-			else if (alleGegruendet) {
+			} else if (alleGegruendet) {
 				if (n < StartGame.getI() - 1) {
-					Overview nextUN = new Overview(Controller.Controller.getUnternehmen(n + 1), n + 1);
+					Overview nextUN = new Overview(n + 1);
 				}
 			} else {
 				if (n < StartGame.getI() - 1) {

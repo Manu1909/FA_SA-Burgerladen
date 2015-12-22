@@ -31,6 +31,16 @@ public class Controller {
 		simuliereSpiel();
 	}
 	
+	public static void setRunde(int z)
+	{
+		anzahlRunden = z;
+	}
+	
+	public static int getRunde()
+	{
+		return anzahlRunden;
+	}
+	
 	public static Unternehmen getUnternehmen(int n)
 	{
 		return unternehmen.get(n);
@@ -385,7 +395,7 @@ public class Controller {
 
 	//Hilfsmethoden um elementare Spielergebnisse zu berechnen
 	//Berechnet die Anzahl der Kunden für das entsprechende Unternehmen
-	private static void berechneKunden(){
+	public static void berechneKunden(){
 		int gesamtAnteil = 0;
 		int[] anteileInnenausstattung = new int[3];
 		int kunden = 0;
