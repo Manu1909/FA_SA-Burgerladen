@@ -6,8 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,7 +24,6 @@ import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
 import business.Datenbank;
-import business.Unternehmen;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
 
@@ -171,6 +170,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 	public void zeigeFensterOverview() {
 		frame.setTitle("Überblick für " + name);
+
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -241,7 +241,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(btnRundeBeenden);
 
 		try {
-			txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€" + "\n"+Controller.Controller.getUnternehmen(n).getKunden());
+			txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€" + "\n"
+					+ Controller.Controller.getUnternehmen(n).getKunden());
 			txtLetztePeriode.setBounds(130, 250, 151, 80);
 			txtLetztePeriode.setEditable(false);
 			panel.add(txtLetztePeriode);
@@ -269,7 +270,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		if(Controller.Controller.getRunde() == 3 || Controller.Controller.getRunde() == 6 || Controller.Controller.getRunde() == 9){
+		if (Controller.Controller.getRunde() == 3 || Controller.Controller.getRunde() == 6
+				|| Controller.Controller.getRunde() == 9) {
 			bar.add(menuCatering);
 			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
 			frame.repaint();
@@ -505,21 +507,23 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Object s = e.getSource();
-		// Fenster öffnen
-		if (s == menuMarketing) {
-			zeigeFensterMarketing();
-		}
-		if (s == menuPreis) {
-			zeigeFensterPreis();
-		}
-		if (s == menuBestellung) {
-			zeigeFensterBestellung();
-		}
-		if (s == menuCatering) {
-			zeigeFensterCatering();
-		}
-		if (s == menuPersonal) {
-			zeigeFensterPersonal();
+		// Fenster öffnen, falls kein anderes geöffnet ist
+		if (frame.getFocusableWindowState() == true) {
+			if (s == menuMarketing) {
+				zeigeFensterMarketing();
+			}
+			if (s == menuPreis) {
+				zeigeFensterPreis();
+			}
+			if (s == menuBestellung) {
+				zeigeFensterBestellung();
+			}
+			if (s == menuCatering) {
+				zeigeFensterCatering();
+			}
+			if (s == menuPersonal) {
+				zeigeFensterPersonal();
+			}
 		}
 
 		//
@@ -585,23 +589,22 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
-			if(Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal().berechneKapazitaet())
-			{
+			if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal()
+					.berechneKapazitaet()) {
 				// Bestellung übergeben
 				Controller.Controller.getUnternehmen(n).bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 						Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
 						Datenbank.sol[listSauce.getSelectedIndex()]);
-				Controller.Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
-						Integer.parseInt(txtBurgerZahl.getText()),
-						Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
+				Controller.Controller.getUnternehmen(n).getBestellung()
+						.setzeBestellmenge(Integer.parseInt(txtBurgerZahl.getText()), Controller.Controller
+								.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
 				un = Controller.Controller.getUnternehmen(n);
 				fleischLieferant = listFleisch.getSelectedValue().toString();
 				brotLieferant = listBroetchen.getSelectedValue().toString();
 				salatLieferant = listSalat.getSelectedValue().toString();
 				saucenLieferant = listSauce.getSelectedValue().toString();
 				lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
-			}
-			else{
+			} else {
 				JOptionPane.showMessageDialog(this, "Sie haben nicht genug Mitarbeiter");
 			}
 			frame.setFocusableWindowState(true);
@@ -624,9 +627,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			// Rundenabschlussberechnungen
 			Controller.Controller.getUnternehmen(n).betreibeMarketing();
 			Controller.Controller.getUnternehmen(n).getPersonal().berechneKosten();
-//			Controller.Controller.getUnternehmen(n).berechneCateringKosten(Datenbank.c1);
-			
-			//Neue Preise auf Grundlage der Verkaufszahlen der letzten Periode
+			// Controller.Controller.getUnternehmen(n).berechneCateringKosten(Datenbank.c1);
+
+			// Neue Preise auf Grundlage der Verkaufszahlen der letzten Periode
 
 			if (n == StartGame.getI() - 1) { //
 				alleGegruendet = true;
