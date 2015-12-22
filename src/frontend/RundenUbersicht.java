@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class RundenUbersicht extends JFrame implements ActionListener {
@@ -22,7 +23,11 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		btnWeiter.setText("Weiter");
 		btnWeiter.addActionListener(this);
 		contentPane.add(btnWeiter);
-
+	
+		JLabel lblText = new JLabel("Rundenübersichtsfenser. Hier stehen später Infos zu allen UN. Über Weiter nächste Runde starten");
+		lblText.setBounds(10,10, 50,120);
+		contentPane.add(lblText);
+		
 		frame.setContentPane(contentPane);
 		frame.setBounds(500, 400, 500, 400);
 		frame.setVisible(true);
