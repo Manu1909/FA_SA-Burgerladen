@@ -50,17 +50,17 @@ public class BestellungTest {
 	@Test
 	public void testBestelle() {
 		u.getBestellung().setzeBestellmenge(50, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
-		u.bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
-		assertEquals(950, u.getFleischlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getBrotlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getSalatlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getSossenlieferant().getVertrauchteRessourcen());
+		u.getBestellung().bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
+		assertEquals(950, u.getBestellung().getFleischlieferant().getVertrauchteRessourcen());
+		assertEquals(950, u.getBestellung().getBrotlieferant().getVertrauchteRessourcen());
+		assertEquals(950, u.getBestellung().getSalatlieferant().getVertrauchteRessourcen());
+		assertEquals(950, u.getBestellung().getSossenlieferant().getVertrauchteRessourcen());
 	}
 
 	@Test
 	public void testBerechneKosten() {
 		u.getBestellung().setzeBestellmenge(2000, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
-		u.bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
+		u.getBestellung().bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
 		assertTrue("Test berechne Bestellkosten", 1940 == u.getBestellung().berechneGesamtpreis());
 
 	}

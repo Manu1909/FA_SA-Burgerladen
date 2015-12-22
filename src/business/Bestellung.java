@@ -137,6 +137,7 @@ public class Bestellung {
 			fl.setVerbrauchteRessourcen(fl.getVertrauchteRessourcen()+menge);
 			fleischlieferant = fl;
 
+
 	}
 	
 	

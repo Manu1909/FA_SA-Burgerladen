@@ -588,7 +588,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			if(Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal().berechneKapazitaet())
 			{
 				// Bestellung übergeben
-				Controller.Controller.getUnternehmen(n).bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
+				Controller.Controller.getUnternehmen(n).getBestellung().bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 						Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
 						Datenbank.sol[listSauce.getSelectedIndex()]);
 				Controller.Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(

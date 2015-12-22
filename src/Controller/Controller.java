@@ -119,7 +119,7 @@ public class Controller {
 					ereignisTrittEin();
 
 					//Personal bearbeiten
-					System.out.println("Möchten sie Personal einstellen?");
+					System.out.println("Mï¿½chten sie Personal einstellen?");
 					System.out.println("Aktuelle Anzahl: " + u.getPersonal().berechneAnzahl());
 					System.out.println("Diesen Monat abgehauen: " + u.getPersonal().getAnzahlGefeuerte());
 					System.out.print("Wie viele?");
@@ -128,7 +128,7 @@ public class Controller {
 						eingabe = scanner.nextInt();
 						System.out.println("neue Anzahl: " + u.getPersonal().erhoeheAnzahl(eingabe));
 					} while (u.getPersonal().getAnzahlAngestellte() + eingabe > 30);
-					System.out.println("Möchten Sie Leute feuern?\nSie werden in der folgenden Periode gefeuert.");
+					System.out.println("Mï¿½chten Sie Leute feuern?\nSie werden in der folgenden Periode gefeuert.");
 					System.out.println("Wie viele?");
 					do{
 						eingabe = scanner.nextInt();
@@ -146,7 +146,7 @@ public class Controller {
 
 						u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 						if (bestellMenge > u.getPersonal().berechneKapazitaet()){
-							System.out.println("Sie haben leider nicht genügend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazität: " + u.getPersonal().berechneKapazitaet());
+							System.out.println("Sie haben leider nicht genï¿½gend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazitï¿½t: " + u.getPersonal().berechneKapazitaet());
 						}
 					}while (u.getBestellung().getMenge() == 0 && bestellMenge !=0 && bestellMenge > u.getPersonal().berechneKapazitaet());
 
@@ -155,24 +155,24 @@ public class Controller {
 
 
 					zeigeLieferant(0);
-					u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+					u.getBestellung().bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
 
 
 
 
 					zeigeLieferant(1);
-					u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+					u.getBestellung().bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
 
 
 
 					zeigeLieferant(2);
-					u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+					u.getBestellung().bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
 
 
 
 					zeigeLieferant(3);
-					u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+					u.getBestellung().bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
 
 
@@ -291,10 +291,10 @@ public class Controller {
 				System.out.println("ZusÃ¤tzlich haben Sie sich fÃ¼r folgende Innenausstattung entschieden: " + u.getStandort().getInnenausstattung().getBezeichnung() + " Kostenpunkt: " + u.getStandort().getInnenausstattung().getKosten());
 
 				//Personalwahl
-				System.out.println("Damit ihr Burgerladen betrieben werden kann benötigen Sie mindestens 5 Mitarbeiter");
-				System.out.println("1 Mitarbeiter kann innerhalb einer Periode maximal 300 Burger produzieren. Damit beträgt die momentane Burgerkapazität 1500.");
-				System.out.println("Das Gehalt beträgt 2040 Euro im Monat");
-				System.out.println("Wollen Sie Ihre Mitarbeiterkapazität erweitern?");
+				System.out.println("Damit ihr Burgerladen betrieben werden kann benï¿½tigen Sie mindestens 5 Mitarbeiter");
+				System.out.println("1 Mitarbeiter kann innerhalb einer Periode maximal 300 Burger produzieren. Damit betrï¿½gt die momentane Burgerkapazitï¿½t 1500.");
+				System.out.println("Das Gehalt betrï¿½gt 2040 Euro im Monat");
+				System.out.println("Wollen Sie Ihre Mitarbeiterkapazitï¿½t erweitern?");
 				u.getPersonal().erhoeheAnzahl((scanner.nextInt()));
 
 				//LieferantenBestellung
@@ -306,7 +306,7 @@ public class Controller {
 
 					u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 					if (bestellMenge > u.getPersonal().berechneKapazitaet()){
-						System.out.println("Sie haben leider nicht genügend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazität: " + u.getPersonal().berechneKapazitaet());
+						System.out.println("Sie haben leider nicht genï¿½gend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazitï¿½t: " + u.getPersonal().berechneKapazitaet());
 					}
 				}while (u.getBestellung().getMenge() == 0 && bestellMenge !=0 && bestellMenge > u.getPersonal().berechneKapazitaet());
 
@@ -314,24 +314,24 @@ public class Controller {
 
 
 				zeigeLieferant(0);
-				u.bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
+				u.getBestellung().bestelleFleisch(Datenbank.fl[scanner.nextInt()-1]);
 
 
 
 
 				zeigeLieferant(1);
-				u.bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
+				u.getBestellung().bestelleBrot(Datenbank.bl[scanner.nextInt()-1]);
 
 
 
 
 				zeigeLieferant(2);
-				u.bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
+				u.getBestellung().bestelleSalat(Datenbank.sal[scanner.nextInt()-1]);
 
 
 
 				zeigeLieferant(3);
-				u.bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
+				u.getBestellung().bestelleSosse(Datenbank.sol[scanner.nextInt()-1]);
 
 
 				System.out.println("Ihre Bestellung kostet: " + u.getBestellung().berechneGesamtpreis() + "â‚¬");
@@ -403,10 +403,10 @@ public class Controller {
 		int poolVariable;
 
 		if(anzahlRunden < 4){
-			poolVariable = 200;
+			poolVariable = 300;
 		}
-		if(anzahlRunden < 8){
-			poolVariable = 150;
+		else if(anzahlRunden < 8){
+			poolVariable = 200;
 		}
 		else{
 			poolVariable = 100;
@@ -503,14 +503,14 @@ public class Controller {
 		}
 	}
 	
-	//Methode für das Auftreten von Ereignissen
+	//Methode fï¿½r das Auftreten von Ereignissen
 	private static void ereignisTrittEin() {
 		for (int i = 0; i < fl.length; i++) {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
 			if (zufallszahl <= fl[i].getRisikoQuote()){
 				for (int j = 0; j < unternehmen.size(); j++) {
-					if (unternehmen.get(j).getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
-						unternehmen.get(j).getFleischlieferant().setRisikoEingetreten(1);
+					if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
+						unternehmen.get(j).getBestellung().getFleischlieferant().setRisikoEingetreten(1);
 					}
 				}
 				
@@ -530,11 +530,11 @@ public class Controller {
 				unternehmen.get(i).setKundenzufriedenheit((int)(unternehmen.get(i).getKundenzufriedenheit() - (int)unternehmen.get(i).getKundenzufriedenheit()*0.01*ereignis[1].getKundenzufriedenheit()));
 				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheit() + " gesenkt");
 			
-			} else if (unternehmen.get(i).getFleischlieferant().getRisikoEingetreten() == 1){ //Ereignis Gammelfleisch TODO: vereinheitlichen
+			} else if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoEingetreten() == 1){ //Ereignis Gammelfleisch TODO: vereinheitlichen
 				System.out.println("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
 				unternehmen.get(i).setKundenzufriedenheit((int)(unternehmen.get(i).getKundenzufriedenheit() - (int)unternehmen.get(i).getKundenzufriedenheit()*0.01*ereignis[2].getKundenzufriedenheit()));
-				unternehmen.get(i).getFleischlieferant().setRisikoEingetreten(0);
+				unternehmen.get(i).getBestellung().getFleischlieferant().setRisikoEingetreten(0);
 				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheit() + " gesenkt");
 			}
 		}
