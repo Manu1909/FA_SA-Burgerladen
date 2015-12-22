@@ -11,10 +11,6 @@ public class Unternehmen {
 	private int kundenzufriedenheit;
 	private String name;
 	private Standort standort;
-	private Lieferant fleischlieferant;
-	private Lieferant brotlieferant;
-	private Lieferant salatlieferant;
-	private Lieferant sossenlieferant;
 	private Kredit kredit;
 	private Bestellung bestellung;
 	private Burger burger;
@@ -102,38 +98,6 @@ public class Unternehmen {
 	public void setStandort(Standort standort) {
 		this.standort = standort;
 	}
-
-	public Lieferant getFleischlieferant() {
-		return fleischlieferant;
-	}
-
-	public void setFleischlieferant(Lieferant fleischlieferant) {
-		this.fleischlieferant = fleischlieferant;
-	}
-
-	public Lieferant getBrotlieferant() {
-		return brotlieferant;
-	}
-
-	public void setBrotlieferant(Lieferant brotlieferant) {
-		this.brotlieferant = brotlieferant;
-	}
-
-	public Lieferant getSalatlieferant() {
-		return salatlieferant;
-	}
-
-	public void setSalatlieferant(Lieferant salatlieferant) {
-		this.salatlieferant = salatlieferant;
-	}
-
-	public Lieferant getSossenlieferant() {
-		return sossenlieferant;
-	}
-
-	public void setSossenlieferant(Lieferant sossenlieferant) {
-		this.sossenlieferant = sossenlieferant;
-	}
 	
 	public Kredit getKredit() {
 		return kredit;
@@ -167,12 +131,6 @@ public class Unternehmen {
 		this.personal = personal;
 	}
 
-	public void setzeLieferanten(Lieferant fleischlieferant, Lieferant brotlieferant, Lieferant salatlieferant, Lieferant sossenlieferant){
-		setFleischlieferant(fleischlieferant);
-		setBrotlieferant(brotlieferant);
-		setSalatlieferant(salatlieferant);
-		setSossenlieferant(sossenlieferant);
-	}
 	
 	public void berechneKapital(){
 		
@@ -182,6 +140,8 @@ public class Unternehmen {
 		setKredit(kredit);
 	}
 
+
+	/*
 	public void bestelleFleisch(Lieferant fl){
 		bestellung.bestelleFleisch(fl);
 		fleischlieferant = fl;
@@ -209,10 +169,10 @@ public class Unternehmen {
 		bestelleBrot(bl);
 		bestelleSalat(sal);
 		bestelleSosse(sol);
-	}
+	}*/
 
 	public int berechneBurgerQualitaet(){
-		return burger.berechneQualitaet(fleischlieferant.getQualitaet(), brotlieferant.getQualitaet(), salatlieferant.getQualitaet(), sossenlieferant.getQualitaet());
+		return burger.berechneQualitaet(bestellung.getFleischlieferant().getQualitaet(), bestellung.getBrotlieferant().getQualitaet(), bestellung.getSalatlieferant().getQualitaet(), bestellung.getSossenlieferant().getQualitaet());
 	}
 
 
@@ -296,6 +256,6 @@ public class Unternehmen {
 	}
 
 	public double berechneCateringKosten(Catering c){
-		return c.getAnzahlBurger()*(fleischlieferant.getPreisProGut()+brotlieferant.getPreisProGut()+salatlieferant.getPreisProGut()+sossenlieferant.getPreisProGut());
+		return c.getAnzahlBurger()*(bestellung.getFleischlieferant().getPreisProGut()+bestellung.getBrotlieferant().getPreisProGut()+bestellung.getSalatlieferant().getPreisProGut()+bestellung.getSossenlieferant().getPreisProGut());
 	}
 }

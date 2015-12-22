@@ -17,7 +17,7 @@ public class BurgerTest {
 	@Before
 	public void init(){
 		u = new Unternehmen("test");
-		u.setzeLieferanten(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
+		u.getBestellung().setzeLieferanten(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
 	}
 
 	@Test
