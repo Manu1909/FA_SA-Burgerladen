@@ -8,6 +8,7 @@ public class Unternehmen {
 	private int kunden;
 	public int kundenAnteil;
 	private int bekanntheit;
+	private int kundenzufriedenheitsVeraenderung = 0;
 	private int kundenzufriedenheit;
 	private String name;
 	private Standort standort;
@@ -17,6 +18,7 @@ public class Unternehmen {
 	private Catering catering;
 	private Marketing marketing = null;
 	private Personal personal;
+	//private int tmpKundenzufriedenheitsOffset;
 
 	// Konstruktor mit �bergabe von name
 	public Unternehmen(String name) {
@@ -63,8 +65,13 @@ public class Unternehmen {
 		return kundenzufriedenheit;
 	}
 
-	public void setKundenzufriedenheit(int kundenzufriedenheit) {
-		this.kundenzufriedenheit = kundenzufriedenheit;
+
+	public int getKundenzufriedenheitsVeraenderung() {
+		return kundenzufriedenheitsVeraenderung;
+	}
+
+	public void setKundenzufriedenheitsVeraenderung(int kundenzufriedenheitsVeraenderung) {
+		this.kundenzufriedenheitsVeraenderung = kundenzufriedenheitsVeraenderung;
 	}
 
 	public String getName() {
@@ -97,6 +104,7 @@ public class Unternehmen {
 
 	public void setStandort(Standort standort) {
 		this.standort = standort;
+		setBekanntheit(standort.getBekanntheit());
 	}
 	
 	public Kredit getKredit() {
@@ -175,15 +183,15 @@ public class Unternehmen {
 		return burger.berechneQualitaet(bestellung.getFleischlieferant().getQualitaet(), bestellung.getBrotlieferant().getQualitaet(), bestellung.getSalatlieferant().getQualitaet(), bestellung.getSossenlieferant().getQualitaet());
 	}
 
-
+	//Diese Methode prüft, ob in dieser Runde Marketing gewählt wurde und berechnet abhängig vom Marketing die neue Bekanntheit und die Kundenzufriedenheit
 	public void betreibeMarketing(){
 		if(marketing!=null){
 			bekanntheit = marketing.berechneBekanntheit(bekanntheit);
 			if(bekanntheit>100){
 				bekanntheit = 100;
 			}
-			kundenzufriedenheit = marketing.berechneKundenzufriedenheit(kundenzufriedenheit);
-			if(kundenzufriedenheit>100){
+			kundenzufriedenheitsVeraenderung = marketing.berechneKundenzufriedenheit(kundenzufriedenheitsVeraenderung);
+			if(kundenzufriedenheit >100){
 				kundenzufriedenheit = 100;
 			}
 		}
@@ -195,15 +203,15 @@ public class Unternehmen {
 			if(bekanntheit>100){
 				bekanntheit = 100;
 			}
-			kundenzufriedenheit = catering.berechneKundenzufriedenheit(kundenzufriedenheit);
-			if(kundenzufriedenheit>100){
+			kundenzufriedenheitsVeraenderung = catering.berechneKundenzufriedenheit(kundenzufriedenheitsVeraenderung);
+			if(kundenzufriedenheit >100){
 				kundenzufriedenheit = 100;
 			}
 		}
 }
 
 	public int berechneKundenanteil(){
-		kundenAnteil = (int)(0.25*bekanntheit + 0.33*kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
+		kundenAnteil = (int)(0.25*bekanntheit + 0.33* kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
 		if(marketing!=null){
 			kundenAnteil *= (1+marketing.getKundenprozentsatz());
 		}
@@ -258,4 +266,17 @@ public class Unternehmen {
 	public double berechneCateringKosten(Catering c){
 		return c.getAnzahlBurger()*(bestellung.getFleischlieferant().getPreisProGut()+bestellung.getBrotlieferant().getPreisProGut()+bestellung.getSalatlieferant().getPreisProGut()+bestellung.getSossenlieferant().getPreisProGut());
 	}
+
+	public int berechneKundenzufriedenheit(){
+		kundenzufriedenheit = burger.berechnePreisleistung() + kundenzufriedenheitsVeraenderung;
+		return kundenzufriedenheit;
+	}
+
+	/*public int erhoeheKundenzufriedenheit(int erhoehung){
+		kundenzufriedenheitsVeraenderung = burger.berechnePreisleistung();
+		tmpKundenzufriedenheitsOffset += erhoehung;
+		kundenzufriedenheitsVeraenderung += tmpKundenzufriedenheitsOffset;
+
+		return kundenzufriedenheitsVeraenderung;
+	}*/
 }
