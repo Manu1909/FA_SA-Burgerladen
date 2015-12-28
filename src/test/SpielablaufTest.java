@@ -34,7 +34,7 @@ public class SpielablaufTest {
 
         for (int i = 0; i < unternehmen.size(); i++) {
             unternehmen.get(i).getBestellung().setzeLieferanten(Datenbank.fl[i], Datenbank.bl[i], Datenbank.sal[i], Datenbank.sol[i]);
-            unternehmen.get(i).setStandort(Datenbank.standorte[i]);
+            unternehmen.get(i).setStandort(Controller.waehleStandort("" +(i+1)));
             k = new Kuehlraum(kuehlraeume[2].getLagerGroesse(), 0, kuehlraeume[2].getMietZusatzKosten());
             unternehmen.get(i).getStandort().setKuehlraum(k);
 
@@ -43,18 +43,18 @@ public class SpielablaufTest {
             //System.out.println("Kundenzufriedenheit " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getKundenzufriedenheit() + "\n");
         }
 
-        unternehmen.get(0).setStandort(Datenbank.standorte[2]);
+        //unternehmen.get(0).setStandort(Datenbank.standorte[2]);
         unternehmen.get(0).getStandort().setInnenausstattung(Datenbank.i[2]);
         unternehmen.get(1).getStandort().setInnenausstattung(Datenbank.i[1]);
         unternehmen.get(2).getStandort().setInnenausstattung(Datenbank.i[0]);
 
-        Controller.unternehmen = unternehmen;
+
     }
 
     @Test
     public void testSpielablauf() {
 
-        while (anzahlRunden < 1) {
+        while (anzahlRunden < 12) {
             for (int i = 0; i < unternehmen.size(); i++) {
 
 
@@ -111,7 +111,7 @@ public class SpielablaufTest {
 
                 }
 
-                Controller.ereignisTrittEin();
+               // Controller.ereignisTrittEin();
 
                 //Personal bearbeiten
                 /*u.getPersonal().berechneAnzahl();

@@ -13,7 +13,7 @@ public class Controller {
 	private static int spielRunde = 0;
 	
 	//Hier werden alle teilnehmende Unternehmen gespeichert
-	public static ArrayList<Unternehmen> unternehmen = new ArrayList<>();
+	private static ArrayList<Unternehmen> unternehmen = new ArrayList<>();
 	
 	//Daten aus der Datenbank
 	private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
