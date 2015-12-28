@@ -34,12 +34,12 @@ public class EreignisTest {
 	
 	@Test
 	public void testGetKundenzufriedenheit(){
-		assertTrue("Test getKundenzufriedenheit", -20 ==e.getKundenzufriedenheit());
+		assertTrue("Test getKundenzufriedenheitsVeraenderung", -20 ==e.getKundenzufriedenheit());
 	}
 	
 	@Test 
 	public void testSetKundenzufriedenheit(){
 		e.setKundenzufriedenheit(11);;
-		assertTrue("Test setKundenzufriedenheit", 11 == e.getKundenzufriedenheit());
+		assertTrue("Test setKundenzufriedenheitsVeraenderung", 11 == e.getKundenzufriedenheit());
 	}
 }

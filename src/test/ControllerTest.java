@@ -34,7 +34,7 @@ public class ControllerTest {
             u.getStandort().setKuehlraum(Datenbank.kuehlraeume[2]);
             u.getStandort().getKuehlraum().setInhalt(5000);
             u.setBekanntheit(50);
-            u.setKundenzufriedenheit(50);
+            u.setKundenzufriedenheitsVeraenderung(50);
             u.getBurger().setPreis(10);
         }
 

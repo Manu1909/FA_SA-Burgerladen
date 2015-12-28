@@ -9,26 +9,26 @@ public class Datenbank {
 	public static final int kundenpoolKlassisch = 1000;
 	public static final int kundenpoolAmerican = 2000;
 	
-	//Daten f�r Standorte
-	private static Standort s1 = new Standort("Planken",3200, 75, 25);
-	private static Standort s2 = new Standort("Jungbusch",1500, 40, 15);
-	private static Standort s3 = new Standort("Kurpfalzer Strasse",3000, 70, 25);
-	private static Standort s4 = new Standort("Quadrate",2500, 60, 20);
+	//Daten für Standorte
+	private static Standort s1 = new Standort("Jungbusch",1500, 40, 15);
+	private static Standort s2 = new Standort("Quadrate",2500, 60, 20);
+	private static Standort s3 = new Standort("Planken",3200, 75, 25);
+	private static Standort s4 = new Standort("Kurpfalzer Strasse",3000, 70, 25);
 	public static Standort[] standorte = {s1, s2, s3, s4};
 	
-	//Daten f�r K�hlr�ume
-	private static Kuehlraum kr1 = new Kuehlraum(2000, 0, 300);
-	private static Kuehlraum kr2 = new Kuehlraum(3000, 0, 500);
-	private static Kuehlraum kr3 = new Kuehlraum(5000, 0, 800);
+	//Daten für Kühlräume
+	private static Kuehlraum kr1 = new Kuehlraum(3000, 0, 300);
+	private static Kuehlraum kr2 = new Kuehlraum(4000, 0, 500);
+	private static Kuehlraum kr3 = new Kuehlraum(6000, 0, 800);
 	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
-	//Daten f�r Innenausstattung
+	//Daten für Innenausstattung
 	private static Innenausstattung i1 = new Innenausstattung("Modern", kundenpoolModern, 40000);
 	private static Innenausstattung i2 = new Innenausstattung("Klassisch", kundenpoolKlassisch, 33000);
 	private static Innenausstattung i3 = new Innenausstattung("American", kundenpoolAmerican, 45000);
 	public static Innenausstattung[] i = {i1,i2,i3};
 	
-	//Daten f�r Lieferante
+	//Daten für Lieferanten
 	public static Lieferant fl1 = new Lieferant(6000, 30, 0.68, 5, 0);
 	public static Lieferant fl2 = new Lieferant(5000, 50, 1.08, 4, 0);
 	public static Lieferant fl3 = new Lieferant(4000, 80, 1.66, 2, 0);
@@ -63,8 +63,8 @@ public class Datenbank {
 	
 	//Daten f�r Ereignisse
 	public static Ereignis e1 = new Ereignis(30, 10);
-	public static Ereignis e2 = new Ereignis(5, -10);
-	public static Ereignis e3 = new Ereignis(10, -20);
+	public static Ereignis e2 = new Ereignis(5, 10);
+	public static Ereignis e3 = new Ereignis(10, 20);
 	public static Ereignis[] e = {e1, e2, e3};
 
 	//Daten für Catering

@@ -145,6 +145,7 @@ public class Controller {
 						bestellMenge = scanner.nextInt();
 
 						u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+						u.getStandort().getKuehlraum().wareEinlagern(u.getBestellung().getMenge());
 						if (bestellMenge > u.getPersonal().berechneKapazitaet()){
 							System.out.println("Sie haben leider nicht gen�gend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazit�t: " + u.getPersonal().berechneKapazitaet());
 						}
@@ -197,7 +198,9 @@ public class Controller {
 					System.out.println("Wählen sie einen Preis für ihren Burger zwischen 5-25€: ");
 					u.getBurger().setPreis(scanner.nextInt());
 
+					u.berechneKundenzufriedenheit();
 				}
+
 
 			}
 			if(anzahlRunden == 3 || anzahlRunden ==  6|| anzahlRunden == 9){
@@ -223,7 +226,7 @@ public class Controller {
 	}
 
 	//Methode die das Catering dem Unternehmen zuweist
-	private static void cateringAuswahlTreffen(int anzahlRunden) {
+	public static void cateringAuswahlTreffen(int anzahlRunden) {
 		String wahlUnternehmen = "";
 		Catering c = null;
 
@@ -305,6 +308,7 @@ public class Controller {
 					bestellMenge = scanner.nextInt();
 
 					u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+					u.getStandort().getKuehlraum().wareEinlagern(u.getBestellung().getMenge());
 					if (bestellMenge > u.getPersonal().berechneKapazitaet()){
 						System.out.println("Sie haben leider nicht gen�gend Mitarbeiter, um diese Anzahl an Burger zu produzieren.\nMomentane Kapazit�t: " + u.getPersonal().berechneKapazitaet());
 					}
@@ -371,6 +375,8 @@ public class Controller {
 				if(scanner.nextInt() == 0){
 					neuerSpieler = false;
 				}
+
+				u.berechneKundenzufriedenheit();
 			}
 
 			berechneKunden();
@@ -458,6 +464,7 @@ public class Controller {
 			}
 
 			unternehmen.get(i).setKunden(kunden);
+			//unternehmen.get(i).getStandort().getKuehlraum().wareEntnehmen(kunden);
 			kunden = 0;
 		}
 
@@ -518,24 +525,24 @@ public class Controller {
 		}
 		for (int i = 0; i < unternehmen.size(); i++) {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
-			if (zufallszahl <= 100){ //Ereignis Adler Mannheim
+			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
 				System.out.println("Das Adler Mannheim-Team war bei Ihnen zu Besuch!");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheit((int)(unternehmen.get(i).getKundenzufriedenheit() + (int)(100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + " und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheit() + " gesteigert.");
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + (int)(100-unternehmen.get(i).getKundenzufriedenheitsVeraenderung())*0.01*ereignis[0].getKundenzufriedenheit()));
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesteigert.");
 			
 			} else if (2< zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
 				System.out.println("In der Küche kam es zu einem Brandunfall.");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheit((int)(unternehmen.get(i).getKundenzufriedenheit() - (int)unternehmen.get(i).getKundenzufriedenheit()*0.01*ereignis[1].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheit() + " gesenkt");
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() - (int)unternehmen.get(i).getKundenzufriedenheitsVeraenderung()*0.01*ereignis[1].getKundenzufriedenheit()));
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
 			
 			} else if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoEingetreten() == 1){ //Ereignis Gammelfleisch TODO: vereinheitlichen
 				System.out.println("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheit((int)(unternehmen.get(i).getKundenzufriedenheit() - (int)unternehmen.get(i).getKundenzufriedenheit()*0.01*ereignis[2].getKundenzufriedenheit()));
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() - (int)unternehmen.get(i).getKundenzufriedenheitsVeraenderung()*0.01*ereignis[2].getKundenzufriedenheit()));
 				unternehmen.get(i).getBestellung().getFleischlieferant().setRisikoEingetreten(0);
-				System.out.println("Dadurch hat sich Ihre Bekanntheit auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheit() + " gesenkt");
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
 			}
 		}
 	}
