@@ -35,7 +35,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 
 	private JList listLocations = new JList(standortOptionen);
 	private JList listInterior = new JList(innenausstattungOptionen);
-	private JList listCredit = new JList(kreditOptionen);
+	private JList listKredit = new JList(kreditOptionen);
 	private JList listStorage = new JList(lagerraumOptionen);
 
 	private JButton btnConfirm = new JButton("Bestätigen");
@@ -145,12 +145,12 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		infoCredit.setBounds(300, 268, 257, 82);
 		panel.add(infoCredit);
 
-		listCredit.setSelectedIndex(0);
-		listCredit.addMouseListener(this);
-		listCredit.setBounds(300, 320, 90, 72);
-		panel.add(listCredit);
+		listKredit.setSelectedIndex(0);
+		listKredit.addMouseListener(this);
+		listKredit.setBounds(300, 320, 90, 72);
+		panel.add(listKredit);
 
-		int m = listCredit.getSelectedIndex();
+		int m = listKredit.getSelectedIndex();
 		tipCredit.setBounds(400, 319, 138, 55);
 		tipCredit.setText("<html><body><p>Zins: " + zins[m] + "<br> Laufzeit: " + laufzeit[m] + "</p></body></hmtl>");
 		panel.add(tipCredit);
@@ -189,17 +189,15 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		Object s = e.getSource();
 		if (s == listLocations) {
 			int p = listLocations.getSelectedIndex();
-
 			tipLocations.setText("<html><body><p>Traffic: " + traffic[p] + "<br> Bekanntheitgrad: " + bekanntheit[p]
 					+ "<br> Miete: " + miete[p] + "€</p></body></hmtl>");
 		}
 		if (s == listInterior) {
 			int p = listInterior.getSelectedIndex();
-
 			tipInterior.setText("<html><body><p>Kosten: " + kostenMobiliar[p] + "€</p></body></hmtl>");
 		}
-		if (s == listCredit) {
-			int p = listCredit.getSelectedIndex();
+		if (s == listKredit) {
+			int p = listKredit.getSelectedIndex();
 			if (p < 3) {
 				tipCredit.setText(
 						"<html><body><p>Zins: " + zins[p] + "<br> Laufzeit: " + laufzeit[p] + "</p></body></hmtl>");
@@ -207,19 +205,15 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 				tipCredit.setText("");
 			}
 		}
-
 		if (s == listStorage) {
 			int p = listStorage.getSelectedIndex();
 			tipStorage.setText("<html><body><p>Lagereinheiten: " + kapazitaet[p] + "<br>Mietzusatz: " + lagerMiete[p]
 					+ "</p></body></html>");
 		}
-
 	}
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -232,8 +226,11 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 					.setStandort(Controller.Controller.waehleStandort("" + (listLocations.getSelectedIndex() + 1)));
 			Controller.Controller.getUnternehmen(n).getStandort().setInnenausstattung(
 					Controller.Controller.waehleInnenausstattung("" + (listInterior.getSelectedIndex() + 1)));
-			Controller.Controller.getUnternehmen(n)
-					.setKredit(Controller.Controller.waehleKredit(listCredit.getSelectedIndex()));
+			if (listKredit.getSelectedIndex() < 3)
+				Controller.Controller.getUnternehmen(n)
+						.setKredit(Controller.Controller.waehleKredit(listKredit.getSelectedIndex()));
+			else
+				Controller.Controller.getUnternehmen(n).setKredit(Controller.Controller.waehleKredit(-1));
 			Controller.Controller.getUnternehmen(n).getStandort()
 					.setKuehlraum(Controller.Controller.waehleKuhlraum("" + (listStorage.getSelectedIndex() + 1)));
 			un = Controller.Controller.getUnternehmen(n);

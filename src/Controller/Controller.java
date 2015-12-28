@@ -504,7 +504,7 @@ public class Controller {
 	}
 	
 	//Methode f�r das Auftreten von Ereignissen
-	private static void ereignisTrittEin() {
+	public static void ereignisTrittEin() {
 		for (int i = 0; i < fl.length; i++) {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
 			if (zufallszahl <= fl[i].getRisikoQuote()){
