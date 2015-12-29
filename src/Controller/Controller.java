@@ -210,7 +210,10 @@ public class Controller {
 			for (int i = 0; i < unternehmen.size(); i++) {
 				Unternehmen u = unternehmen.get(i);
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
-				System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
+				System.out.println("Kapitaldaten f�r: " + u.getName());
+				System.out.println("Umsatz:" + u.berechneUmsatz());
+				System.out.println("Gewinn: " + u.berechneGewinn(anzahlRunden));
+				System.out.println("Neues Kapital: " + u.berechneKapital());
 
 				u.setCatering(null);
 			}
@@ -254,9 +257,6 @@ public class Controller {
 
 	//Methode die den Start des Spiels behandelt
 	public static void startGame(){
-		//BufferedReader für Benutzereingabe
-		BufferedReader userIn = new BufferedReader(new InputStreamReader(System.in));
-
 
 		try {
 			while (neuerSpieler){
@@ -264,29 +264,31 @@ public class Controller {
 				System.out.println("Herzlich Wilkommen");
 				System.out.println("Bitte geben Sie fuer Ihren Burgerladen einen gewünschten Namen ein:" );
 
-				String nameUnternehmen = userIn.readLine();
+				String nameUnternehmen = scanner.next();
 
 				Unternehmen u = new Unternehmen(nameUnternehmen);
+				u.setKapital(Datenbank.startKapital);
+				System.out.println("Ihr Startkapital zu Beginn betr�gt: " + u.getKapital());
 				unternehmen.add(u);
 
 				System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
 				zeigeStandort();
 				System.out.print("Bitte wählen Sie hier: ");
-				u.setStandort(waehleStandort(userIn.readLine()));
+				u.setStandort(waehleStandort(scanner.nextInt() - 1));
 
 
 				System.out.println("Fuer ihren Standort muessen sie noch zusaetzlich einen Kuehlraum wählen in dem Sie Ihre Burger-Zutaten kuehlen koennen");
 				System.out.println("Hierfür stehen Ihnen folgende Möglichkeiten zur Verfügung");
 				zeigeKuehlraume();
 				System.out.print("Bitte wählen Sie hier: ");
-				u.getStandort().setKuehlraum(waehleKuhlraum(userIn.readLine()));
+				u.getStandort().setKuehlraum(waehleKuhlraum(scanner.nextInt() - 1));
 
 				System.out.println("Damit ihr Burgerladen entsprechend eingerichtet werden kann müssen Sie sich noch für eine Innenausstattung entscheiden");
 				System.out.println("Mit der Innenausstattung Ihres Burgerladen ist es Ihnen möglich den Kundenpool individuell zu erweitern");
 				System.out.println("Folgende Einrichtungsarten stehen zur Verfügung");
 				zeigeInnenausstattung();
 				System.out.print("Bitte wählen Sie hier: ");
-				u.getStandort().setInnenausstattung(waehleInnenausstattung(userIn.readLine()));
+				u.getStandort().setInnenausstattung(waehleInnenausstattung(scanner.nextInt() - 1));
 
 				System.out.println("Sie haben Sich f�r folgenden Standort entschieden: ");
 				System.out.println("Standort: " + u.getStandort().getLage() + "; Kühlraum: " + u.getStandort().getKuehlraum().getLagerGroesse());
@@ -380,11 +382,13 @@ public class Controller {
 			}
 
 			berechneKunden();
-
 			for (int i = 0; i < unternehmen.size(); i++) {
 				Unternehmen u = unternehmen.get(i);
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
-				System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
+				System.out.println("Kapitaldaten f�r: " + u.getName());
+				System.out.println("Umsatz:" + u.berechneUmsatz());
+				System.out.println("Gewinn: " + u.berechneGewinn(anzahlRunden));
+				System.out.println("Neues Kapital: " + u.berechneKapital());
 			}
 
 		
@@ -470,24 +474,20 @@ public class Controller {
 
 	}
 
-		
 	//Funktionen zur Wahl eines Kühlraums, Standorts und Innenausstattung
-	public static Innenausstattung waehleInnenausstattung(String auswahl) {
-		int index = Integer.parseInt(auswahl);
-		return innenausstattung[index - 1];
+	public static Innenausstattung waehleInnenausstattung(int auswahl) {
+		return innenausstattung[auswahl];
 	}
 	
-	public static Standort waehleStandort(String auswahl){
+	public static Standort waehleStandort(int auswahl){
 		Standort s;
-		int index = Integer.parseInt(auswahl);
-		s = new Standort(standorte[index - 1].getLage(), standorte[index - 1].getMiete(), standorte[index - 1].getTraffic(), standorte[index - 1].getBekanntheit());
+		s = new Standort(standorte[auswahl].getLage(), standorte[auswahl].getMiete(), standorte[auswahl].getTraffic(), standorte[auswahl].getBekanntheit());
 		return s;
 	}
 	
-	public static Kuehlraum waehleKuhlraum(String auswahl){
+	public static Kuehlraum waehleKuhlraum(int index){
 		Kuehlraum k;
-		int index = Integer.parseInt(auswahl);
-		k = new Kuehlraum(kuehlraeume[index -1].getLagerGroesse(), kuehlraeume[index -1].getInhalt(), kuehlraeume[index -1].getMietZusatzKosten());
+		k = new Kuehlraum(kuehlraeume[index].getLagerGroesse(), kuehlraeume[index].getInhalt(), kuehlraeume[index].getMietZusatzKosten());
 		return k;
 	}
 
@@ -560,7 +560,7 @@ public class Controller {
 	
 	private static void zeigeKuehlraume() {
 		for (int i = 0; i < kuehlraeume.length; i++) {
-			System.out.println("Kühlraum " + (i+1) + ":");
+			System.out.println("Kühlraum " + (i + 1) + ":");
 			System.out.println("Lagerplatz: " + kuehlraeume[i].getLagerGroesse());
 			System.out.println("Zusätzliche Mietkosten: " + kuehlraeume[i].getMietZusatzKosten());
 			System.out.println();

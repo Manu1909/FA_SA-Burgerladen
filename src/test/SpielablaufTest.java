@@ -34,7 +34,7 @@ public class SpielablaufTest {
 
         for (int i = 0; i < unternehmen.size(); i++) {
             unternehmen.get(i).getBestellung().setzeLieferanten(Datenbank.fl[i], Datenbank.bl[i], Datenbank.sal[i], Datenbank.sol[i]);
-            unternehmen.get(i).setStandort(Controller.waehleStandort("" +(i+1)));
+            unternehmen.get(i).setStandort(Controller.waehleStandort((i)));
             k = new Kuehlraum(kuehlraeume[2].getLagerGroesse(), 0, kuehlraeume[2].getMietZusatzKosten());
             unternehmen.get(i).getStandort().setKuehlraum(k);
 
