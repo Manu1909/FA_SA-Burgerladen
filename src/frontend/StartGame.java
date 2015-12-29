@@ -81,14 +81,17 @@ public class StartGame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnGo) {
-			i = Integer.parseInt(txtUNZahl.getText());
-			if (i > 0) {
-				for (int n = 0; n < i; n++) {
-					Controller.Controller.neuesUnternehmen(new business.Unternehmen("un" + n));
-					frame.setVisible(false);
+			try {
+				i = Integer.parseInt(txtUNZahl.getText());
+				if (i > 0) {
+					for (int n = 0; n < i; n++) {
+						Controller.Controller.neuesUnternehmen(new business.Unternehmen("un" + n));
+						frame.setVisible(false);
+					}
+					newName giveName = new newName(0);
+					frame.dispose();
 				}
-				newName giveName = new newName(0);
-				frame.dispose();
+			} catch (NumberFormatException e1) {
 			}
 		}
 	}

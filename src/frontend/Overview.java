@@ -1,13 +1,13 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -206,16 +206,18 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblStandort.setBounds(580, 140, 190, 50);
 		panel.add(lblStandort);
 
-		lblMarketing.setText("Marketing-Aktion: " + werbung);
+		lblMarketing.setText("Marketing: " + werbung);
 		lblMarketing.setBounds(580, 160, 190, 50);
 		panel.add(lblMarketing);
 
-		lblanzahlPersonal.setText("Anzahl Mitarbeiter: " + anzahlPersonal);
+		lblanzahlPersonal.setText("Personal: " + anzahlPersonal);
 		lblanzahlPersonal.setBounds(580, 190, 120, 30);
 		panel.add(lblanzahlPersonal);
 
 		lblBestellung.setText("keine Bestellung");
-		lblBestellung.setBounds(580, 210, 160, 30);
+		lblBestellung.setBackground(Color.RED);
+		lblBestellung.setOpaque(true);
+		lblBestellung.setBounds(580, 215, 160, 20);
 		panel.add(lblBestellung);
 
 		lblPreis.setText("Burgerpreis: " + un.getBurger().getPreis() + "€");
@@ -589,7 +591,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				this.werbung = un.getMarketing().getBezeichnung();
 			else
 				this.werbung = "keine";
-			lblMarketing.setText("Marketing-Aktion: " + werbung);
+			lblMarketing.setText("Marketing: " + werbung);
 			frame.setFocusableWindowState(true);
 			frameMarketing.dispose();
 		}
@@ -629,6 +631,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				brotLieferant = listBroetchen.getSelectedValue().toString();
 				salatLieferant = listSalat.getSelectedValue().toString();
 				saucenLieferant = listSauce.getSelectedValue().toString();
+				lblBestellung.setOpaque(false);
 				lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
 				btnRundeBeenden.setEnabled(true);
 				frame.repaint();
@@ -652,20 +655,18 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
-				// Rundenabschlussberechnungen
-				Controller.Controller.ereignisTrittEin();
-				Controller.Controller.getUnternehmen(n).betreibeMarketing();
-				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
+				Controller.Controller.ereignisTrittEin(); //bestimmt, ob Ereignis eintritt und berechnet Kennzahlen
+				Controller.Controller.getUnternehmen(n).betreibeMarketing(); //berechnet Auswirkungen der gewählten Marketing-Optionen
+				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);//Bestellung einlagern
 				Controller.Controller.getUnternehmen(n).berechneCatering();
+				Controller.Controller.getUnternehmen(n).berechneKundenzufriedenheit();
 				Controller.Controller.berechneKunden();
-				Controller.Controller.getUnternehmen(n).berechneKundenZufriedenheit();
 				Controller.Controller.getUnternehmen(n).setGewinn(
 						Controller.Controller.getUnternehmen(n).berechneGewinn(Controller.Controller.getRunde()));
 				Controller.Controller.getUnternehmen(n).setKapital(Controller.Controller.getUnternehmen(n).getKapital()
 						+ Controller.Controller.getUnternehmen(n).berechneGewinn(Controller.Controller.getRunde()));
 				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum()
 						.wareEntnehmen(Controller.Controller.getUnternehmen(n).getKunden());
-
 				if (n == StartGame.getI() - 1) { //
 					alleGegruendet = true;
 					// Neue Preise auf Grundlage der Verkaufszahlen

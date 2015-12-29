@@ -39,7 +39,9 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		if (s == btnWeiter) {
 			if (Controller.Controller.getRunde() < 12) {
 				Controller.Controller.setRunde(Controller.Controller.getRunde() + 1);
+				frame.setVisible(false);
 				Overview overview = new Overview(0);
+				frame.dispose();
 			}
 		}
 	}
