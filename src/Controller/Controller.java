@@ -1,6 +1,4 @@
 package Controller;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -451,7 +449,7 @@ public class Controller {
 				}
 			}
 
-			//checke Inhalt Kühlraum
+			//checke Inhalt Kuehlraum
 			if(unternehmen.get(i).getStandort().getKuehlraum().getInhalt() < kunden){
 				if(unternehmen.get(i).getMarketing()!=null){
 					if(unternehmen.get(i).getMarketing().getBezeichnung().equals("Werbung21")){
@@ -463,6 +461,22 @@ public class Controller {
 				}
 				else{
 					kunden = unternehmen.get(i).getStandort().getKuehlraum().getInhalt();
+				}
+
+			}
+			
+			//checke Personalkapazitaet
+			if(unternehmen.get(i).getPersonal().berechneKapazitaet() < kunden){
+				if(unternehmen.get(i).getMarketing()!=null){
+					if(unternehmen.get(i).getMarketing().getBezeichnung().equals("Werbung21")){
+						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet()/2;
+					}
+					else{
+						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
+					}
+				}
+				else{
+					kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
 				}
 
 			}
@@ -513,36 +527,41 @@ public class Controller {
 	//Methode f�r das Auftreten von Ereignissen
 	public static void ereignisTrittEin() {
 		for (int i = 0; i < fl.length; i++) {
-			int zufallszahl = (int)(Math.random() * 100) + 1;
-			if (zufallszahl <= fl[i].getRisikoQuote()){
-				for (int j = 0; j < unternehmen.size(); j++) {
-					if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
-						unternehmen.get(j).getBestellung().getFleischlieferant().setRisikoEingetreten(1);
+			
+				int zufallszahl = (int)(Math.random() * 100) + 1;
+				if (zufallszahl <= fl[i].getRisikoQuote()){
+					for (int j = 0; j < unternehmen.size(); j++) {
+						if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
+							if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoEingetreten() == 0){
+									unternehmen.get(j).getBestellung().getFleischlieferant().setRisikoEingetreten(1);
+							}
+						}
 					}
+					
 				}
-				
-			}
 		}
 		for (int i = 0; i < unternehmen.size(); i++) {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
 			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
 				System.out.println("Das Adler Mannheim-Team war bei Ihnen zu Besuch!");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + (int)(100-unternehmen.get(i).getKundenzufriedenheitsVeraenderung())*0.01*ereignis[0].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesteigert.");
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesteigert.");
 			
 			} else if (2< zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
 				System.out.println("In der Küche kam es zu einem Brandunfall.");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() - (int)unternehmen.get(i).getKundenzufriedenheitsVeraenderung()*0.01*ereignis[1].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
 			
-			} else if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoEingetreten() == 1){ //Ereignis Gammelfleisch TODO: vereinheitlichen
+			}
+			
+			if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoEingetreten() == 1){
 				System.out.println("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.");
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int)(unternehmen.get(i).getKundenzufriedenheitsVeraenderung() - (int)unternehmen.get(i).getKundenzufriedenheitsVeraenderung()*0.01*ereignis[2].getKundenzufriedenheit()));
-				unternehmen.get(i).getBestellung().getFleischlieferant().setRisikoEingetreten(0);
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit auf " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
+				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
+				unternehmen.get(i).getBestellung().getFleischlieferant().setRisikoEingetreten(2);
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
 			}
 		}
 	}
