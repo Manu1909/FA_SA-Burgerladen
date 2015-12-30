@@ -249,9 +249,9 @@ public class Unternehmen {
 
 	public double berechneGruendungsKosten(){
 		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
-		if(kredit != null){
+		/*if(kredit != null){
 			kosten += kredit.berechneAnnuitaet();
-		}
+		}*/
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}

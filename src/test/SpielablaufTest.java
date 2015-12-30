@@ -37,6 +37,7 @@ public class SpielablaufTest {
             unternehmen.get(i).setStandort(Controller.waehleStandort((i)));
             k = new Kuehlraum(kuehlraeume[2].getLagerGroesse(), 0, kuehlraeume[2].getMietZusatzKosten());
             unternehmen.get(i).getStandort().setKuehlraum(k);
+            unternehmen.get(i).setKredit(Datenbank.k1);
 
             unternehmen.get(i).berechneKundenzufriedenheit();
             //System.out.println("Bekanntheit " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getBekanntheit());
@@ -110,29 +111,26 @@ public class SpielablaufTest {
                     }
 
                 }
-
-               // Controller.ereignisTrittEin();
-
-                //Personal bearbeiten
-                /*u.getPersonal().berechneAnzahl();
-                u.getPersonal().erhoeheAnzahl(2);
-                u.getPersonal().feuern(1);*/
-
-
-                //LieferantenBestellung
+                
+                if (anzahlRunden > 0){
+                Controller.ereignisTrittEin();
+                }
+                
 
                 //Setze Bestellmenge und bearbeite Personal
                 int bestellMenge = 0;
-                if(anzahlRunden<3){
+                if(anzahlRunden < 3){
                     bestellMenge = 1500;
                 }
                 else if(anzahlRunden < 6){
                     bestellMenge = 2300;
+                    u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
                 else{
                     bestellMenge = 3000;
                     if(anzahlRunden%2==0){
+                    	u.getPersonal().berechneAnzahl();
                         u.getPersonal().feuern(1);
                     }
                 }
