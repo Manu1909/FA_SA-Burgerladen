@@ -50,10 +50,6 @@ public class StartGame extends JFrame implements ActionListener {
 		heading.setBounds(102, 11, 220, 49);
 		contentPane.add(heading);
 
-		JLabel img = new JLabel(new ImageIcon("rot.jpg"));
-		img.setBounds(1, 1, 20, 40);
-		contentPane.add(img);
-
 		txtUNZahl.setBounds(200, 230, 50, 14);
 		contentPane.add(txtUNZahl);
 
@@ -71,7 +67,6 @@ public class StartGame extends JFrame implements ActionListener {
 		contentPane.add(info);
 
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// frame.setExtendedState(MAXIMIZED_BOTH);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 400);
 		frame.setVisible(true);

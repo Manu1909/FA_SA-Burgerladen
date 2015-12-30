@@ -70,7 +70,7 @@ public class Standort {
 	//berechneMiete des kompletten Standorts
 	public double berechneMiete(){
 		miete = miete + getKuehlraum().getMietZusatzKosten();
-		return miete;
+		return miete*3;
 	}
 
 }

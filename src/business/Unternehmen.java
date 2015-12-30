@@ -140,8 +140,9 @@ public class Unternehmen {
 	}
 
 	
-	public void berechneKapital(){
-		
+	public double berechneKapital(){
+		kapital = kapital + gewinn;
+		return kapital;
 	}
 	
 	public void waehleKredit(Kredit k){
@@ -216,6 +217,11 @@ public class Unternehmen {
 			kundenAnteil *= (1+marketing.getKundenprozentsatz());
 		}
 		return kundenAnteil;
+	}
+	
+	public double berechneUmsatz(){
+		umsatz = burger.preis * kunden;
+		return umsatz;
 	}
 
 	public double berechneGewinn(int rundenZahl){

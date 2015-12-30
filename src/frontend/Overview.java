@@ -3,6 +3,7 @@ package frontend;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -43,11 +44,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private int anzahlPersonal;
 	private double kapital;
 	private double schulden;
-	private double umsatz;
 	private double gewinn;
 	private static business.Unternehmen un;
 	private static boolean alleGegruendet = false;
-	private static boolean printErrors = false;
 
 	private JTextField txtKapital = new JTextField();
 	private JTextField txtSchulden = new JTextField();
@@ -165,16 +164,12 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		this.anzahlPersonal = un.getPersonal().berechneAnzahl();
 		try {
-			this.umsatz = un.getUmsatz();
 			this.gewinn = un.getGewinn();
 			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
 			this.werbung = un.getMarketing().getBezeichnung();
 			this.burgerPreis = un.getBurger().getPreis();
 
 		} catch (Exception e) {
-			if (printErrors) {
-				e.printStackTrace();
-			}
 		}
 		zeigeFensterOverview();
 	}
@@ -255,15 +250,12 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(btnRundeBeenden);
 
 		try {
-			txtLetztePeriode.setText("Umsatz: " + umsatz + "€\nGewinn: " + gewinn + "€" + "\n" + "Kunden: "
+			txtLetztePeriode.setText("Umsatz: " +"€\nGewinn: " + gewinn + "€" + "\n" + "Kunden: "
 					+ Controller.Controller.getUnternehmen(n).getKunden());
 			txtLetztePeriode.setBounds(130, 250, 151, 80);
 			txtLetztePeriode.setEditable(false);
 			panel.add(txtLetztePeriode);
 		} catch (Exception e) {
-			if (printErrors) {
-				e.printStackTrace();
-			}
 		}
 
 		txtRangliste.setText("1. Spieler 1 \n2. Spieler 2\n3. Spieler 2\n4. Spieler 4");
@@ -542,7 +534,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			}
 		}
 
-		//
 		if (s == listMarketing) {
 			int p = listMarketing.getSelectedIndex();
 			if (p < 3)
@@ -616,31 +607,36 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
-			if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal()
-					.berechneKapazitaet()) {
-				// Bestellung übergeben
-				Controller.Controller.getUnternehmen(n).getBestellung().bestellen(
-						Datenbank.fl[listFleisch.getSelectedIndex()], Datenbank.bl[listBroetchen.getSelectedIndex()],
-						Datenbank.sal[listSalat.getSelectedIndex()], Datenbank.sol[listSauce.getSelectedIndex()]);
-				Controller.Controller.getUnternehmen(n).getBestellung()
-						.setzeBestellmenge(Integer.parseInt(txtBurgerZahl.getText()), Controller.Controller
-								.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
-				un = Controller.Controller.getUnternehmen(n);
-				burgerZahl = Integer.parseInt(txtBurgerZahl.getText());
-				fleischLieferant = listFleisch.getSelectedValue().toString();
-				brotLieferant = listBroetchen.getSelectedValue().toString();
-				salatLieferant = listSalat.getSelectedValue().toString();
-				saucenLieferant = listSauce.getSelectedValue().toString();
-				lblBestellung.setOpaque(false);
-				lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
-				btnRundeBeenden.setEnabled(true);
-				frame.repaint();
-			} else
-				JOptionPane.showMessageDialog(this,
-						"Sie haben nicht genug Mitarbeiter um diese Menge an Burgern zu vearbeiten");
-			frame.setFocusableWindowState(true);
-			frameBestellungen.setVisible(false);
-			frameBestellungen.dispose();
+			try {
+				if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal()
+						.berechneKapazitaet()) {
+					// Bestellung übergeben
+					Controller.Controller.getUnternehmen(n).getBestellung().bestellen(
+							Datenbank.fl[listFleisch.getSelectedIndex()],
+							Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
+							Datenbank.sol[listSauce.getSelectedIndex()]);
+					Controller.Controller.getUnternehmen(n).getBestellung()
+							.setzeBestellmenge(Integer.parseInt(txtBurgerZahl.getText()), Controller.Controller
+									.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
+					un = Controller.Controller.getUnternehmen(n);
+					burgerZahl = Integer.parseInt(txtBurgerZahl.getText());
+					fleischLieferant = listFleisch.getSelectedValue().toString();
+					brotLieferant = listBroetchen.getSelectedValue().toString();
+					salatLieferant = listSalat.getSelectedValue().toString();
+					saucenLieferant = listSauce.getSelectedValue().toString();
+					lblBestellung.setOpaque(false);
+					lblBestellung.setText("Bestellung: " + txtBurgerZahl.getText() + " Burger");
+					btnRundeBeenden.setEnabled(true);
+					frame.repaint();
+				} else
+					JOptionPane.showMessageDialog(this,
+							"Sie haben nicht genug Mitarbeiter um diese Menge an Burgern zu vearbeiten");
+				frame.setFocusableWindowState(true);
+				frameBestellungen.setVisible(false);
+				frameBestellungen.dispose();
+			} catch (NumberFormatException e1) {
+			} catch (HeadlessException e1) {
+			}
 		}
 		if (s == btnGK) {
 			if (txtBurgerZahl.getText().equals("")) {
@@ -655,9 +651,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
-				Controller.Controller.ereignisTrittEin(); //bestimmt, ob Ereignis eintritt und berechnet Kennzahlen
-				Controller.Controller.getUnternehmen(n).betreibeMarketing(); //berechnet Auswirkungen der gewählten Marketing-Optionen
-				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);//Bestellung einlagern
+				Controller.Controller.ereignisTrittEin(); 
+				Controller.Controller.getUnternehmen(n).betreibeMarketing(); 
+				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
 				Controller.Controller.getUnternehmen(n).berechneCatering();
 				Controller.Controller.getUnternehmen(n).berechneKundenzufriedenheit();
 				Controller.Controller.berechneKunden();
