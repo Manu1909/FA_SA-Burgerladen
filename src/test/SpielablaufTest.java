@@ -38,7 +38,7 @@ public class SpielablaufTest {
             unternehmen.get(i).setStandort(Controller.waehleStandort((i)));
             k = new Kuehlraum(kuehlraeume[2].getLagerGroesse(), 0, kuehlraeume[2].getMietZusatzKosten());
             unternehmen.get(i).getStandort().setKuehlraum(k);
-            //unternehmen.get(i).setKredit(Datenbank.k1);
+            //unternehmen.get(i).setKredit(Datenbank.k2);
 
             unternehmen.get(i).berechneKundenzufriedenheit();
             //System.out.println("Bekanntheit " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getBekanntheit());
@@ -67,11 +67,11 @@ public class SpielablaufTest {
 
 
             for (int i = 0; i < unternehmen.size(); i++) {
-                if(i==1){
-                    bestellNummer = 2;
+                if(i==0){
+                    bestellNummer = 1;
                 }
                 else{
-                    bestellNummer = 1;
+                    bestellNummer = 2;
                 }
 
 
@@ -151,7 +151,9 @@ public class SpielablaufTest {
                 }
 
 
-
+                if(u.getStandort().getKuehlraum().berechneFreienLagerplatz() < bestellMenge){
+                    bestellMenge = u.getStandort().getKuehlraum().berechneFreienLagerplatz();
+                }
                 u.getBestellung().setzeBestellmenge(bestellMenge, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
                 u.getStandort().getKuehlraum().wareEinlagern(u.getBestellung().getMenge());
 

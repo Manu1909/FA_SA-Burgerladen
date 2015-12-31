@@ -85,11 +85,11 @@ public class Lieferant {
 		preisProGut = preisProGut-((1-preisveraenderung)/preisKonstante)*preisProGut;
 		preisProGut = Math.round(100.0*preisProGut)/100.0;
 
-		if(preisProGut > 1.5*startPreis){
-			preisProGut = 1.5*startPreis;
+		if(preisProGut > 1.3*startPreis){
+			preisProGut = 1.3*startPreis;
 		}
-		else if(preisProGut < 0.5*startPreis){
-			preisProGut = 0.5*startPreis;
+		else if(preisProGut < 0.7*startPreis){
+			preisProGut = 0.7*startPreis;
 		}
 		return preisProGut;
 	}
