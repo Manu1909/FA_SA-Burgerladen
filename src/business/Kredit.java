@@ -46,4 +46,9 @@ public class Kredit {
 		annuitaet = Math.round(100.0 * annuitaet) / 100.0;
 		return annuitaet;
 	}
+
+	public double berechneZinsaufwand() {
+
+		return 0;
+	}
 }

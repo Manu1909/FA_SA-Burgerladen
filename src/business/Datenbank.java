@@ -1,10 +1,14 @@
 package business;
+
+import Controller.Controller;
+
 public class Datenbank {
 
 	
 	public static final int startKapital = 90000;
 	//Konstanten f�r den Kundenpool
-	public static final int kundenpool = 10000;
+	public static int kundenpool = 0;
+	public static final int kundenpoolKonstante = 3000;
 	public static final int kundenpoolModern = 1500;
 	public static final int kundenpoolKlassisch = 1000;
 	public static final int kundenpoolAmerican = 2000;

@@ -26,6 +26,7 @@ public class Unternehmen {
 		bestellung = new Bestellung();
 		burger = new Burger();
 		this.personal = new Personal(5);
+		kapital = Datenbank.startKapital;
 	}
 	
 	//Getter und Setter f�r alle Attribute
@@ -113,6 +114,7 @@ public class Unternehmen {
 	
 	public void setKredit(Kredit kredit) {
 		this.kredit = kredit;
+		berechneKapital(true);
 	}
 
 	public Bestellung getBestellung() {
@@ -140,8 +142,14 @@ public class Unternehmen {
 	}
 
 	
-	public double berechneKapital(){
+	public double berechneKapital(boolean kreditWahl){
 		kapital = kapital + gewinn;
+		if(kreditWahl && kredit != null){
+			kapital += kredit.getHoehe();
+		}
+		else if(kredit != null){
+			kapital -= kredit.berechneAnnuitaet();
+		}
 		return kapital;
 	}
 	
@@ -228,12 +236,17 @@ public class Unternehmen {
 		if(rundenZahl == 0){
 			gewinn = burger.preis * kunden - berechneGruendungsKosten();
 		}
-		else if(catering != null){
-			gewinn = burger.preis * kunden - berechneRundenkosten() + berechneCateringKosten(catering);
-		}
 		else{
 			gewinn = burger.preis * kunden - berechneRundenkosten();
 		}
+		if(catering != null){
+			gewinn +=  berechneCateringKosten(catering);
+		}
+		if(kredit != null){
+			gewinn += kredit.berechneZinsaufwand();
+		}
+
+
 		
 
 		if(marketing!=null){
