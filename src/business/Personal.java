@@ -6,9 +6,9 @@ public class Personal {
 	public int anzahlGefeuerte;
 	public int hoechstanzahl = 30;
 	public int mindestanzahl = 5;
-	public int burgerKapazitaet = 300;
+	public int burgerKapazitaet = 350;
 	public int kapazitaet;
-	public int gehalt = 2040;
+	public int gehalt = 1450*3;
 	public int kosten;
 	
 	public Personal(int anzahlAngestellte){
@@ -38,7 +38,7 @@ public class Personal {
 		if (anzahlAngestellte  + i <= hoechstanzahl){
 			anzahlAngestellte = anzahlAngestellte + i;
 		} else {
-			System.out.println("Höchstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
+			System.out.println("Hï¿½chstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
 		}
 		return anzahlAngestellte;
 	}

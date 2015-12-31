@@ -10,9 +10,9 @@ public class Bestellung {
 	private Lieferant sossenlieferant;
 
 	
-	/*public Bestellung(Unternehmen u) {
-		this.u = u;
-	}*/
+	public Bestellung() {
+
+	}
 	
 	public int getMenge(){
 		return menge;

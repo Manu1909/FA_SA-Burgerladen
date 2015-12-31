@@ -19,10 +19,11 @@ public class Controller {
 	private static Innenausstattung[] innenausstattung = Datenbank.i;
 	private static Ereignis[] ereignis = Datenbank.e;
 	private static Lieferant[] fl = Datenbank.fl;
-	private static Scanner scanner = new Scanner(System.in); //Todo macht manu
+	private static Scanner scanner = new Scanner(System.in);
 	private static int anzahlRunden = 0;
 	private static boolean neuerSpieler = true;
 	private static boolean lieferantOK;
+	private static int kundenpool;
 	
 	public static void main(String args[]){
 		startGame();
@@ -54,16 +55,17 @@ public class Controller {
 
 		
 		while(anzahlRunden < 12){
+			for (int j = 0; j < Datenbank.fl.length; j++) {
+				Datenbank.fl[j].setVerbrauchteRessourcen(0);
+				Datenbank.bl[j].setVerbrauchteRessourcen(0);
+				Datenbank.sal[j].setVerbrauchteRessourcen(0);
+				Datenbank.sol[j].setVerbrauchteRessourcen(0);
+			}
 			for (int i = 0; i < unternehmen.size(); i++) {
 				if(anzahlRunden == 0){
 					startGame();
 				}else{
-					for (int j = 0; j < Datenbank.fl.length; j++) {
-						Datenbank.fl[j].setVerbrauchteRessourcen(0);
-						Datenbank.bl[j].setVerbrauchteRessourcen(0);
-						Datenbank.sal[j].setVerbrauchteRessourcen(0);
-						Datenbank.sol[j].setVerbrauchteRessourcen(0);
-					}
+
 
 					Unternehmen u = unternehmen.get(i);
 
@@ -196,7 +198,8 @@ public class Controller {
 					System.out.println("WÃ¤hlen sie einen Preis fÃ¼r ihren Burger zwischen 5-25â‚¬: ");
 					u.getBurger().setPreis(scanner.nextInt());
 
-					u.berechneKundenzufriedenheit();
+					unternehmensRundeBeenden(u);
+
 				}
 
 
@@ -208,10 +211,10 @@ public class Controller {
 			for (int i = 0; i < unternehmen.size(); i++) {
 				Unternehmen u = unternehmen.get(i);
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
-				System.out.println("Kapitaldaten für: " + u.getName());
+				System.out.println("Kapitaldaten fï¿½r: " + u.getName());
 				System.out.println("Umsatz:" + u.berechneUmsatz());
 				System.out.println("Gewinn: " + u.berechneGewinn(anzahlRunden));
-				System.out.println("Neues Kapital: " + u.berechneKapital());
+				System.out.println("Neues Kapital: " + u.berechneKapital(false));
 
 				u.setCatering(null);
 			}
@@ -265,8 +268,8 @@ public class Controller {
 				String nameUnternehmen = scanner.next();
 
 				Unternehmen u = new Unternehmen(nameUnternehmen);
-				u.setKapital(Datenbank.startKapital);
-				System.out.println("Ihr Startkapital zu Beginn beträgt: " + u.getKapital());
+				//u.setKapital(Datenbank.startKapital);
+				System.out.println("Ihr Startkapital zu Beginn betrï¿½gt: " + u.getKapital());
 				unternehmen.add(u);
 
 				System.out.println("Nachdem Sie Ihren Burgerladen benannt haben muessen Sie nun einen gegeigneten Standort auswaehlen");
@@ -378,15 +381,15 @@ public class Controller {
 
 				u.berechneKundenzufriedenheit();
 			}
-
+			berechneKundenpool();
 			berechneKunden();
 			for (int i = 0; i < unternehmen.size(); i++) {
 				Unternehmen u = unternehmen.get(i);
 				System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
-				System.out.println("Kapitaldaten für: " + u.getName());
+				System.out.println("Kapitaldaten fï¿½r: " + u.getName());
 				System.out.println("Umsatz:" + u.berechneUmsatz());
 				System.out.println("Gewinn: " + u.berechneGewinn(anzahlRunden));
-				System.out.println("Neues Kapital: " + u.berechneKapital());
+				System.out.println("Neues Kapital: " + u.berechneKapital(false));
 			}
 
 		
@@ -434,10 +437,10 @@ public class Controller {
 		for (int i = 0; i < unternehmen.size(); i++) {
 			kundenanteil = unternehmen.get(i).berechneKundenanteil();
 			if(gesamtAnteil<=poolVariable){
-				kunden = (kundenanteil*Datenbank.kundenpool/poolVariable);
+				kunden = (kundenanteil*kundenpool/poolVariable);
 			}
 			else{
-				kunden = kundenanteil*Datenbank.kundenpool/gesamtAnteil;
+				kunden = kundenanteil*kundenpool/gesamtAnteil;
 			}
 
 			for (int j = 0; j < anteileInnenausstattung.length; j++) {
@@ -495,7 +498,7 @@ public class Controller {
 	
 	public static Standort waehleStandort(int auswahl){
 		Standort s;
-		s = new Standort(standorte[auswahl].getLage(), standorte[auswahl].getMiete(), standorte[auswahl].getTraffic(), standorte[auswahl].getBekanntheit());
+		s = new Standort(Datenbank.standorte[auswahl].getLage(), Datenbank.standorte[auswahl].getMiete(), Datenbank.standorte[auswahl].getTraffic(), Datenbank.standorte[auswahl].getBekanntheit());
 		return s;
 	}
 	
@@ -526,7 +529,7 @@ public class Controller {
 	
 	//Methode fï¿½r das Auftreten von Ereignissen
 	public static void ereignisTrittEin() {
-		for (int i = 0; i < fl.length; i++) {
+		for (int i = 0; i < Datenbank.fl.length; i++) {
 			
 				int zufallszahl = (int)(Math.random() * 100) + 1;
 				if (zufallszahl <= fl[i].getRisikoQuote()){
@@ -647,6 +650,48 @@ public class Controller {
 			System.out.println("Sofortige Steigerung: " + Datenbank.marketing[i].getProzent());
 			System.out.println();
 		}
+	}
+
+	public static int berechneKundenpool(){
+		kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
+		return kundenpool;
+	}
+
+	public static void unternehmensRundeBeenden(Unternehmen u){
+		u.berechneKundenzufriedenheit();
+		if(u.getKredit()!= null){
+			if(anzahlRunden > u.getKredit().getLaufzeit()){
+				u.setKredit(null);
+			}
+		}
+	}
+
+	public static void rundeBeenden(){
+		if(anzahlRunden == 3 || anzahlRunden ==  6|| anzahlRunden == 9){
+			cateringAuswahlTreffen(anzahlRunden);
+		}
+		berechneKunden();
+		for (int i = 0; i < unternehmen.size(); i++) {
+			Unternehmen u = unternehmen.get(i);
+			u.berechneUmsatz();
+			u.berechneGewinn(anzahlRunden);
+			u.berechneKapital(false);
+
+			u.setCatering(null);
+		}
+
+		for (int j = 0; j < Datenbank.fl.length; j++) {
+			Datenbank.fl[j].berechneNeuenPreis();
+			Datenbank.bl[j].berechneNeuenPreis();
+			Datenbank.sal[j].berechneNeuenPreis();
+			Datenbank.sol[j].berechneNeuenPreis();
+			Datenbank.fl[j].setVerbrauchteRessourcen(0);
+			Datenbank.bl[j].setVerbrauchteRessourcen(0);
+			Datenbank.sal[j].setVerbrauchteRessourcen(0);
+			Datenbank.sol[j].setVerbrauchteRessourcen(0);
+
+		}
+		anzahlRunden++;
 	}
 
 }

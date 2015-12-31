@@ -6,16 +6,18 @@ public class Lieferant {
 	private int verbrauchteRessourcen = 0;
 	private int qualitaet;
 	private double preisProGut;
+	private double startPreis;
 	private int risikoQuote;
 	private int risikoEingetreten;
-	private int preisKonstante = 5;
+	private int preisKonstante = 8;
 
 	
-	public Lieferant(int ressourcen, int qualitaet, double preisProGut, int risikoQuote, int risikoEingetreten) {
+	public Lieferant(int ressourcen, int qualitaet, double startPreis, int risikoQuote, int risikoEingetreten) {
 		this.ressourcen = ressourcen;
 		this.qualitaet = qualitaet;
 		this.risikoQuote = risikoQuote;
-		this.preisProGut = preisProGut;
+		this.startPreis = startPreis;
+		this.preisProGut = startPreis;
 		this.risikoEingetreten = risikoEingetreten;
 	}
 	
@@ -83,6 +85,12 @@ public class Lieferant {
 		preisProGut = preisProGut-((1-preisveraenderung)/preisKonstante)*preisProGut;
 		preisProGut = Math.round(100.0*preisProGut)/100.0;
 
+		if(preisProGut > 1.3*startPreis){
+			preisProGut = 1.3*startPreis;
+		}
+		else if(preisProGut < 0.7*startPreis){
+			preisProGut = 0.7*startPreis;
+		}
 		return preisProGut;
 	}
 	
