@@ -5,7 +5,7 @@ import Controller.Controller;
 public class Datenbank {
 
 	
-	public static final int startKapital = 90000;
+	public static final int startKapital = 70000;
 	//Konstanten f�r den Kundenpool
 	public static int kundenpool = 0;
 	public static final int kundenpoolKonstante = 3500;

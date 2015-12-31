@@ -133,17 +133,17 @@ public class SpielablaufTest {
                     bestellMenge = 1500;
                 }
                 else if(anzahlRunden < 6){
-                    bestellMenge = 2300;
+                    bestellMenge = 2400;
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
                 else if(anzahlRunden<8){
-                    bestellMenge = 3000;
+                    bestellMenge = 3200;
                     u.getPersonal().berechneAnzahl();
-                    u.getPersonal().erhoeheAnzahl(1);
+                    //u.getPersonal().erhoeheAnzahl(1);
                 }
                 else{
-                    bestellMenge = 3000;
+                    bestellMenge = 3200;
                     if(anzahlRunden%2==0){
                     	u.getPersonal().berechneAnzahl();
                         //u.getPersonal().feuern(1);
