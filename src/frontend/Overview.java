@@ -191,14 +191,14 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(lblInfoText);
 
 		JLabel lblKapital = new JLabel("Kapital: ");
-		lblKapital.setBounds(580, 66, 46, 14);
+		lblKapital.setBounds(580, 80, 46, 14);
 		panel.add(lblKapital);
 
 		JLabel lblSchulden = new JLabel("Schulden: ");
-		lblSchulden.setBounds(580, 100, 75, 14);
+		lblSchulden.setBounds(580, 110, 75, 14);
 		panel.add(lblSchulden);
 
-		lblStandort.setText("Standort:         " + standort );
+		lblStandort.setText("Standort:         " + standort);
 		lblStandort.setBounds(580, 140, 190, 50);
 		panel.add(lblStandort);
 
@@ -234,13 +234,13 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		txtKapital = new JTextField();
 		txtKapital.setText("" + kapital);
-		txtKapital.setBounds(650, 63, 86, 20);
+		txtKapital.setBounds(650, 77, 86, 20);
 		txtKapital.setEditable(false);
 		panel.add(txtKapital);
 		txtKapital.setColumns(10);
 
 		txtSchulden = new JTextField();
-		txtSchulden.setBounds(650, 100, 86, 20);
+		txtSchulden.setBounds(650, 110, 86, 20);
 		txtSchulden.setEditable(false);
 		panel.add(txtSchulden);
 		txtSchulden.setColumns(10);
@@ -303,7 +303,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		contentPanePreis.add(txtPreis);
 
 		btnPreis.setText("Bestätigen");
-		btnPreis.setBounds(100, 50, 120, 40);
+		btnPreis.setBounds(100, 50, 120, 30);
 		btnPreis.addActionListener(this);
 		contentPanePreis.add(btnPreis);
 
@@ -359,10 +359,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		setContentPane(contentPanePersonal);
 		contentPanePersonal.setLayout(null);
 
-		JLabel lblPersonal = new JLabel("Personal");
+		JLabel lblPersonal = new JLabel("<html><body><h2>Personal</h2></body></html>");
 		lblPersonal.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPersonal.setFont(new Font("Tahoma", Font.PLAIN, 16));
-		lblPersonal.setBounds(10, 11, 442, 14);
+		lblPersonal.setBounds(10, 11, 442, 33);
 		contentPanePersonal.add(lblPersonal);
 
 		JLabel lblPersonalerk = new JLabel("PersonalErk");
@@ -604,13 +603,16 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			frameMarketing.dispose();
 		}
 		if (s == btnPreis) {
-			framePreis.setVisible(false);
-			burgerPreis = Integer.parseInt(txtPreis.getText());
-			Controller.Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
-			un = Controller.Controller.getUnternehmen(n);
-			lblPreis.setText("Preis/Burger: " + burgerPreis + "€");
-			frame.setFocusableWindowState(true);
-			framePreis.dispose();
+			try {
+				burgerPreis = Integer.parseInt(txtPreis.getText());
+				Controller.Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
+				un = Controller.Controller.getUnternehmen(n);
+				lblPreis.setText("Preis/Burger: " + burgerPreis + "€");
+				frame.setFocusableWindowState(true);
+				framePreis.setVisible(false);
+				framePreis.dispose();
+			} catch (NumberFormatException e1) {
+			}
 		}
 		if (s == btnAbschicken) {
 			framePersonal.setVisible(false);
