@@ -58,20 +58,23 @@ public class SpielablaufTest {
     public void testSpielablauf() {
 
         while (anzahlRunden < 12) {
+            for (int j = 0; j < Datenbank.fl.length; j++) {
+                Datenbank.fl[j].setVerbrauchteRessourcen(0);
+                Datenbank.bl[j].setVerbrauchteRessourcen(0);
+                Datenbank.sal[j].setVerbrauchteRessourcen(0);
+                Datenbank.sol[j].setVerbrauchteRessourcen(0);
+            }
+
+
             for (int i = 0; i < unternehmen.size(); i++) {
-                if(i==0){
-                    bestellNummer = 0;
-                }
-                else{
+                if(i==1){
                     bestellNummer = 2;
                 }
-
-                for (int j = 0; j < Datenbank.fl.length; j++) {
-                    Datenbank.fl[j].setVerbrauchteRessourcen(0);
-                    Datenbank.bl[j].setVerbrauchteRessourcen(0);
-                    Datenbank.sal[j].setVerbrauchteRessourcen(0);
-                    Datenbank.sol[j].setVerbrauchteRessourcen(0);
+                else{
+                    bestellNummer = 1;
                 }
+
+
 
                 Unternehmen u = unternehmen.get(i);
 

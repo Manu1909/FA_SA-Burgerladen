@@ -55,16 +55,17 @@ public class Controller {
 
 		
 		while(anzahlRunden < 12){
+			for (int j = 0; j < Datenbank.fl.length; j++) {
+				Datenbank.fl[j].setVerbrauchteRessourcen(0);
+				Datenbank.bl[j].setVerbrauchteRessourcen(0);
+				Datenbank.sal[j].setVerbrauchteRessourcen(0);
+				Datenbank.sol[j].setVerbrauchteRessourcen(0);
+			}
 			for (int i = 0; i < unternehmen.size(); i++) {
 				if(anzahlRunden == 0){
 					startGame();
 				}else{
-					for (int j = 0; j < Datenbank.fl.length; j++) {
-						Datenbank.fl[j].setVerbrauchteRessourcen(0);
-						Datenbank.bl[j].setVerbrauchteRessourcen(0);
-						Datenbank.sal[j].setVerbrauchteRessourcen(0);
-						Datenbank.sol[j].setVerbrauchteRessourcen(0);
-					}
+
 
 					Unternehmen u = unternehmen.get(i);
 
@@ -684,6 +685,11 @@ public class Controller {
 			Datenbank.bl[j].berechneNeuenPreis();
 			Datenbank.sal[j].berechneNeuenPreis();
 			Datenbank.sol[j].berechneNeuenPreis();
+			Datenbank.fl[j].setVerbrauchteRessourcen(0);
+			Datenbank.bl[j].setVerbrauchteRessourcen(0);
+			Datenbank.sal[j].setVerbrauchteRessourcen(0);
+			Datenbank.sol[j].setVerbrauchteRessourcen(0);
+
 		}
 		anzahlRunden++;
 	}

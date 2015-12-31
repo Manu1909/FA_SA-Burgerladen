@@ -242,12 +242,7 @@ public class Unternehmen {
 		if(catering != null){
 			gewinn +=  berechneCateringKosten(catering);
 		}
-		if(kredit != null){
-			gewinn += kredit.berechneZinsaufwand();
-		}
 
-
-		
 
 		if(marketing!=null){
 			if(marketing.getBezeichnung().equals("Werbung21")){
@@ -262,9 +257,6 @@ public class Unternehmen {
 
 	public double berechneGruendungsKosten(){
 		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
-		/*if(kredit != null){
-			kosten += kredit.berechneAnnuitaet();
-		}*/
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}
@@ -274,7 +266,7 @@ public class Unternehmen {
 	public double berechneRundenkosten(){
 		double kosten = standort.getMiete() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
 		if(kredit != null){
-			kosten += kredit.berechneAnnuitaet();
+			kosten += kredit.berechneZinsaufwand();
 		}
 		if(marketing != null){
 			kosten += marketing.getKosten();
