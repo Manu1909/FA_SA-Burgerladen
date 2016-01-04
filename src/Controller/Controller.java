@@ -413,6 +413,8 @@ public class Controller {
 		int kundenanteil = 0;
 		int poolVariable;
 
+		berechneKundenpool();
+
 		if(anzahlRunden < 4){
 			poolVariable = 300;
 		}
@@ -478,10 +480,9 @@ public class Controller {
 						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
 					}
 				}
+				}
 				else{
 					kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
-				}
-
 			}
 
 			unternehmen.get(i).setKunden(kunden);
@@ -654,9 +655,9 @@ public class Controller {
 
 	public static int berechneKundenpool(){
 	//	kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
-		kundenpool = 15000;
+		kundenpool = 10000;
 		//return kundenpool;
-		return 15000;
+		return 10000;
 	}
 
 	public static void unternehmensRundeBeenden(Unternehmen u){
