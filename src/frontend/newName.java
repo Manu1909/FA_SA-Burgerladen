@@ -12,6 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import Controller.Controller;
+
 public class newName extends JFrame implements ActionListener {
 	private JFrame frame = new JFrame();
 	private JPanel contentPane = new JPanel();
@@ -66,16 +68,26 @@ public class newName extends JFrame implements ActionListener {
 	}
 
 	// ab hier Listener-Methoden
-
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
-
 		if (s == btnNext) {
-			name = txtName.getText();
-			newStore store = new newStore(name, n);
-			frame.setVisible(false);
-			frame.dispose();
+			boolean taken = false;
+			for (int i = 0; i < 5; i++) {
+				try {
+					if (Controller.getUnternehmen(i).getName().equals(txtName.getText()))
+						taken = true;
+				} catch (Exception e1) {
+				}
+			}
+			if (taken == false) {
+				name = txtName.getText();
+				newStore store = new newStore(name, n);
+				frame.setVisible(false);
+				frame.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Dieser Name ist bereits vergeben.");
+			}
 		}
 	}
 }

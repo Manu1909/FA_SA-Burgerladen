@@ -8,6 +8,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import Controller.Controller;
+
 public class RundenUbersicht extends JFrame implements ActionListener {
 	private JButton btnWeiter = new JButton();
 	private business.Unternehmen un;
@@ -23,11 +25,12 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		btnWeiter.setText("Weiter");
 		btnWeiter.addActionListener(this);
 		contentPane.add(btnWeiter);
-	
-		JLabel lblText = new JLabel("Rundenübersichtsfenser. Hier stehen später Infos zu allen UN. Über Weiter nächste Runde starten");
-		lblText.setBounds(10,10, 50,120);
+
+		JLabel lblText = new JLabel(
+				"Rundenï¿½bersichtsfenser. Hier stehen spï¿½ter Infos zu allen UN. ï¿½ber Weiter nï¿½chste Runde starten");
+		lblText.setBounds(10, 10, 50, 120);
 		contentPane.add(lblText);
-		
+
 		frame.setContentPane(contentPane);
 		frame.setBounds(500, 400, 500, 400);
 		frame.setVisible(true);
@@ -37,8 +40,8 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnWeiter) {
-			if (Controller.Controller.getRunde() < 12) {
-				Controller.Controller.setRunde(Controller.Controller.getRunde() + 1);
+			if (Controller.getRunde() < 12) {
+				Controller.rundeBeenden();
 				frame.setVisible(false);
 				Overview overview = new Overview(0);
 				frame.dispose();

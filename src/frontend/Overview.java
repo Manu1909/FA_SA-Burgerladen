@@ -24,6 +24,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
+import Controller.Controller;
 
 import business.Datenbank;
 
@@ -150,7 +151,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 	public Overview(int n) {
 		this.n = n;
-		this.un = Controller.Controller.getUnternehmen(n);
+		this.un = Controller.getUnternehmen(n);
 		this.name = un.getName();
 		this.standort = un.getStandort().getLage();
 		this.innenausstattung = un.getStandort().getInnenausstattung().getBezeichnung();
@@ -159,8 +160,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		else
 			this.kredit = 0;
 		this.kapital = un.getKapital();
-		if (Controller.Controller.getRunde() < 1 && un.getKredit() != null) {
-			Controller.Controller.getUnternehmen(n).setKapital(un.getKapital() + un.getKredit().getHoehe());
+		if (Controller.getRunde() < 1 && un.getKredit() != null) {
+			Controller.getUnternehmen(n).setKapital(un.getKapital() + un.getKredit().getHoehe());
 			this.kapital = un.getKapital();
 		}
 		this.anzahlPersonal = un.getPersonal().berechneAnzahl();
@@ -199,29 +200,29 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(lblSchulden);
 
 		lblStandort.setText("Standort:         " + standort);
-		lblStandort.setBounds(580, 140, 190, 50);
+		lblStandort.setBounds(580, 150, 190, 14);
 		panel.add(lblStandort);
 
 		lblMarketing.setText("Marketing:      " + werbung);
-		lblMarketing.setBounds(580, 160, 190, 50);
+		lblMarketing.setBounds(580, 170, 190, 14);
 		panel.add(lblMarketing);
 
 		lblanzahlPersonal.setText("Personal:        " + anzahlPersonal);
-		lblanzahlPersonal.setBounds(580, 190, 120, 30);
+		lblanzahlPersonal.setBounds(580, 190, 120, 14);
 		panel.add(lblanzahlPersonal);
 
 		lblBestellung.setText("keine Bestellung");
 		lblBestellung.setBackground(Color.RED);
 		lblBestellung.setOpaque(true);
-		lblBestellung.setBounds(580, 215, 160, 20);
+		lblBestellung.setBounds(580, 210, 160, 14);
 		panel.add(lblBestellung);
 
 		lblPreis.setText("Preis/Burger: " + un.getBurger().getPreis() + "€");
-		lblPreis.setBounds(580, 230, 160, 30);
+		lblPreis.setBounds(580, 230, 190, 14);
 		panel.add(lblPreis);
 
 		lblInnenausstattung.setText("Ausstattung:  " + innenausstattung);
-		lblInnenausstattung.setBounds(580, 250, 160, 30);
+		lblInnenausstattung.setBounds(580, 250, 160, 14);
 		panel.add(lblInnenausstattung);
 
 		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
@@ -252,7 +253,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		try {
 			txtLetztePeriode.setText("Umsatz: " + "€\nGewinn: " + gewinn + "€" + "\n" + "Kunden: "
-					+ Controller.Controller.getUnternehmen(n).getKunden());
+					+ Controller.getUnternehmen(n).getKunden());
 			txtLetztePeriode.setBounds(180, 250, 151, 52);
 			txtLetztePeriode.setEditable(false);
 			panel.add(txtLetztePeriode);
@@ -280,8 +281,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		if (Controller.Controller.getRunde() == 2 || Controller.Controller.getRunde() == 5
-				|| Controller.Controller.getRunde() == 8) {
+		if (Controller.getRunde() == 2 || Controller.getRunde() == 5 || Controller.getRunde() == 8) {
 			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
 			menuCatering.setEnabled(true);
 		}
@@ -426,8 +426,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		contentPaneBestellungen.add(txtBurgerZahl);
 		txtBurgerZahl.setColumns(10);
 		JLabel lblBurger = new JLabel("Burger" + "          (Lagerinhalt: "
-				+ Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() + "/"
-				+ Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse() + ")");
+				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() + "/"
+				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse() + ")");
 		lblBurger.setBounds(240, 76, 200, 14);
 		contentPaneBestellungen.add(lblBurger);
 
@@ -588,12 +588,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (s == btnConfirm) {
 			frameMarketing.setVisible(false);
 			if (listMarketing.getSelectedIndex() < 3)
-				Controller.Controller.getUnternehmen(n)
-						.setMarketing(Controller.Controller.waehleMarketing(listMarketing.getSelectedIndex()));
+				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(listMarketing.getSelectedIndex()));
 			else
-				Controller.Controller.getUnternehmen(n).setMarketing(Controller.Controller.waehleMarketing(-1));
+				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));
 
-			un = Controller.Controller.getUnternehmen(n);
+			un = Controller.getUnternehmen(n);
 			if (un.getMarketing() != null)
 				this.werbung = un.getMarketing().getBezeichnung();
 			else
@@ -605,8 +604,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (s == btnPreis) {
 			try {
 				burgerPreis = Integer.parseInt(txtPreis.getText());
-				Controller.Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
-				un = Controller.Controller.getUnternehmen(n);
+				Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
+				un = Controller.getUnternehmen(n);
 				lblPreis.setText("Preis/Burger: " + burgerPreis + "€");
 				frame.setFocusableWindowState(true);
 				framePreis.setVisible(false);
@@ -616,10 +615,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (s == btnAbschicken) {
 			framePersonal.setVisible(false);
-			Controller.Controller.getUnternehmen(n).getPersonal()
-					.erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
-			Controller.Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
-			un = Controller.Controller.getUnternehmen(n);
+			Controller.getUnternehmen(n).getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
+			Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
+			un = Controller.getUnternehmen(n);
 			lblanzahlPersonal.setText("Personal:        " + un.getPersonal().berechneAnzahl());
 			menuPersonal.setEnabled(false);
 			frame.setFocusableWindowState(true);
@@ -627,17 +625,16 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (s == btnBestellungAbschicken) {
 			try {
-				if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.Controller.getUnternehmen(n).getPersonal()
+				if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.getUnternehmen(n).getPersonal()
 						.berechneKapazitaet()) {
 					// Bestellung übergeben
-					Controller.Controller.getUnternehmen(n).getBestellung().bestellen(
-							Datenbank.fl[listFleisch.getSelectedIndex()],
+					Controller.getUnternehmen(n).getBestellung().bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 							Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
 							Datenbank.sol[listSauce.getSelectedIndex()]);
-					Controller.Controller.getUnternehmen(n).getBestellung()
-							.setzeBestellmenge(Integer.parseInt(txtBurgerZahl.getText()), Controller.Controller
-									.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
-					un = Controller.Controller.getUnternehmen(n);
+					Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
+							Integer.parseInt(txtBurgerZahl.getText()),
+							Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
+					un = Controller.getUnternehmen(n);
 					burgerZahl = Integer.parseInt(txtBurgerZahl.getText());
 					fleischLieferant = listFleisch.getSelectedValue().toString();
 					brotLieferant = listBroetchen.getSelectedValue().toString();
@@ -670,27 +667,16 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
-				Controller.Controller.ereignisTrittEin();
-				Controller.Controller.getUnternehmen(n).betreibeMarketing();
-				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
-				Controller.Controller.getUnternehmen(n).berechneCatering();
-				Controller.Controller.getUnternehmen(n).berechneKundenzufriedenheit();
-				Controller.Controller.berechneKunden();
-				Controller.Controller.getUnternehmen(n).setGewinn(
-						Controller.Controller.getUnternehmen(n).berechneGewinn(Controller.Controller.getRunde()));
-				Controller.Controller.getUnternehmen(n).setKapital(Controller.Controller.getUnternehmen(n).getKapital()
-						+ Controller.Controller.getUnternehmen(n).berechneGewinn(Controller.Controller.getRunde()));
-				Controller.Controller.getUnternehmen(n).getStandort().getKuehlraum()
-						.wareEntnehmen(Controller.Controller.getUnternehmen(n).getKunden());
+				Controller.getUnternehmen(n).betreibeMarketing();
+				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
+				Controller.getUnternehmen(n).berechneCatering();
+				Controller.getUnternehmen(n).getStandort().getKuehlraum()
+						.wareEntnehmen(Controller.getUnternehmen(n).getKunden());
+				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
 				if (n == StartGame.getI() - 1) { //
 					alleGegruendet = true;
 					// Neue Preise auf Grundlage der Verkaufszahlen
-					for (int j = 0; j < Datenbank.fl.length; j++) {
-						Datenbank.fl[j].berechneNeuenPreis();
-						Datenbank.bl[j].berechneNeuenPreis();
-						Datenbank.sal[j].berechneNeuenPreis();
-						Datenbank.sol[j].berechneNeuenPreis();
-					}
+					Controller.ereignisTrittEin();
 					frame.setVisible(false);
 					RundenUbersicht ende = new RundenUbersicht();
 					frame.dispose();
