@@ -43,6 +43,10 @@ public class ControllerTest {
     @Test
     public void testBerechneKunden() {
         Controller.berechneKunden();
+        for (int i = 0; i < unternehmen.size(); i++) {
+            System.out.println("Kunden " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getKunden());
+        }
+
         assertEquals(1932, unternehmen.get(1).getKunden());
     }
 

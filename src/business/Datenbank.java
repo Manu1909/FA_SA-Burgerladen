@@ -5,7 +5,7 @@ import Controller.Controller;
 public class Datenbank {
 
 	
-	public static final int startKapital = 90000;
+	public static final int startKapital = 70000;
 	//Konstanten f�r den Kundenpool
 	public static int kundenpool = 0;
 	public static final int kundenpoolKonstante = 3500;
@@ -23,7 +23,7 @@ public class Datenbank {
 	//Daten für Kühlräume
 	private static Kuehlraum kr1 = new Kuehlraum(3000, 0, 300);
 	private static Kuehlraum kr2 = new Kuehlraum(4000, 0, 500);
-	private static Kuehlraum kr3 = new Kuehlraum(6000, 0, 800);
+	private static Kuehlraum kr3 = new Kuehlraum(10000, 0, 800);
 	public static Kuehlraum[] kuehlraeume = {kr1, kr2, kr3};
 	
 	//Daten für Innenausstattung

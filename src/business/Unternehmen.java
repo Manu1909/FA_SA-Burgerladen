@@ -25,7 +25,7 @@ public class Unternehmen {
 		this.name = name;
 		bestellung = new Bestellung();
 		burger = new Burger();
-		this.personal = new Personal(5);
+		this.personal = new Personal(4);
 		kapital = Datenbank.startKapital;
 	}
 	
@@ -241,6 +241,10 @@ public class Unternehmen {
 		}
 		if(catering != null){
 			gewinn +=  berechneCateringKosten(catering);
+		}
+		//berechnung eines DispoKredites mit 15% Zinse
+		if(kapital<0){
+			gewinn += kapital*0.15/4;
 		}
 
 

@@ -130,20 +130,20 @@ public class SpielablaufTest {
                 //Setze Bestellmenge und bearbeite Personal
                 int bestellMenge = 0;
                 if(anzahlRunden < 3){
-                    bestellMenge = 1500;
+                    bestellMenge = 10000;
                 }
                 else if(anzahlRunden < 6){
-                    bestellMenge = 2300;
+                    bestellMenge = 10000;
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
                 else if(anzahlRunden<8){
-                    bestellMenge = 3000;
+                    bestellMenge = 10000;
                     u.getPersonal().berechneAnzahl();
-                    u.getPersonal().erhoeheAnzahl(1);
+                    u.getPersonal().erhoeheAnzahl(2);
                 }
                 else{
-                    bestellMenge = 3000;
+                    bestellMenge = 10000;
                     if(anzahlRunden%2==0){
                     	u.getPersonal().berechneAnzahl();
                         //u.getPersonal().feuern(1);
@@ -202,7 +202,8 @@ public class SpielablaufTest {
                     u.getBurger().setPreis(startPreise[i] + anzahlRunden/2);
                 }*/
 
-                u.getBurger().setPreis(startPreise[i] + anzahlRunden);
+                //u.getBurger().setPreis(startPreise[i] + anzahlRunden);
+                u.getBurger().setPreis(startPreise[i]);
 
                 Controller.unternehmensRundeBeenden(u);
 
@@ -218,14 +219,26 @@ public class SpielablaufTest {
             for (int i = 0; i < unternehmen.size(); i++) {
                 System.out.println("Runde: " + anzahlRunden);
                 Unternehmen u = unternehmen.get(i);
+
+
+                System.out.println("Miete: "+ u.getName()+ ": " + u.getStandort().getMiete());
+                System.out.println("Personalkosten: "+ u.getName()+ ": " + u.getPersonal().berechneKosten());
+                if(u.getMarketing() != null){
+                    System.out.println("Marketing: " + u.getMarketing().getKosten());
+                }
+                System.out.println("Bestellungspreis: "+ u.getName()+ ": " + u.getBestellung().berechneGesamtpreis());
+                System.out.println("Gesamtkosten: "+ u.getName()+ ": " + u.berechneRundenkosten() + "\n");
+                System.out.println("Burger Preis " + u.getName()+ ": " + u.getBurger().getPreis());
+                System.out.println("Kundenanteil: " + u.getName()+ ": " + u.berechneKundenanteil());
                 System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
                 System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
                 System.out.println("Kapital " + u.getName() + ": " + u.berechneKapital(false));
                 System.out.println("Bekanntheit " + u.getName() + ": " + u.getBekanntheit());
                 System.out.println("Kundenzufriedenheit " + u.getName() + ": " + u.getKundenzufriedenheit() + "\n");
-                System.out.println("Preise Lieferant2: " + Datenbank.fl[2].getPreisProGut() +"\n");
+                //System.out.println("Preise Lieferant2: " + Datenbank.fl[2].getPreisProGut() +"\n");
 
                 u.setCatering(null);
+                u.setMarketing(null);
             }
 
             //Berechne neue Lieferantenpreise
@@ -235,7 +248,7 @@ public class SpielablaufTest {
                 Datenbank.sal[j].berechneNeuenPreis();
                 Datenbank.sol[j].berechneNeuenPreis();
             }
-            anzahlRunden++;
+            Controller.setRunde(++anzahlRunden);
 
         }
 
