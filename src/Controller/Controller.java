@@ -653,8 +653,10 @@ public class Controller {
 	}
 
 	public static int berechneKundenpool(){
-		kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
-		return kundenpool;
+	//	kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
+		kundenpool = 15000;
+		//return kundenpool;
+		return 15000;
 	}
 
 	public static void unternehmensRundeBeenden(Unternehmen u){

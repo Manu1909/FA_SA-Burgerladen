@@ -6,7 +6,7 @@ public class Personal {
 	public int anzahlGefeuerte;
 	public int hoechstanzahl = 30;
 	public int mindestanzahl = 4;
-	public int burgerKapazitaet = 180*3;
+	public int burgerKapazitaet = 200*3;
 	public int kapazitaet;
 	public int gehalt = 1500*3;
 	public int kosten;

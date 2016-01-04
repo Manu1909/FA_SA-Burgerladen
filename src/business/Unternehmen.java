@@ -244,7 +244,7 @@ public class Unternehmen {
 		}
 		//berechnung eines DispoKredites mit 15% Zinse
 		if(kapital<0){
-			gewinn += kapital*0.15;
+			gewinn += kapital*0.15/4;
 		}
 
 
