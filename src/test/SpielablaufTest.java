@@ -123,7 +123,7 @@ public class SpielablaufTest {
                 }
                 
                 if (anzahlRunden > 0){
-                //Controller.ereignisTrittEin();
+                Controller.ereignisTrittEin();
                 }
                 
 

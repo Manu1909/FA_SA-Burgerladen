@@ -8,17 +8,15 @@ public class Lieferant {
 	private double preisProGut;
 	private double startPreis;
 	private int risikoQuote;
-	private int risikoEingetreten;
 	private int preisKonstante = 8;
 
 	
-	public Lieferant(int ressourcen, int qualitaet, double startPreis, int risikoQuote, int risikoEingetreten) {
+	public Lieferant(int ressourcen, int qualitaet, double startPreis, int risikoQuote) {
 		this.ressourcen = ressourcen;
 		this.qualitaet = qualitaet;
 		this.risikoQuote = risikoQuote;
 		this.startPreis = startPreis;
 		this.preisProGut = startPreis;
-		this.risikoEingetreten = risikoEingetreten;
 	}
 	
 	public void setRessourcen(int ressourcen){
@@ -42,10 +40,6 @@ public class Lieferant {
 		this.risikoQuote = risikoQuote;
 	}
 	
-	public void setRisikoEingetreten(int risikoEingetreten){
-		this.risikoEingetreten = risikoEingetreten;
-	}
-	
 	public int getVertrauchteRessourcen(){
 		return verbrauchteRessourcen;
 	}
@@ -63,10 +57,6 @@ public class Lieferant {
 		return risikoQuote;
 	}
 	
-	public int getRisikoEingetreten(){
-		return risikoEingetreten;
-	}
-
 
 	//Methode wird gebraucht bei begrenzten Ressourcen
 	/*public int berechneUebrigeRessourcen(){
