@@ -1,4 +1,5 @@
 package business;
+import backend.Datenbank;;
 
 public class Unternehmen {
 	

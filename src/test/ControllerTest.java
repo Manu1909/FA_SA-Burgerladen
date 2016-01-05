@@ -1,7 +1,7 @@
 package test;
 
 import Controller.Controller;
-import business.Datenbank;
+import backend.Datenbank;
 import business.Unternehmen;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,6 +43,10 @@ public class ControllerTest {
     @Test
     public void testBerechneKunden() {
         Controller.berechneKunden();
+        for (int i = 0; i < unternehmen.size(); i++) {
+            System.out.println("Kunden " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getKunden());
+        }
+
         assertEquals(1932, unternehmen.get(1).getKunden());
     }
 

@@ -25,7 +25,7 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 
-import business.Datenbank;
+import backend.Datenbank;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
 
