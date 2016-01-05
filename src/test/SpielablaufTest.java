@@ -64,13 +64,13 @@ public class SpielablaufTest {
         unternehmen = null;
     }
 
-    @Test
+/*    @Test
     public void testSpielablaufMitEreignis(){
         //Spielablauf mit Ereignissen
         init();
         simuliereSpielablauf(true);
         unternehmen = null;
-    }
+    }*/
 
 
     public void simuliereSpielablauf(boolean ereignis){
