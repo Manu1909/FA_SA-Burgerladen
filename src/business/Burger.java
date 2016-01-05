@@ -31,7 +31,7 @@ public class Burger {
 	}
 
 	public int berechnePreisleistung(){
-		return (qualitaet + berechnePreisPunkte())/2;
+		return (qualitaet + berechnePreisPunkte()*2)/3;
 	}
 
 	public int berechnePreisPunkte(){

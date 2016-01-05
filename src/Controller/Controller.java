@@ -561,7 +561,7 @@ public class Controller {
 				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
 			
 			} else if (2< zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
-				System.out.println("In der Küche kam es zu einem Brandunfall.");
+				System.out.println("In der Kï¿½che kam es zu einem Brandunfall.");
 				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
 				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
@@ -695,6 +695,7 @@ public class Controller {
 			u.berechneKapital(false);
 
 			u.setCatering(null);
+			u.setMarketing(null);
 		}
 
 		for (int j = 0; j < Datenbank.fl.length; j++) {

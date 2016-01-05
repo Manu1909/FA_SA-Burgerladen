@@ -10,23 +10,25 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created by kochsiek on 28.12.2015.
  */
 public class SpielablaufTest {
 
-    ArrayList<Unternehmen> unternehmen = new ArrayList<>();
+    ArrayList<Unternehmen> unternehmen =null;
     int anzahlRunden;
     Kuehlraum k;
     private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
     private int[] startPreise = {10, 12, 14};
     private int bestellNummer;
 
-    @Before
+   // @Before
     public void init(){
 
-        anzahlRunden = 0;
+        unternehmen = new ArrayList<>();
+        Controller.setRunde(anzahlRunden=0);
 
         for (int i = 0; i < 3; i++) {
             Controller.neuesUnternehmen(new Unternehmen("u"+i));
@@ -38,7 +40,7 @@ public class SpielablaufTest {
             unternehmen.get(i).setStandort(Controller.waehleStandort((i)));
             k = new Kuehlraum(kuehlraeume[2].getLagerGroesse(), 0, kuehlraeume[2].getMietZusatzKosten());
             unternehmen.get(i).getStandort().setKuehlraum(k);
-            //unternehmen.get(i).setKredit(Datenbank.k2);
+            unternehmen.get(i).setKredit(Datenbank.k1);
 
             unternehmen.get(i).berechneKundenzufriedenheit();
             //System.out.println("Bekanntheit " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getBekanntheit());
@@ -49,14 +51,29 @@ public class SpielablaufTest {
         unternehmen.get(0).getStandort().setInnenausstattung(Datenbank.i[2]);
         unternehmen.get(1).getStandort().setInnenausstattung(Datenbank.i[1]);
         unternehmen.get(2).getStandort().setInnenausstattung(Datenbank.i[0]);
-        Controller.berechneKundenpool();
-
-
     }
 
     @Test
     public void testSpielablauf() {
 
+        init();
+        simuliereSpielablauf(false);
+
+        assertTrue("u1 soll gewonnen haben", unternehmen.get(1).getKapital()>unternehmen.get(0).getKapital() && unternehmen.get(1).getKapital()>unternehmen.get(2).getKapital());
+
+        unternehmen = null;
+    }
+
+    @Test
+    public void testSpielablaufMitEreignis(){
+        //Spielablauf mit Ereignissen
+        init();
+        simuliereSpielablauf(true);
+        unternehmen = null;
+    }
+
+
+    public void simuliereSpielablauf(boolean ereignis){
         while (anzahlRunden < 12) {
             for (int j = 0; j < Datenbank.fl.length; j++) {
                 Datenbank.fl[j].setVerbrauchteRessourcen(0);
@@ -68,7 +85,7 @@ public class SpielablaufTest {
 
             for (int i = 0; i < unternehmen.size(); i++) {
                 if(i==0){
-                    bestellNummer = 1;
+                    bestellNummer = 0;
                 }
                 else{
                     bestellNummer = 2;
@@ -121,11 +138,11 @@ public class SpielablaufTest {
                     }
 
                 }
-                
-                if (anzahlRunden > 0){
+
+                if (anzahlRunden > 0 && ereignis){
                 Controller.ereignisTrittEin();
                 }
-                
+
 
                 //Setze Bestellmenge und bearbeite Personal
                 int bestellMenge = 0;
@@ -133,19 +150,19 @@ public class SpielablaufTest {
                     bestellMenge = 10000;
                 }
                 else if(anzahlRunden < 6){
-                    bestellMenge = 10000;
+                    bestellMenge = 4000;
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
                 else if(anzahlRunden<8){
-                    bestellMenge = 10000;
+                    bestellMenge = 5000;
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
                 else{
-                    bestellMenge = 10000;
+                    bestellMenge = 6000;
                     if(anzahlRunden%2==0){
-                    	u.getPersonal().berechneAnzahl();
+                        u.getPersonal().berechneAnzahl();
                         //u.getPersonal().feuern(1);
                     }
                 }
@@ -258,11 +275,7 @@ public class SpielablaufTest {
             Controller.setRunde(++anzahlRunden);
 
         }
-
-
     }
-
-
 
 
 }
