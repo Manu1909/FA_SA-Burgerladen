@@ -3,11 +3,10 @@ package test;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import business.Catering;
-import business.Datenbank;
+import backend.Datenbank;
 import business.Unternehmen;
 
 public class CateringTest {
@@ -54,7 +53,7 @@ public class CateringTest {
 			qualitaetUnternehmen = c1.getQualitaet().get(i);
 		}
 		
-		assertTrue("Test addQualität", qualitaetUnternehmen == 67);
+		assertTrue("Test addQualitï¿½t", qualitaetUnternehmen == 67);
 	}
 
 	@Test

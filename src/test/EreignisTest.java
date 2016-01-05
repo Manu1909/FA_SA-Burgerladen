@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import business.Datenbank;
+import backend.Datenbank;
 import business.Ereignis;
 import business.Personal;
 

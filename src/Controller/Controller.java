@@ -2,6 +2,7 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import backend.Datenbank;
 import business.*;
 
 public class Controller {
@@ -422,7 +423,7 @@ public class Controller {
 			poolVariable = 200;
 		}
 		else{
-			poolVariable = 100;
+			poolVariable = 120;
 		}
 
 		for (int i = 0; i < unternehmen.size(); i++) {
@@ -446,10 +447,10 @@ public class Controller {
 			}
 
 			for (int j = 0; j < anteileInnenausstattung.length; j++) {
-				if(anteileInnenausstattung[j]<=poolVariable){
+				if(anteileInnenausstattung[j]<=poolVariable && unternehmen.get(i).getStandort().getInnenausstattung() == Datenbank.i[j]){
 					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/poolVariable;
 				}
-				else{
+				else if(unternehmen.get(i).getStandort().getInnenausstattung() == Datenbank.i[j]){
 					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/anteileInnenausstattung[j];
 				}
 			}
@@ -471,7 +472,7 @@ public class Controller {
 			}
 			
 			//checke Personalkapazitaet
-			if(unternehmen.get(i).getPersonal().berechneKapazitaet() < kunden){
+			if(unternehmen.get(i).getPersonal().berechneKapazitaet() > kunden){
 				if(unternehmen.get(i).getMarketing()!=null){
 					if(unternehmen.get(i).getMarketing().getBezeichnung().equals("Werbung21")){
 						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet()/2;
@@ -654,10 +655,10 @@ public class Controller {
 	}
 
 	public static int berechneKundenpool(){
-	//	kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
-		kundenpool = 10000;
-		//return kundenpool;
-		return 10000;
+		kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
+		//kundenpool = 15000;
+		return kundenpool;
+		//return 15000;
 	}
 
 	public static void unternehmensRundeBeenden(Unternehmen u){

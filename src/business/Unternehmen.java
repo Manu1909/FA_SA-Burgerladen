@@ -1,5 +1,7 @@
 package business;
 
+import backend.Datenbank;
+
 public class Unternehmen {
 	
 	private double gewinn;
@@ -220,7 +222,7 @@ public class Unternehmen {
 }
 
 	public int berechneKundenanteil(){
-		kundenAnteil = (int)(0.25*bekanntheit + 0.33* kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisleistung());
+		kundenAnteil = (int)(0.25*bekanntheit + 0.33* kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisPunkte());
 		if(marketing!=null){
 			kundenAnteil *= (1+marketing.getKundenprozentsatz());
 		}

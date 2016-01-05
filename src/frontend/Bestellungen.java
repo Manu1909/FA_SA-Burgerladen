@@ -1,19 +1,15 @@
 package frontend;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
-import business.Datenbank;
+import backend.Datenbank;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
-import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -23,10 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.Color;
 import javax.swing.UIManager;
 import javax.swing.JButton;
-import javax.swing.border.BevelBorder;
 
 public class Bestellungen extends JFrame implements ActionListener, MouseListener{
 	

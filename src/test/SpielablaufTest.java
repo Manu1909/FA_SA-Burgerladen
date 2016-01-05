@@ -1,7 +1,7 @@
 package test;
 
 import Controller.Controller;
-import business.Datenbank;
+import backend.Datenbank;
 import business.Kuehlraum;
 import business.Unternehmen;
 import org.junit.Before;
@@ -20,7 +20,7 @@ public class SpielablaufTest {
     int anzahlRunden;
     Kuehlraum k;
     private static Kuehlraum[] kuehlraeume = Datenbank.kuehlraeume;
-    private int[] startPreise = {8, 10, 12};
+    private int[] startPreise = {10, 12, 14};
     private int bestellNummer;
 
     @Before
@@ -140,7 +140,7 @@ public class SpielablaufTest {
                 else if(anzahlRunden<8){
                     bestellMenge = 10000;
                     u.getPersonal().berechneAnzahl();
-                    u.getPersonal().erhoeheAnzahl(2);
+                    u.getPersonal().erhoeheAnzahl(1);
                 }
                 else{
                     bestellMenge = 10000;
@@ -220,15 +220,22 @@ public class SpielablaufTest {
                 System.out.println("Runde: " + anzahlRunden);
                 Unternehmen u = unternehmen.get(i);
 
+                if(anzahlRunden == 10){
+                    Controller.berechneKunden();
+                }
+
 
                 System.out.println("Miete: "+ u.getName()+ ": " + u.getStandort().getMiete());
                 System.out.println("Personalkosten: "+ u.getName()+ ": " + u.getPersonal().berechneKosten());
+                System.out.println("Anzahl Personal: "+ u.getName()+ ": " + u.getPersonal().berechneAnzahl());
                 if(u.getMarketing() != null){
                     System.out.println("Marketing: " + u.getMarketing().getKosten());
                 }
                 System.out.println("Bestellungspreis: "+ u.getName()+ ": " + u.getBestellung().berechneGesamtpreis());
                 System.out.println("Gesamtkosten: "+ u.getName()+ ": " + u.berechneRundenkosten() + "\n");
                 System.out.println("Burger Preis " + u.getName()+ ": " + u.getBurger().getPreis());
+                System.out.println("Burger Preisleistung " + u.getName()+ ": " + u.getBurger().berechnePreisleistung());
+                System.out.println("Preispunkte "+ u.getName()+ ": " + u.getBurger().berechnePreisPunkte());
                 System.out.println("Kundenanteil: " + u.getName()+ ": " + u.berechneKundenanteil());
                 System.out.println("Anzahl Kunden " + u.getName() + ": " + u.getKunden());
                 System.out.println("Gewinn " + u.getName() + ": " + u.berechneGewinn(anzahlRunden));
