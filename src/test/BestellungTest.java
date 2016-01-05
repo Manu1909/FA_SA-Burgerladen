@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
+import backend.Datenbank;
 import business.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +23,7 @@ public class BestellungTest {
 		//u.getStandort().setKuehlraum(k3);
 		
 		
-		for(Lieferant fl:Datenbank.fl){
+		for(Lieferant fl: Datenbank.fl){
 			fl.setVerbrauchteRessourcen(900);
 		}
 		

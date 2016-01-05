@@ -1,7 +1,7 @@
 package test;
 
 import Controller.Controller;
-import business.Datenbank;
+import backend.Datenbank;
 import business.Unternehmen;
 import org.junit.Before;
 import org.junit.Test;

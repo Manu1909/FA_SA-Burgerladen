@@ -8,14 +8,13 @@ import java.awt.event.MouseListener;
 //import java.util.Locale.LanguageRange;
 
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import business.Datenbank;
+import backend.Datenbank;
 
 public class newStore extends JFrame implements ActionListener, MouseListener {
 	private int n;

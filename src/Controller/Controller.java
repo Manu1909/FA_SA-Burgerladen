@@ -2,6 +2,7 @@ package Controller;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import backend.Datenbank;
 import business.*;
 
 public class Controller {
@@ -24,6 +25,7 @@ public class Controller {
 	private static boolean neuerSpieler = true;
 	private static boolean lieferantOK;
 	private static int kundenpool;
+	private static int [] risikoEingetreten = new int [3];
 	
 	public static void main(String args[]){
 		startGame();
@@ -422,7 +424,7 @@ public class Controller {
 			poolVariable = 200;
 		}
 		else{
-			poolVariable = 100;
+			poolVariable = 120;
 		}
 
 		for (int i = 0; i < unternehmen.size(); i++) {
@@ -446,10 +448,10 @@ public class Controller {
 			}
 
 			for (int j = 0; j < anteileInnenausstattung.length; j++) {
-				if(anteileInnenausstattung[j]<=poolVariable){
+				if(anteileInnenausstattung[j]<=poolVariable && unternehmen.get(i).getStandort().getInnenausstattung() == Datenbank.i[j]){
 					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/poolVariable;
 				}
-				else{
+				else if(unternehmen.get(i).getStandort().getInnenausstattung() == Datenbank.i[j]){
 					kunden += kundenanteil*Datenbank.i[j].getGroesseKundenpool()/anteileInnenausstattung[j];
 				}
 			}
@@ -471,7 +473,7 @@ public class Controller {
 			}
 			
 			//checke Personalkapazitaet
-			if(unternehmen.get(i).getPersonal().berechneKapazitaet() < kunden){
+			if(unternehmen.get(i).getPersonal().berechneKapazitaet() > kunden){
 				if(unternehmen.get(i).getMarketing()!=null){
 					if(unternehmen.get(i).getMarketing().getBezeichnung().equals("Werbung21")){
 						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet()/2;
@@ -530,14 +532,17 @@ public class Controller {
 	
 	//Methode f�r das Auftreten von Ereignissen
 	public static void ereignisTrittEin() {
+		int alteBekanntheit;
+		int bekanntheitsVeraenderung;
+		int kundenzufriedenheitsVeraenderung;
 		for (int i = 0; i < Datenbank.fl.length; i++) {
 			
 				int zufallszahl = (int)(Math.random() * 100) + 1;
 				if (zufallszahl <= fl[i].getRisikoQuote()){
 					for (int j = 0; j < unternehmen.size(); j++) {
 						if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
-							if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoEingetreten() == 0){
-									unternehmen.get(j).getBestellung().getFleischlieferant().setRisikoEingetreten(1);
+							if (risikoEingetreten[j] == 0){
+								risikoEingetreten[j] = 1;
 							}
 						}
 					}
@@ -548,24 +553,33 @@ public class Controller {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
 			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
 				System.out.println("Das Adler Mannheim-Team war bei Ihnen zu Besuch!");
+				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
+				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesteigert.");
+				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
 			
 			} else if (2< zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
-				System.out.println("In der Küche kam es zu einem Brandunfall.");
+				System.out.println("In der K�che kam es zu einem Brandunfall.");
+				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
+				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
+				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt");
 			
 			}
 			
-			if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoEingetreten() == 1){
+			if (risikoEingetreten[i] == 1){
 				System.out.println("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.");
+				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
+				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
-				unternehmen.get(i).getBestellung().getFleischlieferant().setRisikoEingetreten(2);
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " auf " + unternehmen.get(i).getBekanntheit() + " gesteigert und ihre Kundenzufriedenheit um " + unternehmen.get(i).getKundenzufriedenheitsVeraenderung() + " gesenkt");
+				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+				risikoEingetreten[i] = 2;
+				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt");
 			}
 		}
 	}
@@ -654,10 +668,10 @@ public class Controller {
 	}
 
 	public static int berechneKundenpool(){
-	//	kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
-		kundenpool = 10000;
-		//return kundenpool;
-		return 10000;
+		kundenpool = Datenbank.kundenpoolKonstante * unternehmen.size();
+		//kundenpool = 15000;
+		return kundenpool;
+		//return 15000;
 	}
 
 	public static void unternehmensRundeBeenden(Unternehmen u){
@@ -681,6 +695,7 @@ public class Controller {
 			u.berechneKapital(false);
 
 			u.setCatering(null);
+			u.setMarketing(null);
 		}
 
 		for (int j = 0; j < Datenbank.fl.length; j++) {

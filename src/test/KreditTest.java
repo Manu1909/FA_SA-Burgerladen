@@ -6,7 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import business.Kredit;
-import business.Datenbank;
+import backend.Datenbank;
 import business.Unternehmen;
 
 public class KreditTest {

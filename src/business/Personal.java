@@ -8,7 +8,7 @@ public class Personal {
 	public int mindestanzahl = 4;
 	public int burgerKapazitaet = 200*3;
 	public int kapazitaet;
-	public int gehalt = 1500*3;
+	public int gehalt = 1400*3;
 	public int kosten;
 	
 	public Personal(int anzahlAngestellte){
