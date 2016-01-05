@@ -6,6 +6,8 @@ public class Kredit {
 	private double zinssatz;
 	private int hoehe; // Idee: H�he des Kredits selber bestimmen
 	private double annuitaet;
+	private double zinsaufwand;
+	private double bereinigteAnnuitaet;
 
 	public Kredit(int laufzeit, double zinssatz, int hoehe) {
 		this.laufzeit = laufzeit;
@@ -27,6 +29,12 @@ public class Kredit {
 	public void setAnnuitaet(double annuitaet){
 		this.annuitaet = annuitaet;
 	}
+	public void setZinsaufwand(double zinsaufwand){
+		this.zinsaufwand = zinsaufwand;
+	}
+	public void setBereinigteAnnuitaet(double bereinigteAnnuitaet){
+		this.bereinigteAnnuitaet = bereinigteAnnuitaet;
+	}
 	public int getLaufzeit() {
 		return laufzeit;
 	}
@@ -39,6 +47,12 @@ public class Kredit {
 	public double getAnnuitaet(){
 		return annuitaet;
 	}
+	public double getZinsaufwand(){
+		return zinsaufwand;
+	}
+	public double getBereinigteAnnuitaet(){
+		return bereinigteAnnuitaet;
+	}
 	
 	// Methoden
 	public double berechneAnnuitaet(){
@@ -48,7 +62,13 @@ public class Kredit {
 	}
 
 	public double berechneZinsaufwand() {
-
-		return 0;
+		zinsaufwand = annuitaet*laufzeit - hoehe;
+		zinsaufwand = Math.round(100.0 * zinsaufwand) / 100.0;
+		return zinsaufwand;
+	}
+	
+	public double berechneBereinigteAnnuitaet() {
+		bereinigteAnnuitaet = annuitaet - (zinsaufwand/laufzeit);
+		return bereinigteAnnuitaet;
 	}
 }

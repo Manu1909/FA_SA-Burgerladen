@@ -149,7 +149,7 @@ public class Unternehmen {
 			kapital += kredit.getHoehe();
 		}
 		else if(kredit != null){
-			kapital -= kredit.berechneAnnuitaet();
+			kapital -= kredit.berechneBereinigteAnnuitaet();
 		}
 		return kapital;
 	}
@@ -262,6 +262,9 @@ public class Unternehmen {
 
 	public double berechneGruendungsKosten(){
 		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneZinsaufwand();
+		}
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}
