@@ -62,13 +62,13 @@ public class Kredit {
 	}
 
 	public double berechneZinsaufwand() {
-		zinsaufwand = annuitaet*laufzeit - hoehe;
+		zinsaufwand = (annuitaet*laufzeit - hoehe)/laufzeit;
 		zinsaufwand = Math.round(100.0 * zinsaufwand) / 100.0;
 		return zinsaufwand;
 	}
 	
 	public double berechneBereinigteAnnuitaet() {
-		bereinigteAnnuitaet = annuitaet - (zinsaufwand/laufzeit);
+		bereinigteAnnuitaet = annuitaet - zinsaufwand;
 		return bereinigteAnnuitaet;
 	}
 }

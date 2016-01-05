@@ -30,12 +30,12 @@ public class KreditTest {
 	@Test
 	public void testBerechneZinsaufwand() {
 		k.setAnnuitaet(2631.62);
-		assertTrue("Test berechneZinsaufwand", 1052.96 == k.berechneZinsaufwand());
+		assertTrue("Test berechneZinsaufwand", 131.62 == k.berechneZinsaufwand());
 	}
 	
 	@Test
 	public void testBerechneBereinigteAnnuitaet() {
-		k.setZinsaufwand(1052.96);
+		k.setZinsaufwand(131.62);
 		assertTrue("Test berechneBereinigteAnnuitaet", 2500 == k.berechneBereinigteAnnuitaet());
 	}
 }
