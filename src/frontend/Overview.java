@@ -29,7 +29,6 @@ import Controller.Controller;
 import business.Datenbank;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
-
 	private String name = "";
 	private String standort;
 	private String innenausstattung;
@@ -46,7 +45,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private int anzahlPersonal;
 	private double kapital;
 	private double schulden;
-	private double gewinn;
 	private static business.Unternehmen un;
 	private static boolean alleGegruendet = false;
 
@@ -103,9 +101,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	// Variablen Catering-Fenster
 	private JFrame frameCatering = new JFrame();
 	private JPanel contentPaneCatering = new JPanel();
-	private JButton btnAngebotAbgeben = new JButton();
-	private JButton btnAuftragAblehnen = new JButton();
+	private JButton btnAngebotAbgeben = new JButton("Angebot abgeben");
+	private JButton btnAuftragAblehnen = new JButton("Nein, danke!");
 	private JTextField txtAngebotSumme = new JTextField();
+	private String catering;
+	private JLabel lblCateringtxt = new JLabel(catering);
 
 	// Variablen Bestellungs-Fenster
 	private JFrame frameBestellungen = new JFrame();
@@ -166,7 +166,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		this.anzahlPersonal = un.getPersonal().berechneAnzahl();
 		try {
-			this.gewinn = un.getGewinn();
 			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
 			this.werbung = un.getMarketing().getBezeichnung();
 			this.burgerPreis = un.getBurger().getPreis();
@@ -177,7 +176,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	}
 
 	public void zeigeFensterOverview() {
-		frame.setTitle("Überblick für " + name);
+		frame.setTitle("Überblick für " + name + " (Runde " + Controller.getRunde() + ")");
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -252,18 +251,34 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		panel.add(btnRundeBeenden);
 
 		try {
-			txtLetztePeriode.setText("Umsatz: " + "€\nGewinn: " + gewinn + "€" + "\n" + "Kunden: "
+			txtLetztePeriode.setText("Umsatz: " + Controller.getUnternehmen(n).getUmsatz() + "€\nGewinn: "
+					+ Controller.getUnternehmen(n).getGewinn() + "€" + "\n" + "Kunden: "
 					+ Controller.getUnternehmen(n).getKunden());
 			txtLetztePeriode.setBounds(180, 250, 151, 52);
 			txtLetztePeriode.setEditable(false);
 			panel.add(txtLetztePeriode);
 		} catch (Exception e) {
 		}
+		int max = 0;
+		for (int i = 0; i < StartGame.getI(); i++) {
+			try {
+				if (Controller.getUnternehmen(i).getUmsatz() > Controller.getUnternehmen(max).getUmsatz())
+					max = i;
+			} catch (Exception e) {
+			}
+		}
 
-		txtRangliste.setText("1. Spieler 1 \n2. Spieler 2\n3. Spieler 2\n4. Spieler 4");
+		txtRangliste.setText(
+				"1. " + Controller.getUnternehmen(max).getName() + " \n2. Spieler 2" + "\n3. Spieler 3\n4. Spieler 4");
 		txtRangliste.setBounds(350, 250, 150, 69);
 		txtRangliste.setEditable(false);
 		panel.add(txtRangliste);
+		if (Controller.getRunde() == 0) {
+			panel.remove(txtRangliste);
+			panel.remove(lblRangliste);
+			panel.remove(txtLetztePeriode);
+			panel.remove(lblLetztePeriode);
+		}
 
 		bar.setBounds(260, 10, 360, 20);
 		menuCatering.addMouseListener(this);
@@ -281,7 +296,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
-		if (Controller.getRunde() == 2 || Controller.getRunde() == 5 || Controller.getRunde() == 8) {
+		if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9) {
 			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
 			menuCatering.setEnabled(true);
 		}
@@ -299,19 +314,28 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		framePreis.setContentPane(contentPanePreis);
 		contentPanePreis.setLayout(null);
 
-		txtPreis.setBounds(43, 43, 40, 30);
+		JLabel lblPreisHead = new JLabel("<html><body><h2>Preis wählen</h2></body></html>");
+		lblPreisHead.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPreisHead.setBounds(10, 5, 442, 33);
+		contentPanePreis.add(lblPreisHead);
+
+		txtPreis.setBounds(205, 100, 50, 23);
 		contentPanePreis.add(txtPreis);
 
+		JLabel preisErk = new JLabel(
+				"<html><body>Legen Sie den Preis fest, zu dem ihre Burger verkauft werden sollen. " + "</body></html>");
+		preisErk.setBounds(125, 40, 200, 40);
+		contentPanePreis.add(preisErk);
+
 		btnPreis.setText("Bestätigen");
-		btnPreis.setBounds(100, 50, 120, 30);
+		btnPreis.setBounds(170, 150, 120, 23);
 		btnPreis.addActionListener(this);
 		contentPanePreis.add(btnPreis);
 
 		frame.setFocusableWindowState(false);
 		framePreis.setUndecorated(true);
 		framePreis.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		framePreis.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		framePreis.setBounds(100, 100, 450, 300);
+		framePreis.setBounds(100, 100, 450, 200);
 		framePreis.setVisible(true);
 	}
 
@@ -348,7 +372,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		frameMarketing.setUndecorated(true);
 		frameMarketing.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		frameMarketing.setContentPane(contentPaneMarketing);
-		frameMarketing.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameMarketing.setBounds(100, 100, 450, 300);
 		frameMarketing.setVisible(true);
 	}
@@ -396,12 +419,50 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		framePersonal.setUndecorated(true);
 		framePersonal.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		framePersonal.setContentPane(contentPanePersonal);
-		framePersonal.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		framePersonal.setBounds(100, 100, 501, 364);
 		framePersonal.setVisible(true);
 	}
 
 	private void zeigeFensterCatering() {
+		if (Controller.getRunde() == 3) {
+			catering = "<html><body>Der 'Mannheimer Morgen' möchte bei einem städtischen Burgerladen für eine Firmenfeier 1000 Burger bestellen. Möchten Sie ein Angebot abgeben?</html></body>";
+		} else if (Controller.getRunde() == 6) {
+			catering = "<html><body>Es ist wieder Zeit für das Sommerfest an der DHBW Mannheim! Sie können ein Angebot für 2000 Burger abgeben.</html></body>";
+		} else if (Controller.getRunde() == 9) {
+			catering = "<html><body>Die Adler Mannheim sind Meister! Bei der angemessenen Feier dürfen auf keinen Fall die besten Burger Mannheims fehlen. Möchten Sie an der Ausschreibung für 5000 Burger teilnehmen?</html></body>";
+		} else {
+			catering = "Keine Catering-Ausschreibungen verfügbar.";
+		}
+		contentPaneCatering.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPaneCatering.setLayout(null);
+		JLabel lblCatering = new JLabel("<html><body><h2>Catering</h2></body></html>");
+		lblCatering.setBounds(5, 5, 474, 30);
+		lblCatering.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPaneCatering.add(lblCatering);
+
+		lblCateringtxt.setText(catering);
+		lblCateringtxt.setBounds(145, 25, 250, 150);
+		lblCateringtxt.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPaneCatering.add(lblCateringtxt);
+
+		txtAngebotSumme.setBounds(176, 150, 144, 20);
+		contentPaneCatering.add(txtAngebotSumme);
+		txtAngebotSumme.setColumns(10);
+
+		btnAngebotAbgeben.setBounds(97, 200, 134, 23);
+		contentPaneCatering.add(btnAngebotAbgeben);
+		btnAngebotAbgeben.addActionListener(this);
+
+		btnAuftragAblehnen.setBounds(273, 200, 134, 23);
+		contentPaneCatering.add(btnAuftragAblehnen);
+		btnAuftragAblehnen.addActionListener(this);
+
+		frame.setFocusableWindowState(false);
+		frameCatering.setUndecorated(true);
+		frameCatering.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		frameCatering.setContentPane(contentPaneCatering);
+		frameCatering.setBounds(100, 100, 500, 275);
+		frameCatering.setVisible(true);
 
 	}
 
@@ -509,7 +570,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		frameBestellungen.setUndecorated(true);
 		frameBestellungen.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		frameBestellungen.setContentPane(contentPaneBestellungen);
-		frameBestellungen.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frameBestellungen.setBounds(100, 100, 600, 650);
 		frameBestellungen.setVisible(true);
 	}
@@ -586,7 +646,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnConfirm) {
-			frameMarketing.setVisible(false);
 			if (listMarketing.getSelectedIndex() < 3)
 				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(listMarketing.getSelectedIndex()));
 			else
@@ -601,6 +660,14 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			frame.setFocusableWindowState(true);
 			frameMarketing.dispose();
 		}
+		if (s == btnAngebotAbgeben) {
+			frame.setFocusableWindowState(true);
+			frameCatering.dispose();
+		}
+		if (s == btnAuftragAblehnen) {
+			frame.setFocusableWindowState(true);
+			frameCatering.dispose();
+		}
 		if (s == btnPreis) {
 			try {
 				burgerPreis = Integer.parseInt(txtPreis.getText());
@@ -608,13 +675,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				un = Controller.getUnternehmen(n);
 				lblPreis.setText("Preis/Burger: " + burgerPreis + "€");
 				frame.setFocusableWindowState(true);
-				framePreis.setVisible(false);
 				framePreis.dispose();
 			} catch (NumberFormatException e1) {
 			}
 		}
 		if (s == btnAbschicken) {
-			framePersonal.setVisible(false);
 			Controller.getUnternehmen(n).getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
 			Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
 			un = Controller.getUnternehmen(n);
@@ -648,7 +713,6 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					JOptionPane.showMessageDialog(this,
 							"Sie haben nicht genug Mitarbeiter um diese Menge an Burgern zu vearbeiten");
 				frame.setFocusableWindowState(true);
-				frameBestellungen.setVisible(false);
 				frameBestellungen.dispose();
 			} catch (NumberFormatException e1) {
 			} catch (HeadlessException e1) {
@@ -673,22 +737,18 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				Controller.getUnternehmen(n).getStandort().getKuehlraum()
 						.wareEntnehmen(Controller.getUnternehmen(n).getKunden());
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
-				if (n == StartGame.getI() - 1) { //
+				if (n == StartGame.getI() - 1) {
 					alleGegruendet = true;
-					// Neue Preise auf Grundlage der Verkaufszahlen
 					Controller.ereignisTrittEin();
-					frame.setVisible(false);
 					RundenUbersicht ende = new RundenUbersicht();
 					frame.dispose();
 				} else if (alleGegruendet) {
 					if (n < StartGame.getI() - 1) {
-						frame.setVisible(false);
 						Overview nextUN = new Overview(n + 1);
 						frame.dispose();
 					}
 				} else {
 					if (n < StartGame.getI() - 1) {
-						frame.setVisible(false);
 						newName nextUN = new newName(n + 1);
 						frame.dispose();
 					}

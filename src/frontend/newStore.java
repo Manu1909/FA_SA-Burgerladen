@@ -120,7 +120,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		panel.add(listKuehlraum);
 
 		int x = listKuehlraum.getSelectedIndex();
-		tipStorage.setBounds(690, 110, 120, 60);
+		tipStorage.setBounds(690, 115, 130, 60);
 		tipStorage.setText("<html><body><p>Lagereinheiten: " + kapazitaet[x] + "<br>Mietzusatz: " + lagerMiete[x]
 				+ "</p></body></html>");
 		panel.add(tipStorage);
@@ -151,7 +151,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		panel.add(listKredit);
 
 		int m = listKredit.getSelectedIndex();
-		tipCredit.setBounds(400, 319, 138, 55);
+		tipCredit.setBounds(400, 326, 138, 55);
 		tipCredit.setText("<html><body><p>Zins: " + zins[m] + "<br> Laufzeit: " + laufzeit[m] + "</p></body></hmtl>");
 		panel.add(tipCredit);
 
