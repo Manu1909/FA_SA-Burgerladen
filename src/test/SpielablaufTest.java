@@ -118,7 +118,7 @@ public class SpielablaufTest {
                     if (eingabe == 1) {
                         //Preisangebot für Catering
                         Datenbank.c2.addName(u.getName());
-                        Datenbank.c2.addPreis(5000);
+                        Datenbank.c2.addPreis(4000 + i*1000);
                         Datenbank.c2.addQualitaet(u.getBurger().getQualitaet());
                     }
 

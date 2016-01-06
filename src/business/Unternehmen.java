@@ -243,10 +243,7 @@ public class Unternehmen {
 		if(catering != null){
 			gewinn +=  berechneCateringKosten(catering);
 		}
-		//berechnung eines DispoKredites mit 15% Zinse
-		if(kapital<0){
-			gewinn += kapital*0.15/4;
-		}
+
 
 
 		if(marketing!=null){
@@ -268,6 +265,10 @@ public class Unternehmen {
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}
+		//berechnung eines DispoKredites mit 15% Zinse
+		if(kapital<0){
+			kosten -= kapital*0.15/4;
+		}
 		return kosten;
 	}
 
@@ -279,6 +280,11 @@ public class Unternehmen {
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}
+		//berechnung eines DispoKredites mit 15% Zinse
+		if(kapital<0){
+			kosten -= kapital*0.15/4;
+		}
+
 		return kosten;
 	}
 

@@ -1,6 +1,7 @@
 package test;
 import static org.junit.Assert.*;
 
+import backend.Datenbank;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,14 +14,15 @@ public class LieferantTest {
 	private Lieferant l;
 	private Bestellung b;
 	private Unternehmen u;
+	private double startPreis;
 	
 	@Before
 	public void init(){
-		l = new Lieferant(1000, 3, 0.3, 5);
+		l = Datenbank.fl1;
 		u = new Unternehmen("test");
+		startPreis = l.getPreisProGut();
 		//b = new Bestellung(u);
-		
-		l.setVerbrauchteRessourcen(920);
+
 	}
 
 	//Die beiden Tests wären nur von Nöten, wenn Lieferanten begrenzte Ressourcen hätten
@@ -36,10 +38,30 @@ public class LieferantTest {
 	}*/
 
 	@Test
-	public void testBerechneNeuenPreis() {
-		l.setVerbrauchteRessourcen(520);
-		assertTrue("Test Preisberechnung", 0.27==l.berechneNeuenPreis());
+	public void testHoehererPreis() {
+		l.setVerbrauchteRessourcen(8000);
+		assertTrue("Test Preiserhoehung", l.getPreisProGut()<l.berechneNeuenPreis());
 
+		l.setPreisProGut(startPreis);
+	}
+
+	@Test
+	public void testNiedrigererPreis() {
+		l.setVerbrauchteRessourcen(4000);
+		assertTrue("Test niedrigerer Preis", l.getPreisProGut()>l.berechneNeuenPreis());
+
+		l.setPreisProGut(startPreis);
+	}
+
+	@Test
+	public void testErhoehungsGrenze() {
+		l.setVerbrauchteRessourcen(20000);
+		for (int i = 0; i < 5; i++) {
+			l.berechneNeuenPreis();
+		}
+		assertEquals(startPreis*1.3, l.berechneNeuenPreis(), 0);
+
+		l.setPreisProGut(startPreis);
 	}
 
 }

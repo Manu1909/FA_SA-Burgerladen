@@ -22,32 +22,39 @@ public class ControllerTest {
     @Before
     public void init(){
 
+        Controller.setRunde(10);
 
         for (int i = 0; i < 3; i++) {
             Controller.neuesUnternehmen(new Unternehmen("u"+i));
             unternehmen.add(Controller.getUnternehmen(i));
+            unternehmen.get(i).getBestellung().setzeLieferanten(Datenbank.fl[i], Datenbank.bl[i], Datenbank.sal[i], Datenbank.sol[i]);
+            unternehmen.get(i).setStandort(Controller.waehleStandort(2));
+            unternehmen.get(i).getStandort().setKuehlraum(Datenbank.kuehlraeume[2]);
+            unternehmen.get(i).getStandort().getKuehlraum().setInhalt(6000);
+            unternehmen.get(i).setBekanntheit(20 + i*10);
+            unternehmen.get(i).setKundenzufriedenheitsVeraenderung(20+i*10);
+            unternehmen.get(i).getBurger().setPreis(10);
+            unternehmen.get(i).berechneBurgerQualitaet();
+            unternehmen.get(i).berechneKundenzufriedenheit();
+            unternehmen.get(i).getPersonal().setAnzahlAngestellte(10);
+            unternehmen.get(i).getStandort().setInnenausstattung(Controller.waehleInnenausstattung(2));
         }
 
-        for (Unternehmen u:unternehmen) {
-            u.getBestellung().setzeLieferanten(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
-            u.setStandort(Datenbank.standorte[1]);
-            u.getStandort().setKuehlraum(Datenbank.kuehlraeume[2]);
-            u.getStandort().getKuehlraum().setInhalt(5000);
-            u.setBekanntheit(50);
-            u.setKundenzufriedenheitsVeraenderung(50);
-            u.getBurger().setPreis(10);
-        }
 
     }
 
     @Test
     public void testBerechneKunden() {
+        //System.out.println("Kundenpool: " + Controller.berechneKundenpool());
         Controller.berechneKunden();
-        for (int i = 0; i < unternehmen.size(); i++) {
+        /*for (int i = 0; i < unternehmen.size(); i++) {
             System.out.println("Kunden " + unternehmen.get(i).getName() + ": " + unternehmen.get(i).getKunden());
-        }
+        }*/
 
-        assertEquals(1932, unternehmen.get(1).getKunden());
+
+        assertEquals(3916, unternehmen.get(0).getKunden(), 0);
+        assertEquals(4666, unternehmen.get(1).getKunden(), 0);
+        assertEquals(5415, unternehmen.get(2).getKunden(), 0);
     }
 
 }
