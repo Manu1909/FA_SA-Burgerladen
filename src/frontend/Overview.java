@@ -661,8 +661,24 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			frameMarketing.dispose();
 		}
 		if (s == btnAngebotAbgeben) {
-			frame.setFocusableWindowState(true);
-			frameCatering.dispose();
+			try {
+				if (Controller.getRunde() == 3) {
+					Datenbank.c1.addPreis((Double.parseDouble(txtAngebotSumme.getText())));
+					Datenbank.c1.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
+				}
+				if (Controller.getRunde() == 6) {
+					Datenbank.c2.addPreis((Double.parseDouble(txtAngebotSumme.getText())));
+					Datenbank.c2.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
+				}
+				if (Controller.getRunde() == 9) {
+					Datenbank.c3.addPreis((Double.parseDouble(txtAngebotSumme.getText())));
+					Datenbank.c3.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
+				}
+				frame.setFocusableWindowState(true);
+				menuCatering.setEnabled(false);
+				frameCatering.dispose();
+			} catch (NumberFormatException e1) {
+			}
 		}
 		if (s == btnAuftragAblehnen) {
 			frame.setFocusableWindowState(true);
@@ -740,6 +756,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				if (n == StartGame.getI() - 1) {
 					alleGegruendet = true;
 					Controller.ereignisTrittEin();
+					if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9)
+						Controller.cateringAuswahlTreffen(Controller.getRunde());
 					RundenUbersicht ende = new RundenUbersicht();
 					frame.dispose();
 				} else if (alleGegruendet) {
