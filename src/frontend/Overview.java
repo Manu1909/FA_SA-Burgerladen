@@ -2,7 +2,6 @@ package frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,28 +23,15 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
-import Controller.Controller;
 
+import Controller.Controller;
 import backend.Datenbank;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
-	private String name = "";
-	private String standort;
-	private String innenausstattung;
+
 	private String werbung;
-	private String fleischLieferant;
-	private String brotLieferant;
-	private String salatLieferant;
-	private String saucenLieferant;
 	private int burgerZahl;
-	private int n;
-	private int kredit;
-	private int lagerPlatzGroesse;
-	private int burgerPreis;
-	private int anzahlPersonal;
-	private double kapital;
-	private double schulden;
-	private static business.Unternehmen un;
+	private int n; // Unternehmensnummer
 	private static boolean alleGegruendet = false;
 
 	private JTextField txtKapital = new JTextField();
@@ -66,7 +52,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	private JLabel lblInnenausstattung = new JLabel();
 	private JPanel panel = new JPanel();
 	private JTextPane txtLetztePeriode = new JTextPane();
-	private JTextPane txtRangliste = new JTextPane();
+	private JTextPane txtRanglisteKapital = new JTextPane();
+	private JTextPane txtRanglisteGewinn = new JTextPane();
 	private JButton btnRundeBeenden = new JButton("Runde beenden");
 
 	// Variablen Marketing
@@ -151,32 +138,17 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 
 	public Overview(int n) {
 		this.n = n;
-		this.un = Controller.getUnternehmen(n);
-		this.name = un.getName();
-		this.standort = un.getStandort().getLage();
-		this.innenausstattung = un.getStandort().getInnenausstattung().getBezeichnung();
-		if (un.getKredit() != null)
-			this.kredit = un.getKredit().getHoehe();
-		else
-			this.kredit = 0;
-		this.kapital = un.getKapital();
-		if (Controller.getRunde() < 1 && un.getKredit() != null) {
-			Controller.getUnternehmen(n).setKapital(un.getKapital() + un.getKredit().getHoehe());
-			this.kapital = un.getKapital();
-		}
-		this.anzahlPersonal = un.getPersonal().berechneAnzahl();
 		try {
-			this.lagerPlatzGroesse = un.getStandort().getKuehlraum().getLagerGroesse();
-			this.werbung = un.getMarketing().getBezeichnung();
-			this.burgerPreis = un.getBurger().getPreis();
-
+			this.werbung = Controller.getUnternehmen(n).getMarketing().getBezeichnung();
 		} catch (Exception e) {
+			this.werbung = "keins";
 		}
 		zeigeFensterOverview();
 	}
 
 	public void zeigeFensterOverview() {
-		frame.setTitle("Überblick für " + name + " (Runde " + Controller.getRunde() + ")");
+		frame.setTitle(
+				"Überblick für " + Controller.getUnternehmen(n).getName() + " (Runde " + Controller.getRunde() + ")");
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -198,7 +170,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblSchulden.setBounds(580, 110, 75, 14);
 		panel.add(lblSchulden);
 
-		lblStandort.setText("Standort:         " + standort);
+		lblStandort.setText("Standort:         " + Controller.getUnternehmen(n).getStandort().getLage());
 		lblStandort.setBounds(580, 150, 190, 14);
 		panel.add(lblStandort);
 
@@ -206,7 +178,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblMarketing.setBounds(580, 170, 190, 14);
 		panel.add(lblMarketing);
 
-		lblanzahlPersonal.setText("Personal:        " + anzahlPersonal);
+		lblanzahlPersonal
+				.setText("Personal:        " + Controller.getUnternehmen(n).getPersonal().getAnzahlAngestellte());
 		lblanzahlPersonal.setBounds(580, 190, 120, 14);
 		panel.add(lblanzahlPersonal);
 
@@ -216,24 +189,16 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		lblBestellung.setBounds(580, 210, 160, 14);
 		panel.add(lblBestellung);
 
-		lblPreis.setText("Preis/Burger: " + un.getBurger().getPreis() + "€");
+		lblPreis.setText("Preis/Burger: " + Controller.getUnternehmen(n).getBurger().getPreis() + "€");
 		lblPreis.setBounds(580, 230, 190, 14);
 		panel.add(lblPreis);
 
-		lblInnenausstattung.setText("Ausstattung:  " + innenausstattung);
+		lblInnenausstattung.setText(
+				"Ausstattung:  " + Controller.getUnternehmen(n).getStandort().getInnenausstattung().getBezeichnung());
 		lblInnenausstattung.setBounds(580, 250, 160, 14);
 		panel.add(lblInnenausstattung);
 
-		JLabel lblRangliste = new JLabel("<html><body><h3>Rangliste:</h3></body></html>");
-		lblRangliste.setBounds(350, 210, 75, 50);
-		panel.add(lblRangliste);
-
-		JLabel lblLetztePeriode = new JLabel("<html><body><h3>Letzte Periode:</h3></body></html>");
-		lblLetztePeriode.setBounds(180, 210, 120, 50);
-		panel.add(lblLetztePeriode);
-
 		txtKapital = new JTextField();
-		txtKapital.setText("" + kapital);
 		txtKapital.setBounds(650, 77, 86, 20);
 		txtKapital.setEditable(false);
 		panel.add(txtKapital);
@@ -244,40 +209,71 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		txtSchulden.setEditable(false);
 		panel.add(txtSchulden);
 		txtSchulden.setColumns(10);
+		
+		if (Controller.getUnternehmen(n).getKapital() >= 0) {
+			txtKapital.setText("" + Controller.getUnternehmen(n).getKapital() + " €");
+			txtSchulden.setText("" + 0 + " €");
+		} else {
+			txtSchulden.setText("" + Math.abs(Controller.getUnternehmen(n).getKapital()) + " €");
+			txtKapital.setText("" + 0 + " €");
+		}
 
-		btnRundeBeenden.setBounds(344, 390, 150, 23);
+		btnRundeBeenden.setBounds(345, 390, 150, 23);
 		btnRundeBeenden.addActionListener(this);
 		btnRundeBeenden.setEnabled(false);
 		panel.add(btnRundeBeenden);
 
+		JLabel lblLetztePeriode = new JLabel("<html><body><h3>Letzte Periode:</h3></body></html>");
+		lblLetztePeriode.setBounds(580, 270, 120, 50);
+		panel.add(lblLetztePeriode);
 		try {
 			txtLetztePeriode.setText("Umsatz: " + Controller.getUnternehmen(n).getUmsatz() + "€\nGewinn: "
 					+ Controller.getUnternehmen(n).getGewinn() + "€" + "\n" + "Kunden: "
 					+ Controller.getUnternehmen(n).getKunden());
-			txtLetztePeriode.setBounds(180, 250, 151, 52);
+			txtLetztePeriode.setBounds(580, 310, 151, 52);
 			txtLetztePeriode.setEditable(false);
 			panel.add(txtLetztePeriode);
 		} catch (Exception e) {
 		}
-		int max = 0;
-		for (int i = 0; i < StartGame.getI(); i++) {
-			try {
-				if (Controller.getUnternehmen(i).getUmsatz() > Controller.getUnternehmen(max).getUmsatz())
-					max = i;
-			} catch (Exception e) {
-			}
+
+		int[] ranglisteKapital = getReihenfolgeKapital();
+		int[] ranglisteGewinn = getReihenfolgeGewinn();
+		String rangKapital = "";
+		String rangGewinn = "";
+		rangKapital += "1. " + Controller.getUnternehmen(ranglisteKapital[0]).getName() + " "
+				+ Controller.getUnternehmen(ranglisteKapital[0]).getKapital() + " €";
+		rangGewinn += "1. " + (Controller.getUnternehmen(ranglisteKapital[0]).getName()) + " "
+				+ (Controller.getUnternehmen(ranglisteKapital[0]).getKapital() - Datenbank.startKapital) + " €";
+		for (int p = 1; p < ranglisteKapital.length; p++) {
+			rangKapital += "\n" + (p + 1) + ". " + Controller.getUnternehmen(ranglisteKapital[p]).getName() + " "
+					+ Controller.getUnternehmen(ranglisteKapital[p]).getKapital() + " €";
+			rangGewinn += "\n" + (p + 1) + ". " + Controller.getUnternehmen(ranglisteKapital[p]).getName() + " "
+					+ (Controller.getUnternehmen(ranglisteKapital[p]).getKapital() - Datenbank.startKapital) + " €";
 		}
 
-		txtRangliste.setText(
-				"1. " + Controller.getUnternehmen(max).getName() + " \n2. Spieler 2" + "\n3. Spieler 3\n4. Spieler 4");
-		txtRangliste.setBounds(350, 250, 150, 69);
-		txtRangliste.setEditable(false);
-		panel.add(txtRangliste);
+		JLabel lblRanglisteKapital = new JLabel("<html><body><h3>Rangliste (Kapital)</h3></body></html>");
+		lblRanglisteKapital.setBounds(345, 270, 150, 50);
+		panel.add(lblRanglisteKapital);
+		txtRanglisteKapital.setText(rangKapital);
+		txtRanglisteKapital.setBounds(345, 310, 150, 69);
+		txtRanglisteKapital.setEditable(false);
+		panel.add(txtRanglisteKapital);
+
+		JLabel lblRanglisteGewinn = new JLabel("<html><body><h3>Rangliste (Gewinn)</h3></body></html>");
+		lblRanglisteGewinn.setBounds(150, 270, 150, 50);
+		panel.add(lblRanglisteGewinn);
+		txtRanglisteGewinn.setText(rangGewinn);
+		txtRanglisteGewinn.setBounds(150, 310, 150, 69);
+		txtRanglisteGewinn.setEditable(false);
+		panel.add(txtRanglisteGewinn);
+
 		if (Controller.getRunde() == 0) {
-			panel.remove(txtRangliste);
-			panel.remove(lblRangliste);
+			panel.remove(txtRanglisteKapital);
+			panel.remove(lblRanglisteKapital);
 			panel.remove(txtLetztePeriode);
 			panel.remove(lblLetztePeriode);
+			panel.remove(txtRanglisteGewinn);
+			panel.remove(lblRanglisteGewinn);
 		}
 
 		bar.setBounds(260, 10, 360, 20);
@@ -651,9 +647,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			else
 				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));
 
-			un = Controller.getUnternehmen(n);
-			if (un.getMarketing() != null)
-				this.werbung = un.getMarketing().getBezeichnung();
+			if (Controller.getUnternehmen(n).getMarketing() != null)
+				this.werbung = Controller.getUnternehmen(n).getMarketing().getBezeichnung();
 			else
 				this.werbung = "keine";
 			lblMarketing.setText("Marketing:      " + werbung);
@@ -686,10 +681,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (s == btnPreis) {
 			try {
-				burgerPreis = Integer.parseInt(txtPreis.getText());
 				Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
-				un = Controller.getUnternehmen(n);
-				lblPreis.setText("Preis/Burger: " + burgerPreis + "€");
+				lblPreis.setText("Preis/Burger: " + Integer.parseInt(txtPreis.getText()) + "€");
 				frame.setFocusableWindowState(true);
 				framePreis.dispose();
 			} catch (NumberFormatException e1) {
@@ -698,16 +691,17 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (s == btnAbschicken) {
 			Controller.getUnternehmen(n).getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
 			Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
-			un = Controller.getUnternehmen(n);
-			lblanzahlPersonal.setText("Personal:        " + un.getPersonal().berechneAnzahl());
+			lblanzahlPersonal
+					.setText("Personal:        " + Controller.getUnternehmen(n).getPersonal().berechneAnzahl());
 			menuPersonal.setEnabled(false);
 			frame.setFocusableWindowState(true);
 			framePersonal.dispose();
 		}
 		if (s == btnBestellungAbschicken) {
 			try {
-				if (Integer.parseInt(txtBurgerZahl.getText()) <= Controller.getUnternehmen(n).getPersonal()
-						.berechneKapazitaet()) {
+				if (Integer.parseInt(txtBurgerZahl.getText())
+						+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() <= Controller
+								.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse()) {
 					// Bestellung übergeben
 					Controller.getUnternehmen(n).getBestellung().bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 							Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
@@ -715,21 +709,15 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
 							Integer.parseInt(txtBurgerZahl.getText()),
 							Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
-					un = Controller.getUnternehmen(n);
 					burgerZahl = Integer.parseInt(txtBurgerZahl.getText());
-					fleischLieferant = listFleisch.getSelectedValue().toString();
-					brotLieferant = listBroetchen.getSelectedValue().toString();
-					salatLieferant = listSalat.getSelectedValue().toString();
-					saucenLieferant = listSauce.getSelectedValue().toString();
 					lblBestellung.setOpaque(false);
 					lblBestellung.setText("Bestellung:     " + txtBurgerZahl.getText() + " Burger");
 					btnRundeBeenden.setEnabled(true);
 					frame.repaint();
+					frame.setFocusableWindowState(true);
+					frameBestellungen.dispose();
 				} else
-					JOptionPane.showMessageDialog(this,
-							"Sie haben nicht genug Mitarbeiter um diese Menge an Burgern zu vearbeiten");
-				frame.setFocusableWindowState(true);
-				frameBestellungen.dispose();
+					JOptionPane.showMessageDialog(this, "Ihr Kühlraum hat nicht genug Platz für die Bestellung");
 			} catch (NumberFormatException e1) {
 			} catch (HeadlessException e1) {
 			}
@@ -748,10 +736,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
 				Controller.getUnternehmen(n).betreibeMarketing();
-				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
-				Controller.getUnternehmen(n).berechneCatering();
 				Controller.getUnternehmen(n).getStandort().getKuehlraum()
-						.wareEntnehmen(Controller.getUnternehmen(n).getKunden());
+						.wareEinlagern(Integer.parseInt(txtBurgerZahl.getText()));
+				Controller.getUnternehmen(n).berechneCatering();
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
 				if (n == StartGame.getI() - 1) {
 					alleGegruendet = true;
@@ -773,5 +760,41 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				}
 			}
 		}
+	}
+
+	public int[] getReihenfolgeKapital() {
+		int[] i = new int[StartGame.getUnZahl()];
+		for (int z = 0; z < i.length; z++) {
+			i[z] = z;
+		}
+		for (int j = 0; j < i.length; j++) {
+			for (int z = 0; z < i.length - j - 1; z++) {
+				if (Controller.getUnternehmen(i[z]).getKapital() < Controller.getUnternehmen(i[z + 1]).getKapital()) {
+					int tmp = i[z];
+					i[z] = i[z + 1];
+					i[z + 1] = tmp;
+				}
+			}
+		}
+		return i;
+	}
+
+	public int[] getReihenfolgeGewinn() {
+		int[] i = new int[StartGame.getUnZahl()];
+		for (int z = 0; z < i.length; z++) {
+			i[z] = z;
+		}
+		for (int j = 0; j < i.length; j++) {
+			for (int z = 0; z < i.length - j - 1; z++) {
+				if (Controller.getUnternehmen(i[z]).getKapital()
+						- Datenbank.startKapital < Controller.getUnternehmen(i[z + 1]).getKapital()
+								- Datenbank.startKapital) {
+					int tmp = i[z];
+					i[z] = i[z + 1];
+					i[z + 1] = tmp;
+				}
+			}
+		}
+		return i;
 	}
 }

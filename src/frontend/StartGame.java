@@ -19,9 +19,15 @@ public class StartGame extends JFrame implements ActionListener {
 	private JPanel contentPane = new JPanel();
 	private JButton btnGo = new JButton("Start");
 	private JTextField txtUNZahl = new JTextField();
+	private static int unZahl;
 
 	public static void main(String[] args) {
 		StartGame test = new StartGame();
+	}
+	
+	public static int getUnZahl()
+	{
+		return unZahl;
 	}
 
 	public static int getI() {
@@ -78,6 +84,7 @@ public class StartGame extends JFrame implements ActionListener {
 		if (s == btnGo) {
 			try {
 				i = Integer.parseInt(txtUNZahl.getText());
+				unZahl = i;
 				if (i > 0) {
 					for (int n = 0; n < i; n++) {
 						Controller.Controller.neuesUnternehmen(new business.Unternehmen("un" + n));

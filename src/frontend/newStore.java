@@ -220,7 +220,6 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		Object s = e.getSource();
 		if (s == btnConfirm) {
 			Controller.Controller.getUnternehmen(n).setName(name);
-			Controller.Controller.getUnternehmen(n).setKapital(90000.0);
 			Controller.Controller.getUnternehmen(n)
 					.setStandort(Controller.Controller.waehleStandort(listStandort.getSelectedIndex()));
 			Controller.Controller.getUnternehmen(n).getStandort()

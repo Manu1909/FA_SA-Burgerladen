@@ -42,6 +42,10 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		if (s == btnWeiter) {
 			if (Controller.getRunde() < 12) {
 				Controller.rundeBeenden();
+				for (int n = 0; n < StartGame.getUnZahl(); n++) {
+					Controller.getUnternehmen(n).getStandort().getKuehlraum()
+							.wareEntnehmen(Controller.getUnternehmen(n).getKunden());
+				}
 				frame.setVisible(false);
 				Overview overview = new Overview(0);
 				frame.dispose();
