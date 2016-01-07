@@ -473,7 +473,7 @@ public class Controller {
 			}
 			
 			//checke Personalkapazitaet
-			if(unternehmen.get(i).getPersonal().berechneKapazitaet() > kunden){
+			if(unternehmen.get(i).getPersonal().berechneKapazitaet() < kunden){
 				if(unternehmen.get(i).getMarketing()!=null){
 					if(unternehmen.get(i).getMarketing().getBezeichnung().equals("Werbung21")){
 						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet()/2;
@@ -482,10 +482,11 @@ public class Controller {
 						kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
 					}
 				}
-				}
 				else{
 					kunden = unternehmen.get(i).getPersonal().berechneKapazitaet();
+				}
 			}
+
 
 			unternehmen.get(i).setKunden(kunden);
 			//unternehmen.get(i).getStandort().getKuehlraum().wareEntnehmen(kunden);

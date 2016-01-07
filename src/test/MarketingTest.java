@@ -9,7 +9,7 @@ import org.junit.Test;
 /**
  * Created by kochsiek on 05.12.2015.
  */
-public class Werbung21Test {
+public class MarketingTest {
     Unternehmen u;
     Marketing werbung21;
 

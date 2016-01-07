@@ -149,7 +149,7 @@ public class Unternehmen {
 			kapital += kredit.getHoehe();
 		}
 		else if(kredit != null){
-			kapital -= kredit.berechneAnnuitaet();
+			kapital -= kredit.berechneBereinigteAnnuitaet();
 		}
 		return kapital;
 	}
@@ -243,10 +243,7 @@ public class Unternehmen {
 		if(catering != null){
 			gewinn +=  berechneCateringKosten(catering);
 		}
-		//berechnung eines DispoKredites mit 15% Zinse
-		if(kapital<0){
-			gewinn += kapital*0.15/4;
-		}
+
 
 
 		if(marketing!=null){
@@ -262,8 +259,15 @@ public class Unternehmen {
 
 	public double berechneGruendungsKosten(){
 		double kosten = standort.getMiete() + standort.getInnenausstattung().getKosten() + bestellung.berechneGesamtpreis()  + personal.berechneKosten();
+		if(kredit != null){
+			kosten += kredit.berechneZinsaufwand();
+		}
 		if(marketing != null){
 			kosten += marketing.getKosten();
+		}
+		//berechnung eines DispoKredites mit 15% Zinse
+		if(kapital<0){
+			kosten -= kapital*0.15/4;
 		}
 		return kosten;
 	}
@@ -276,6 +280,11 @@ public class Unternehmen {
 		if(marketing != null){
 			kosten += marketing.getKosten();
 		}
+		//berechnung eines DispoKredites mit 15% Zinse
+		if(kapital<0){
+			kosten -= kapital*0.15/4;
+		}
+
 		return kosten;
 	}
 

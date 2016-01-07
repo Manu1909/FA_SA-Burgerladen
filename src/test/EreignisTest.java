@@ -7,18 +7,15 @@ import org.junit.Test;
 
 import backend.Datenbank;
 import business.Ereignis;
-import business.Personal;
 
 public class EreignisTest {
 
 	Ereignis e;
-	Personal p;
 	
 	@Before
 	public void init(){
 		Datenbank db = new Datenbank();
 		e = db.getE1();
-		p = new Personal(10);
 	}
 	
 	@Test

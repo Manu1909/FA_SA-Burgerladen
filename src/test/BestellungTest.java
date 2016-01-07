@@ -15,29 +15,11 @@ public class BestellungTest {
 	@Before
 	public void init(){
 		u = new Unternehmen("test");
-		//b = new Bestellung(u);
 		Kuehlraum k3 = new Kuehlraum(2000, 0, 800);
 		Standort s4 = new Standort("Quadrate",1300, 3, 4);
 		s4.setKuehlraum(k3);
 		u.setStandort(s4);
-		//u.getStandort().setKuehlraum(k3);
-		
-		
-		for(Lieferant fl: Datenbank.fl){
-			fl.setVerbrauchteRessourcen(900);
-		}
-		
-		for(Lieferant bl:Datenbank.bl){
-			bl.setVerbrauchteRessourcen(900);
-		}
-		
-		for(Lieferant sal:Datenbank.sal){
-			sal.setVerbrauchteRessourcen(900);
-		}
-		
-		for(Lieferant sol:Datenbank.sol){
-			sol.setVerbrauchteRessourcen(900);
-		}
+
 	}
 	
 	@Test
@@ -50,19 +32,20 @@ public class BestellungTest {
 	
 	@Test
 	public void testBestelle() {
-		u.getBestellung().setzeBestellmenge(50, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
+		u.getBestellung().setzeBestellmenge(950, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 		u.getBestellung().bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
-		assertEquals(950, u.getBestellung().getFleischlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getBestellung().getBrotlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getBestellung().getSalatlieferant().getVertrauchteRessourcen());
-		assertEquals(950, u.getBestellung().getSossenlieferant().getVertrauchteRessourcen());
+		assertEquals(950, u.getBestellung().getFleischlieferant().getVertrauchteRessourcen(), 0);
+		assertEquals(950, u.getBestellung().getBrotlieferant().getVertrauchteRessourcen(), 0);
+		assertEquals(950, u.getBestellung().getSalatlieferant().getVertrauchteRessourcen(), 0);
+		assertEquals(950, u.getBestellung().getSossenlieferant().getVertrauchteRessourcen(), 0);
 	}
 
 	@Test
 	public void testBerechneKosten() {
 		u.getBestellung().setzeBestellmenge(2000, u.getStandort().getKuehlraum().berechneFreienLagerplatz());
 		u.getBestellung().bestellen(Datenbank.fl1, Datenbank.bl1, Datenbank.sal1, Datenbank.sol1);
-		assertTrue("Test berechne Bestellkosten", 1940 == u.getBestellung().berechneGesamtpreis());
+		//assertTrue("Test berechne Bestellkosten", 1940 == u.getBestellung().berechneGesamtpreis());
+		assertEquals(1940, u.getBestellung().berechneGesamtpreis(), 0);
 
 	}
 	
