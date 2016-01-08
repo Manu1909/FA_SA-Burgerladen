@@ -141,7 +141,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		try {
 			this.werbung = Controller.getUnternehmen(n).getMarketing().getBezeichnung();
 		} catch (Exception e) {
-			this.werbung = "keins";
+			this.werbung = "nichts";
 		}
 		zeigeFensterOverview();
 	}
@@ -209,7 +209,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		txtSchulden.setEditable(false);
 		panel.add(txtSchulden);
 		txtSchulden.setColumns(10);
-		
+
 		if (Controller.getUnternehmen(n).getKapital() >= 0) {
 			txtKapital.setText("" + Controller.getUnternehmen(n).getKapital() + " €");
 			txtSchulden.setText("" + 0 + " €");
@@ -243,15 +243,15 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		rangKapital += "1. " + Controller.getUnternehmen(ranglisteKapital[0]).getName() + " "
 				+ Controller.getUnternehmen(ranglisteKapital[0]).getKapital() + " €";
 		rangGewinn += "1. " + (Controller.getUnternehmen(ranglisteKapital[0]).getName()) + " "
-				+ (Controller.getUnternehmen(ranglisteKapital[0]).getKapital() - Datenbank.startKapital) + " €";
+				+ (Controller.getUnternehmen(ranglisteKapital[0]).getGewinn()) + " €";
 		for (int p = 1; p < ranglisteKapital.length; p++) {
 			rangKapital += "\n" + (p + 1) + ". " + Controller.getUnternehmen(ranglisteKapital[p]).getName() + " "
 					+ Controller.getUnternehmen(ranglisteKapital[p]).getKapital() + " €";
 			rangGewinn += "\n" + (p + 1) + ". " + Controller.getUnternehmen(ranglisteKapital[p]).getName() + " "
-					+ (Controller.getUnternehmen(ranglisteKapital[p]).getKapital() - Datenbank.startKapital) + " €";
+					+ (Controller.getUnternehmen(ranglisteKapital[p]).getGewinn()) + " €";
 		}
 
-		JLabel lblRanglisteKapital = new JLabel("<html><body><h3>Rangliste (Kapital)</h3></body></html>");
+		JLabel lblRanglisteKapital = new JLabel("<html><body><h3>Kapital</h3></body></html>");
 		lblRanglisteKapital.setBounds(345, 270, 150, 50);
 		panel.add(lblRanglisteKapital);
 		txtRanglisteKapital.setText(rangKapital);
@@ -259,7 +259,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		txtRanglisteKapital.setEditable(false);
 		panel.add(txtRanglisteKapital);
 
-		JLabel lblRanglisteGewinn = new JLabel("<html><body><h3>Rangliste (Gewinn)</h3></body></html>");
+		JLabel lblRanglisteGewinn = new JLabel("<html><body><h3>Gewinn letzte Runde</h3></body></html>");
 		lblRanglisteGewinn.setBounds(150, 270, 150, 50);
 		panel.add(lblRanglisteGewinn);
 		txtRanglisteGewinn.setText(rangGewinn);
@@ -650,7 +650,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			if (Controller.getUnternehmen(n).getMarketing() != null)
 				this.werbung = Controller.getUnternehmen(n).getMarketing().getBezeichnung();
 			else
-				this.werbung = "keine";
+				this.werbung = "nichts";
 			lblMarketing.setText("Marketing:      " + werbung);
 			frame.setFocusableWindowState(true);
 			frameMarketing.dispose();
@@ -786,9 +786,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		for (int j = 0; j < i.length; j++) {
 			for (int z = 0; z < i.length - j - 1; z++) {
-				if (Controller.getUnternehmen(i[z]).getKapital()
-						- Datenbank.startKapital < Controller.getUnternehmen(i[z + 1]).getKapital()
-								- Datenbank.startKapital) {
+				if (Controller.getUnternehmen(i[z]).getGewinn() < Controller.getUnternehmen(i[z + 1]).getGewinn()){
 					int tmp = i[z];
 					i[z] = i[z + 1];
 					i[z + 1] = tmp;
