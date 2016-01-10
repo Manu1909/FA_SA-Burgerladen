@@ -25,7 +25,7 @@ public class Controller {
 	private static boolean neuerSpieler = true;
 	private static boolean lieferantOK;
 	private static int kundenpool;
-	private static int [] risikoEingetreten = new int [3];
+	private static int [] risikoEingetreten = new int [10];
 	
 	public static void main(String args[]){
 		startGame();
@@ -532,10 +532,12 @@ public class Controller {
 	}
 	
 	//Methode f�r das Auftreten von Ereignissen
-	public static void ereignisTrittEin() {
+	public static String ereignisTrittEin() {
 		int alteBekanntheit;
 		int bekanntheitsVeraenderung;
 		int kundenzufriedenheitsVeraenderung;
+		String ereignisErgebnis = null;
+		boolean initErgebnis = false;
 		for (int i = 0; i < Datenbank.fl.length; i++) {
 			
 				int zufallszahl = (int)(Math.random() * 100) + 1;
@@ -553,36 +555,56 @@ public class Controller {
 		for (int i = 0; i < unternehmen.size(); i++) {
 			int zufallszahl = (int)(Math.random() * 100) + 1;
 			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
-				System.out.println("Das Adler Mannheim-Team war bei Ihnen zu Besuch!");
 				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
 				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
 				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
+				if (initErgebnis == false){
+					ereignisErgebnis = ("\nDas Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
+					initErgebnis = true;
+				} else {
+					ereignisErgebnis += ("\nDas Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
+				}
+			}
 			
-			} else if (2< zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
-				System.out.println("In der K�che kam es zu einem Brandunfall.");
+			if (2 < zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
 				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
 				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
 				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt");
-			
+				if (initErgebnis == false){
+					ereignisErgebnis = ("\nIn der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+					initErgebnis = true;
+				} else {
+					ereignisErgebnis += ("\nIn der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+				}
 			}
 			
-			if (risikoEingetreten[i] == 1){
-				System.out.println("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.");
+			if (risikoEingetreten[i] == 1){ //Ereignis Gammelfleischskandal
 				alteBekanntheit = unternehmen.get(i).getBekanntheit();
 				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
 				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
 				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
 				risikoEingetreten[i] = 2;
-				System.out.println("Dadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt");
+				if (initErgebnis == false){
+					ereignisErgebnis = ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+					initErgebnis = true;
+				} else {
+					ereignisErgebnis += ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+				}
 			}
 		}
+		if (ereignisErgebnis == null){
+			return null;
+		} else {
+			System.out.println(ereignisErgebnis);
+			return ereignisErgebnis;
+		}
+		
+		
 	}
 	
 	//Methoden für die Anzeige der unterschiedlichen Optionen --> werden mit UI nicht mehr benötigt

@@ -82,7 +82,10 @@ public class SpielablaufTest {
                 Datenbank.sol[j].setVerbrauchteRessourcen(0);
             }
 
-
+            if (anzahlRunden > 0 && ereignis){
+                Controller.ereignisTrittEin();
+                }
+            
             for (int i = 0; i < unternehmen.size(); i++) {
                 if(i==0){
                     bestellNummer = 0;
@@ -139,9 +142,9 @@ public class SpielablaufTest {
 
                 }
 
-                if (anzahlRunden > 0 && ereignis){
+                /*if (anzahlRunden > 0 && ereignis){
                 Controller.ereignisTrittEin();
-                }
+                }*/
 
 
                 //Setze Bestellmenge und bearbeite Personal
