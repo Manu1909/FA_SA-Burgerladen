@@ -742,7 +742,10 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
 				if (n == StartGame.getI() - 1) {
 					alleGegruendet = true;
-					Controller.ereignisTrittEin();
+					String ereignisErgebnis = Controller.ereignisTrittEin();
+					if (ereignisErgebnis != null){
+						JOptionPane.showMessageDialog(this, ereignisErgebnis);
+					}
 					if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9)
 						Controller.cateringAuswahlTreffen(Controller.getRunde());
 					RundenUbersicht ende = new RundenUbersicht();
