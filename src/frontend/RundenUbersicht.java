@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Controller.Controller;
@@ -15,9 +16,11 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	private business.Unternehmen un;
 	JFrame frame = new JFrame();
 	JPanel contentPane = new JPanel();
+	private String ereignisErgebnis;
 
-	public RundenUbersicht() {
+	public RundenUbersicht(String ereignisErgebnis) {
 		buildWindow();
+		this.ereignisErgebnis = ereignisErgebnis;
 	}
 
 	private void buildWindow() {
@@ -42,7 +45,8 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		if (s == btnWeiter) {
 			if (Controller.getRunde() < 12) {
 				Controller.rundeBeenden();
-				frame.setVisible(false);
+				if (ereignisErgebnis != null)
+					JOptionPane.showMessageDialog(this, ereignisErgebnis);
 				Overview overview = new Overview(0);
 				frame.dispose();
 			}
