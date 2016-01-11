@@ -24,9 +24,8 @@ public class StartGame extends JFrame implements ActionListener {
 	public static void main(String[] args) {
 		StartGame test = new StartGame();
 	}
-	
-	public static int getUnZahl()
-	{
+
+	public static int getUnZahl() {
 		return unZahl;
 	}
 
