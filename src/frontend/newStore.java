@@ -162,6 +162,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 900, 500);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 

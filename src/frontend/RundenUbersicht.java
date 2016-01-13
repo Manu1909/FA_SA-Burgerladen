@@ -16,11 +16,9 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	private business.Unternehmen un;
 	JFrame frame = new JFrame();
 	JPanel contentPane = new JPanel();
-	private String ereignisErgebnis;
 
-	public RundenUbersicht(String ereignisErgebnis) {
+	public RundenUbersicht() {
 		buildWindow();
-		this.ereignisErgebnis = ereignisErgebnis;
 	}
 
 	private void buildWindow() {
@@ -36,6 +34,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 
 		frame.setContentPane(contentPane);
 		frame.setBounds(500, 400, 500, 400);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -45,10 +44,8 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		if (s == btnWeiter) {
 			if (Controller.getRunde() < 12) {
 				Controller.rundeBeenden();
-				if (ereignisErgebnis != null)
-					JOptionPane.showMessageDialog(this, ereignisErgebnis);
-				Overview overview = new Overview(0);
 				frame.dispose();
+				Overview overview = new Overview(0);
 			}
 		}
 	}

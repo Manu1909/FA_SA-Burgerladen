@@ -74,6 +74,7 @@ public class StartGame extends JFrame implements ActionListener {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
 		frame.setBounds(100, 100, 450, 400);
+		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}
 
@@ -95,5 +96,6 @@ public class StartGame extends JFrame implements ActionListener {
 			} catch (NumberFormatException e1) {
 			}
 		}
+		
 	}
 }
