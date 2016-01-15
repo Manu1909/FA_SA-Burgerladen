@@ -57,7 +57,7 @@ public class SpielablaufTest {
     public void testSpielablauf() {
 
         init();
-        simuliereSpielablauf(false);
+        simuliereSpielablauf(true);
 
         assertTrue("u1 soll gewonnen haben", unternehmen.get(1).getKapital()>unternehmen.get(0).getKapital() && unternehmen.get(1).getKapital()>unternehmen.get(2).getKapital());
 
@@ -82,8 +82,8 @@ public class SpielablaufTest {
                 Datenbank.sol[j].setVerbrauchteRessourcen(0);
             }
 
-            if (anzahlRunden > 0 && ereignis){
-                Controller.ereignisTrittEin();
+            if (anzahlRunden == 6 && ereignis){
+                Controller.ereignisTrittEin(anzahlRunden);
                 }
             
             for (int i = 0; i < unternehmen.size(); i++) {
