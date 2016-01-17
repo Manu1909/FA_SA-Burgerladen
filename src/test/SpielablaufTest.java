@@ -64,13 +64,6 @@ public class SpielablaufTest {
         unternehmen = null;
     }
 
-/*    @Test
-    public void testSpielablaufMitEreignis(){
-        //Spielablauf mit Ereignissen
-        init();
-        simuliereSpielablauf(true);
-        unternehmen = null;
-    }*/
 
 
     public void simuliereSpielablauf(boolean ereignis){
@@ -155,7 +148,7 @@ public class SpielablaufTest {
                 else if(anzahlRunden < 6){
                     bestellMenge = 4000;
                     u.getPersonal().berechneAnzahl();
-                    u.getPersonal().erhoeheAnzahl(1);
+                    //u.getPersonal().erhoeheAnzahl(1);
                 }
                 else if(anzahlRunden<8){
                     bestellMenge = 5000;
@@ -169,6 +162,14 @@ public class SpielablaufTest {
                         //u.getPersonal().feuern(1);
                     }
                 }
+                if(anzahlRunden==4 || anzahlRunden==6 || anzahlRunden==8){
+                    u.getPersonal().berechneAnzahl();
+                    u.getPersonal().erhoeheAnzahl(1);
+                }
+                /*if(anzahlRunden==9 && i==1){
+                    u.getPersonal().berechneAnzahl();
+                    u.getPersonal().erhoeheAnzahl(1);
+                }*/
 
 
                 if(u.getStandort().getKuehlraum().berechneFreienLagerplatz() < bestellMenge){
@@ -203,7 +204,7 @@ public class SpielablaufTest {
                     eingabe = 1;
                 }
 
-                if(anzahlRunden == 6 && i==0){
+                if(anzahlRunden == 6 && (i==0 || i==1)){
                     eingabe = 2;
                 }
 

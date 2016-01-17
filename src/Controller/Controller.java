@@ -418,7 +418,9 @@ public class Controller {
 
 		berechneKundenpool();
 
-		if(anzahlRunden < 4){
+		poolVariable = 300 - anzahlRunden*15;
+
+		/*if(anzahlRunden < 4){
 			poolVariable = 300;
 		}
 		else if(anzahlRunden < 8){
@@ -426,7 +428,7 @@ public class Controller {
 		}
 		else{
 			poolVariable = 120;
-		}
+		}*/
 
 		for (int i = 0; i < unternehmen.size(); i++) {
 			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden

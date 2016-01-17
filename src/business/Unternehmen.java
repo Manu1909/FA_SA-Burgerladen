@@ -151,6 +151,7 @@ public class Unternehmen {
 		else if(kredit != null){
 			kapital -= kredit.berechneBereinigteAnnuitaet();
 		}
+		kapital = Math.round(kapital*100)/100;
 		return kapital;
 	}
 	
@@ -253,6 +254,7 @@ public class Unternehmen {
 		}
 		standort.getKuehlraum().wareEntnehmen(kunden);
 
+		gewinn = Math.round(gewinn*100)/100;
 		return gewinn;
 	}
 
@@ -269,6 +271,7 @@ public class Unternehmen {
 		if(kapital<0){
 			kosten -= kapital*0.15/4;
 		}
+		kosten = Math.round(kosten*100)/100;
 		return kosten;
 	}
 
@@ -285,6 +288,7 @@ public class Unternehmen {
 			kosten -= kapital*0.15/4;
 		}
 
+		kosten = Math.round(kosten*100)/100;
 		return kosten;
 	}
 
