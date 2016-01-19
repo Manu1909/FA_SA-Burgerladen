@@ -566,6 +566,11 @@ public class Controller {
 					}
 				}
 			}
+			for (int i = 0; i < ereignisErgebnis.length; i++) {
+				if (ereignisErgebnis[i] != null){
+					System.out.println(ereignisErgebnis[i]);
+				}
+			}
 		} else {
 			for (int i = 0; i < Datenbank.fl.length; i++) {
 				
@@ -603,11 +608,12 @@ public class Controller {
 					bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
 					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
 					kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+					unternehmen.get(i).setGewinn(unternehmen.get(i).getGewinn()-5000);
 					if (initErgebnis[i] == 0){
 						ereignisErgebnis[i] = ("In der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
 						initErgebnis[i] = 1;
 					} else {
-						ereignisErgebnis[i] += ("\nIn der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+						ereignisErgebnis[i] += ("\nIn der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.\nEs sind zudem Kosten von 5000,00 € entstanden.");
 					}
 				}
 				
@@ -635,11 +641,6 @@ public class Controller {
 		if (checkArray == 3){
 			return null;
 		} else {
-			for (int i = 0; i < ereignisErgebnis.length; i++) {
-				if (ereignisErgebnis[i] != null){
-					System.out.println(ereignisErgebnis[i]);
-				}
-			}
 			return ereignisErgebnis;
 		}
 		

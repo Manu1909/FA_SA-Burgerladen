@@ -69,7 +69,7 @@ public class Datenbank {
 	//Daten f�r Ereignisse
 	public static Ereignis e1 = new Ereignis(30, 10);
 	public static Ereignis e2 = new Ereignis(5, 10);
-	public static Ereignis e3 = new Ereignis(10, 20);
+	public static Ereignis e3 = new Ereignis(5, 20);
 	public static Ereignis[] e = {e1, e2, e3};
 
 	//Daten für Catering
