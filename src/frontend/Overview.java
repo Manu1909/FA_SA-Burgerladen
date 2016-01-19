@@ -31,12 +31,12 @@ import backend.Datenbank;
 public class Overview extends JFrame implements ActionListener, MouseListener {
 
 	private static String werbung;
-	private String ereignisErgebnis;
 	private int burgerZahl;
 	private int n; // Unternehmensnummer
 	private static boolean alleGegruendet = false;
 	private int feuern;
 	private int einstellen;
+	private static String[] ereignisErgebnis;
 
 	private JTextField txtKapital = new JTextField();
 	private JTextField txtSchulden = new JTextField();
@@ -152,111 +152,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		zeigeFensterOverview();
 	}
 
-	private void zeigeFensterBestellung() {
-		// contentPane-Settings
-		contentPaneBestellungen = new JPanel();
-		contentPaneBestellungen.setBackground(UIManager.getColor("FormattedTextField.inactiveBackground"));
-		contentPaneBestellungen.setBorder(new EmptyBorder(0, 0, 0, 0));
-		contentPaneBestellungen.setLayout(null);
-
-		// Überschrift
-		JLabel lblBestellungen = new JLabel("<html><body><h2>Bestellungen</h2></body></html>");
-		lblBestellungen.setBounds(5, 5, 574, 33);
-		lblBestellungen.setHorizontalAlignment(SwingConstants.CENTER);
-		contentPaneBestellungen.add(lblBestellungen);
-
-		// Burger
-		JLabel lblBestellung = new JLabel("Ich bestelle für");
-		lblBestellung.setBounds(27, 76, 116, 14);
-		contentPaneBestellungen.add(lblBestellung);
-		txtBurgerZahl.setBounds(120, 73, 86, 20);
-		contentPaneBestellungen.add(txtBurgerZahl);
-		txtBurgerZahl.setColumns(10);
-		JLabel lblBurger = new JLabel("Burger" + "          (Lagerinhalt: "
-				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() + "/"
-				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse() + ")");
-		lblBurger.setBounds(240, 76, 200, 14);
-		contentPaneBestellungen.add(lblBurger);
-
-		// Fleisch
-		listFleisch.setBounds(120, 104, 137, 62);
-		listFleisch.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listFleisch.setSelectedIndex(0);
-		listFleisch.addMouseListener(this);
-		lblFleischErk
-				.setText("<html><body><p>Kosten pro Burger: " + kostenFl[0] + " €" + "<br> Qualität: " + qualitaetFl[0]
-						+ " Punkte" + "<br> Gammelfleischrisiko: " + risikoquoteFl[0] + " Prozent </p><body></html>");
-		contentPaneBestellungen.add(lblFleischErk);
-		contentPaneBestellungen.add(listFleisch);
-		JLabel lblFleisch = new JLabel("Fleisch");
-		lblFleisch.setBounds(27, 101, 83, 14);
-		contentPaneBestellungen.add(lblFleisch);
-		lblFleischErk.setBounds(284, 104, 202, 48);
-
-		// Brötchen
-		JLabel lblBroetchen = new JLabel("Brötchen");
-		lblBroetchen.setBounds(27, 193, 83, 14);
-		contentPaneBestellungen.add(lblBroetchen);
-		listBroetchen.setBounds(120, 193, 137, 62);
-		listBroetchen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listBroetchen.setSelectedIndex(0);
-		listBroetchen.addMouseListener(this);
-		lblBroetchenErk.setText("<html><body><p>Kosten pro Burger: " + kostenBr[0] + " €" + "<br> Qualität: "
-				+ qualitaetBr[0] + " Punkte. <body></html>");
-		contentPaneBestellungen.add(listBroetchen);
-		lblBroetchenErk.setBounds(284, 193, 202, 62);
-		contentPaneBestellungen.add(lblBroetchenErk);
-
-		// Salatwahl
-		JLabel lblSalat = new JLabel("Salat");
-		lblSalat.setBounds(27, 299, 46, 14);
-		contentPaneBestellungen.add(lblSalat);
-		listSalat.setBounds(120, 287, 137, 62);
-		listSalat.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listSalat.setSelectedIndex(0);
-		listSalat.addMouseListener(this);
-		lblSalatErk.setText("<html><body><p>Kosten pro Burger: " + kostenSa[0] + " €" + "<br> Qualität: "
-				+ qualitaetSa[0] + " Punkte. <body></html>");
-		contentPaneBestellungen.add(listSalat);
-		lblSalatErk.setBounds(284, 287, 202, 62);
-		contentPaneBestellungen.add(lblSalatErk);
-
-		// Sauce
-		JLabel lblSauce = new JLabel("Sauce");
-		lblSauce.setBounds(27, 398, 46, 14);
-		contentPaneBestellungen.add(lblSauce);
-		listSauce.setBounds(120, 389, 137, 62);
-		listSauce.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		listSauce.setSelectedIndex(0);
-		listSauce.addMouseListener(this);
-		lblSaucenErk.setText("<html><body><p>Kosten pro Burger: " + kostenSau[0] + " €" + "<br> Qualität: "
-				+ qualitaetSau[0] + " Punkte. <body></html>");
-		contentPaneBestellungen.add(listSauce);
-		lblSaucenErk.setBounds(284, 389, 202, 62);
-		contentPaneBestellungen.add(lblSaucenErk);
-
-		// Gesamtkosten
-		btnGK.setBounds(120, 493, 179, 23);
-		btnGK.addActionListener(this);
-		contentPaneBestellungen.add(btnGK);
-		lblGK.setBounds(392, 497, 150, 14);
-		contentPaneBestellungen.add(lblGK);
-
-		// Abschicken
-		btnBestellungAbschicken.setBounds(222, 552, 147, 23);
-		btnBestellungAbschicken.addActionListener(this);
-		contentPaneBestellungen.add(btnBestellungAbschicken);
-
-		// Frame-Settings
-		frameBestellungen.setUndecorated(true);
-		frameBestellungen.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-		frameBestellungen.setContentPane(contentPaneBestellungen);
-		frameBestellungen.setBounds(100, 100, 600, 650);
-		frameBestellungen.setLocationRelativeTo(null);
-		frameBestellungen.setVisible(true);
-	}
-
-	public void zeigeFensterOverview() {
+	public void zeigeFensterOverview() {// Überblick aufbauen und anzeigen
 		frame.setTitle(
 				"Überblick für " + Controller.getUnternehmen(n).getName() + " (Runde " + Controller.getRunde() + ")");
 		contentPane = new JPanel();
@@ -368,9 +264,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		txtRanglisteKapital.setEditable(false);
 		txtRanglisteKapital.setBounds(150, 310, 150, 69);
 		panelKapital.add(txtRanglisteKapital);
-		JScrollPane scrollPaneKapital = new JScrollPane (panelKapital, 
-	            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-	            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scrollPaneKapital = new JScrollPane(panelKapital, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneKapital.setBounds(345, 310, 150, 69);
 		panel.add(scrollPaneKapital);
 
@@ -382,9 +277,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		txtRanglisteGewinn.setBounds(150, 310, 150, 69);
 		txtRanglisteGewinn.setEditable(false);
 		panelGewinn.add(txtRanglisteGewinn);
-		JScrollPane scrollPaneGewinn = new JScrollPane (panelGewinn, 
-	            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
-	            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		JScrollPane scrollPaneGewinn = new JScrollPane(panelGewinn, ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPaneGewinn.setBounds(150, 310, 150, 69);
 		panel.add(scrollPaneGewinn);
 
@@ -418,6 +312,12 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
 			menuCatering.setEnabled(true);
 		}
+		try {
+			if (ereignisErgebnis[n] != null) {
+				JOptionPane.showMessageDialog(this, ereignisErgebnis[n]);
+			}
+		} catch (Exception e) {
+		}
 		frame.setContentPane(contentPane);
 		frame.setResizable(false);
 		frame.add(panel);
@@ -427,7 +327,112 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		frame.setVisible(true);
 	}
 
+	private void zeigeFensterBestellung() {// BEstellungsfenster anzeigen
+		// contentPane-Settings
+		contentPaneBestellungen = new JPanel();
+		contentPaneBestellungen.setBackground(UIManager.getColor("FormattedTextField.inactiveBackground"));
+		contentPaneBestellungen.setBorder(new EmptyBorder(0, 0, 0, 0));
+		contentPaneBestellungen.setLayout(null);
+
+		// Überschrift
+		JLabel lblBestellungen = new JLabel("<html><body><h2>Bestellungen</h2></body></html>");
+		lblBestellungen.setBounds(5, 5, 574, 33);
+		lblBestellungen.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPaneBestellungen.add(lblBestellungen);
+
+		// Burger
+		JLabel lblBestellung = new JLabel("Ich bestelle für");
+		lblBestellung.setBounds(27, 76, 116, 14);
+		contentPaneBestellungen.add(lblBestellung);
+		txtBurgerZahl.setBounds(120, 73, 86, 20);
+		contentPaneBestellungen.add(txtBurgerZahl);
+		txtBurgerZahl.setColumns(10);
+		JLabel lblBurger = new JLabel("Burger" + "          (Lagerinhalt: "
+				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() + "/"
+				+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse() + ")");
+		lblBurger.setBounds(240, 76, 200, 14);
+		contentPaneBestellungen.add(lblBurger);
+
+		// Fleisch
+		listFleisch.setBounds(120, 104, 137, 62);
+		listFleisch.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listFleisch.setSelectedIndex(0);
+		listFleisch.addMouseListener(this);
+		lblFleischErk
+				.setText("<html><body><p>Kosten pro Burger: " + kostenFl[0] + " €" + "<br> Qualität: " + qualitaetFl[0]
+						+ " Punkte" + "<br> Gammelfleischrisiko: " + risikoquoteFl[0] + " Prozent </p><body></html>");
+		contentPaneBestellungen.add(lblFleischErk);
+		contentPaneBestellungen.add(listFleisch);
+		JLabel lblFleisch = new JLabel("Fleisch");
+		lblFleisch.setBounds(27, 101, 83, 14);
+		contentPaneBestellungen.add(lblFleisch);
+		lblFleischErk.setBounds(284, 104, 202, 48);
+
+		// Brötchen
+		JLabel lblBroetchen = new JLabel("Brötchen");
+		lblBroetchen.setBounds(27, 193, 83, 14);
+		contentPaneBestellungen.add(lblBroetchen);
+		listBroetchen.setBounds(120, 193, 137, 62);
+		listBroetchen.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listBroetchen.setSelectedIndex(0);
+		listBroetchen.addMouseListener(this);
+		lblBroetchenErk.setText("<html><body><p>Kosten pro Burger: " + kostenBr[0] + " €" + "<br> Qualität: "
+				+ qualitaetBr[0] + " Punkte. <body></html>");
+		contentPaneBestellungen.add(listBroetchen);
+		lblBroetchenErk.setBounds(284, 193, 202, 62);
+		contentPaneBestellungen.add(lblBroetchenErk);
+
+		// Salatwahl
+		JLabel lblSalat = new JLabel("Salat");
+		lblSalat.setBounds(27, 299, 46, 14);
+		contentPaneBestellungen.add(lblSalat);
+		listSalat.setBounds(120, 287, 137, 62);
+		listSalat.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSalat.setSelectedIndex(0);
+		listSalat.addMouseListener(this);
+		lblSalatErk.setText("<html><body><p>Kosten pro Burger: " + kostenSa[0] + " €" + "<br> Qualität: "
+				+ qualitaetSa[0] + " Punkte. <body></html>");
+		contentPaneBestellungen.add(listSalat);
+		lblSalatErk.setBounds(284, 287, 202, 62);
+		contentPaneBestellungen.add(lblSalatErk);
+
+		// Sauce
+		JLabel lblSauce = new JLabel("Sauce");
+		lblSauce.setBounds(27, 398, 46, 14);
+		contentPaneBestellungen.add(lblSauce);
+		listSauce.setBounds(120, 389, 137, 62);
+		listSauce.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listSauce.setSelectedIndex(0);
+		listSauce.addMouseListener(this);
+		lblSaucenErk.setText("<html><body><p>Kosten pro Burger: " + kostenSau[0] + " €" + "<br> Qualität: "
+				+ qualitaetSau[0] + " Punkte. <body></html>");
+		contentPaneBestellungen.add(listSauce);
+		lblSaucenErk.setBounds(284, 389, 202, 62);
+		contentPaneBestellungen.add(lblSaucenErk);
+
+		// Gesamtkosten
+		btnGK.setBounds(120, 493, 179, 23);
+		btnGK.addActionListener(this);
+		contentPaneBestellungen.add(btnGK);
+		lblGK.setBounds(392, 497, 150, 14);
+		contentPaneBestellungen.add(lblGK);
+
+		// Abschicken
+		btnBestellungAbschicken.setBounds(222, 552, 147, 23);
+		btnBestellungAbschicken.addActionListener(this);
+		contentPaneBestellungen.add(btnBestellungAbschicken);
+
+		// Frame-Settings
+		frameBestellungen.setUndecorated(true);
+		frameBestellungen.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+		frameBestellungen.setContentPane(contentPaneBestellungen);
+		frameBestellungen.setBounds(100, 100, 600, 650);
+		frameBestellungen.setLocationRelativeTo(null);
+		frameBestellungen.setVisible(true);
+	}
+
 	public void zeigeFensterMarketing() {
+		// contentPane-settings
 		contentPaneMarketing = new JPanel();
 		contentPaneMarketing.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPaneMarketing.setLayout(null);
@@ -452,6 +457,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		btnConfirm.addActionListener(this);
 		contentPaneMarketing.add(btnConfirm);
 
+		// frame-settings
 		frame.setFocusableWindowState(false);
 		frameMarketing.setUndecorated(true);
 		frameMarketing.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
@@ -588,18 +594,19 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	}
 
 	@Override
-	public void mouseEntered(MouseEvent arg0) {
+	public void mouseEntered(MouseEvent e) {
 
 	}
 
 	@Override
-	public void mouseExited(MouseEvent arg0) {
+	public void mouseExited(MouseEvent e) {
 	}
 
 	@Override
 	public void mousePressed(MouseEvent e) {
 		Object s = e.getSource();
-		// Fenster öffnen, falls kein anderes geöffnet ist
+		// Unterfenster je nach geklicktem Menüpunkt öffnen
+		//Mouseevents Überblick
 		if (frame.getFocusableWindowState() == true) {
 			if (s == menuMarketing) {
 				zeigeFensterMarketing();
@@ -617,6 +624,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				zeigeFensterPersonal();
 			}
 		}
+		
+		//Mousevents Bestellungen
 		if (s == listFleisch) {
 			int a = listFleisch.getSelectedIndex();
 			lblFleischErk.setText("<html><body><p>Kosten pro Burger: " + kostenFl[a] + " €" + "<br> Qualität: "
@@ -635,6 +644,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			lblSaucenErk.setText("<html><body><p>Kosten pro Burger: " + kostenSau[d] + " €" + "<br> Qualität: "
 					+ qualitaetSau[d] + " Punkte. <body></html>");
 		}
+		//Mouseevents Marketing
 		if (s == listMarketing) {
 			int p = listMarketing.getSelectedIndex();
 			if (p < 3)
@@ -653,31 +663,36 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
+		//Buttonevents Bestellung
 		if (s == btnBestellungAbschicken) {
 			try {
 				if (Integer.parseInt(txtBurgerZahl.getText())
 						+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() <= Controller
-								.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse()) {
-					// Bestellung übergeben
+								.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse()
+						&& Integer.parseInt(txtBurgerZahl.getText()) >= 0) {//Falls Lager nicht überfüllt
+					// Lieferanten übergeben
 					Controller.getUnternehmen(n).getBestellung().bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 							Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
 							Datenbank.sol[listSauce.getSelectedIndex()]);
+					//Bestellmenge übergeben
 					Controller.getUnternehmen(n).getBestellung().setzeBestellmenge(
 							Integer.parseInt(txtBurgerZahl.getText()),
 							Controller.getUnternehmen(n).getStandort().getKuehlraum().berechneFreienLagerplatz());
 					burgerZahl = Integer.parseInt(txtBurgerZahl.getText());
 					lblBestellung.setText("Bestellung:     " + Integer.parseInt(txtBurgerZahl.getText()) + " Burger");
-					lblBestellung.setOpaque(false);
+					lblBestellung.setOpaque(false);//Label Bestellung im Überblick entfärben
 					btnRundeBeenden.setEnabled(true);
 					frame.setFocusableWindowState(true);
 					frameBestellungen.dispose();
-
-				} else
+				} else if (Integer.parseInt(txtBurgerZahl.getText()) < 0) {//Begrenzung: Bestellmenge muss >=0 sein
+				} else {
 					JOptionPane.showMessageDialog(this, "Ihr Kühlraum hat nicht genug Platz für die Bestellung");
+				}
+
 			} catch (Exception e1) {
 			}
 		}
-		if (s == btnGK) {
+		if (s == btnGK) {//Button Gesamtkosten: Optional, nur Ausgabe, keine Änderungen im Unternehmen
 			if (txtBurgerZahl.getText().equals("")) {
 			} else {
 				try {
@@ -692,41 +707,41 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				}
 			}
 		}
-		if (s == btnPreis) {
+		if (s == btnPreis) { // Button im Preisfenster
 			try {
-				if(Integer.parseInt(txtPreis.getText())>= 0 && Integer.parseInt(txtPreis.getText()) <= 25)
-				{
-					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
+				if (Integer.parseInt(txtPreis.getText()) >= 0 && Integer.parseInt(txtPreis.getText()) <= 25) {//Begrenzung: 0 <= Preis <= 25
+					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));//Preis im UN setzen
 					lblPreis.setText("Preis/Burger: " + Controller.getUnternehmen(n).getBurger().getPreis() + "€");
 					frame.setFocusableWindowState(true);
 					framePreis.dispose();
-				}
-				else
-					preisErk.setBackground(Color.RED);
-					preisErk.setOpaque(true);
+				} else//Falls Verstoß gegen die Preisbegrenzung
+					preisErk.setBackground(Color.RED); //Erklärung hervorheben <=> Fehlermeldung
+				preisErk.setOpaque(true);
 			} catch (Exception e1) {
 				preisErk.setBackground(Color.RED);
 				preisErk.setOpaque(true);
 			}
 		}
-		if (s == btnAngebotAbgeben) {
+		if (s == btnAngebotAbgeben) {//Button im Fenster Catering
 			frame.setFocusableWindowState(true);
 			frameCatering.dispose();
 		}
-		if (s == btnAuftragAblehnen) {
+		if (s == btnAuftragAblehnen) {//Button im Fenster Catering
 			frame.setFocusableWindowState(true);
+			txtAngebotSumme.setText("");
 			frameCatering.dispose();
 		}
-		if (s == btnAbschicken) {
+		if (s == btnAbschicken) {//Button im Fenster Personal
 			frame.setFocusableWindowState(true);
 			framePersonal.dispose();
+			//keine Datenänderung, Behandlung im RundeBeenden Button
 		}
-		if (s == btnConfirm) {
-			if (listMarketing.getSelectedIndex() < 3)
+		if (s == btnConfirm) {//Button im Fenster Marketing
+			if (listMarketing.getSelectedIndex() < 3) //Falls Optionen ausgewählt
 				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(listMarketing.getSelectedIndex()));
 			else
-				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));
-			if (Controller.getUnternehmen(n).getMarketing() != null) {
+				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));// setzen: kein Marketing
+			if (Controller.getUnternehmen(n).getMarketing() != null) {//Label im Überblick ändern
 				lblMarketing.setText("Marketing:      " + Controller.getUnternehmen(n).getMarketing().getBezeichnung());
 			} else
 				lblMarketing.setText("Marketing:      nichts");
@@ -736,47 +751,48 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
 				try {
-					if (Controller.getRunde() == 3) {
-						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
+					if (Controller.getRunde() == 3) {//Falls Runde 3 (Rundenzähler startet bei 0)
+						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));//Preis und Qualität in Cateringauswahl
 						Datenbank.c1.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 6) {
-						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
+					if (Controller.getRunde() == 6) {//Falls Runde 6 (Rundenzähler startet bei 0)
+						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));//Preis und Qualität in Cateringauswahl
 						Datenbank.c2.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 9) {
-						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
+					if (Controller.getRunde() == 9) {//Falls Runde 9 (Rundenzähler startet bei 0)
+						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));//Preis und Qualität in Cateringauswahl
 						Datenbank.c3.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
 				} catch (Exception e2) {
 				}
 
-				try {
+				try {//Personalzahl um angegebene Zahl erhöhen
 					Controller.getUnternehmen(n).getPersonal().erhoeheAnzahl(Integer.parseInt(txtEinstellen.getText()));
 				} catch (Exception e1) {
 				}
-				try {
+				try {//Personalzahl um angegebene Zahl verringern
 					Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
 				} catch (Exception e1) {
 				}
-				Controller.getUnternehmen(n).betreibeMarketing();
-				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);
-				Controller.getUnternehmen(n).berechneCatering();
+				Controller.getUnternehmen(n).betreibeMarketing();//Marketingauswikrungen berechnen
+				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);//Ware in Kühlraum lagern
+				Controller.getUnternehmen(n).berechneCatering();//Cateringkosten berechnen
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
-				if (n == StartGame.getI() - 1) {
+				if (n == StartGame.getI() - 1) {//Wenn letzter Spieler spielt
 					alleGegruendet = true;
-					String[] ereignisErgebnis = Controller.ereignisTrittEin();
+					ereignisErgebnis = Controller.ereignisTrittEin();//Array von Ereignissen füllen (1 Element pro UN)
 					if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9)
 						Controller.cateringAuswahlTreffen(Controller.getRunde());
-					RundenUbersicht ende = new RundenUbersicht();
+					Controller.rundeBeenden();
+					RundenUbersicht ende = new RundenUbersicht();//neue Rundenübersicht öffnen
 					frame.dispose();
-				} else if (alleGegruendet) {
-					if (n < StartGame.getI() - 1) {
+				} else if (alleGegruendet) { 
+					if (n < StartGame.getI() - 1) {//wenn alle UN gegründet wurden und der Spieler nicht der letzte ist
 						frame.dispose();
 						Overview nextUN = new Overview(n + 1);
 					}
 				} else {
-					if (n < StartGame.getI() - 1) {
+					if (n < StartGame.getI() - 1) { //wenn nicht alle gegründet sind, immer neue Gründung starten
 						frame.dispose();
 						newName nextUN = new newName(n + 1);
 					}
@@ -785,7 +801,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 	}
 
-	public int[] getReihenfolgeKapital() {
+	public int[] getReihenfolgeKapital() { //Gibt Array zurück, dass die Unternehmen nach Kapital geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;
@@ -802,7 +818,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		return i;
 	}
 
-	public int[] getReihenfolgeGewinn() {
+	public static int[] getReihenfolgeGewinn() {//Gibt Array zurück, dass die Unternehmen nach Gewinn geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;

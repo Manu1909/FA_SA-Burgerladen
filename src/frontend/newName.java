@@ -33,7 +33,7 @@ public class newName extends JFrame implements ActionListener {
 	}
 
 	public void buildWindow() {
-
+		//contentPane settings
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
