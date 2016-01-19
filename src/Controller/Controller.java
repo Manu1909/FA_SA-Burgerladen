@@ -119,7 +119,7 @@ public class Controller {
 					}
 
 					//Hier muss restliche Spiellogik entstehen
-					ereignisTrittEin();
+					ereignisTrittEin(0);
 
 					//Personal bearbeiten
 					System.out.println("M�chten sie Personal einstellen?");
@@ -418,7 +418,9 @@ public class Controller {
 
 		berechneKundenpool();
 
-		if(anzahlRunden < 4){
+		poolVariable = 300 - anzahlRunden*15;
+
+		/*if(anzahlRunden < 4){
 			poolVariable = 300;
 		}
 		else if(anzahlRunden < 8){
@@ -426,7 +428,7 @@ public class Controller {
 		}
 		else{
 			poolVariable = 120;
-		}
+		}*/
 
 		for (int i = 0; i < unternehmen.size(); i++) {
 			//Hier muss für jedes einzelne Unternehmen die Anzahl der Kunden berechnet und gesetzt werden
@@ -533,73 +535,98 @@ public class Controller {
 	}
 	
 	//Methode fuer das Auftreten von Ereignissen
-	public static String [] ereignisTrittEin() {
+	public static String [] ereignisTrittEin(int parameter) {
 		int alteBekanntheit;
 		int bekanntheitsVeraenderung;
 		int kundenzufriedenheitsVeraenderung;
 		String [] ereignisErgebnis = new String [unternehmen.size()];
 		int [] initErgebnis = new int [unternehmen.size()];
 		int checkArray = 0;
-		for (int i = 0; i < Datenbank.fl.length; i++) {
-			
-				int zufallszahl = (int)(Math.random() * 100) + 1;
-				if (zufallszahl <= fl[i].getRisikoQuote()){
-					for (int j = 0; j < unternehmen.size(); j++) {
-						if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
-							if (risikoEingetreten[j] == 0){
-								risikoEingetreten[j] = 1;
+		if (parameter == 6){
+			for (int i = 0; i < unternehmen.size(); i++) {
+				if (unternehmen.get(i).getBestellung().getFleischlieferant().getRisikoQuote() == fl[2].getRisikoQuote()){
+					if (risikoEingetreten[i] == 0){
+						risikoEingetreten[i] = 1;
+					}
+				}
+			}
+			for (int i = 0; i < unternehmen.size(); i++) {
+				if (risikoEingetreten[i] == 1){ //Ereignis Gammelfleischskandal
+					alteBekanntheit = unternehmen.get(i).getBekanntheit();
+					unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
+					bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
+					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
+					kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+					risikoEingetreten[i] = 2;
+					if (initErgebnis[i] == 0){
+						ereignisErgebnis[i] = ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+						initErgebnis[i] = 1;
+					} else {
+						ereignisErgebnis[i] += ("\nEs hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+					}
+				}
+			}
+		} else {
+			for (int i = 0; i < Datenbank.fl.length; i++) {
+				
+					int zufallszahl = (int)(Math.random() * 100) + 1;
+					if (zufallszahl <= fl[i].getRisikoQuote()){
+						for (int j = 0; j < unternehmen.size(); j++) {
+							if (unternehmen.get(j).getBestellung().getFleischlieferant().getRisikoQuote() == fl[i].getRisikoQuote()){
+								if (risikoEingetreten[j] == 0){
+									risikoEingetreten[j] = 1;
+								}
 							}
 						}
+						
 					}
-					
+			}
+			for (int i = 0; i < unternehmen.size(); i++) {
+				int zufallszahl = (int)(Math.random() * 100) + 1;
+				if (zufallszahl <= 100){ //Ereignis Adler Mannheim
+					alteBekanntheit = unternehmen.get(i).getBekanntheit();
+					unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
+					bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
+					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
+					kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+					if (initErgebnis[i] == 0){
+						ereignisErgebnis[i] = ("Das Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
+						initErgebnis[i] = 1;
+					} else {
+						ereignisErgebnis[i] += ("\nDas Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
+					}
 				}
+				
+				if (2 < zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
+					alteBekanntheit = unternehmen.get(i).getBekanntheit();
+					unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
+					bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
+					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
+					kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+					if (initErgebnis[i] == 0){
+						ereignisErgebnis[i] = ("In der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+						initErgebnis[i] = 1;
+					} else {
+						ereignisErgebnis[i] += ("\nIn der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+					}
+				}
+				
+				if (risikoEingetreten[i] == 1){ //Ereignis Gammelfleischskandal
+					alteBekanntheit = unternehmen.get(i).getBekanntheit();
+					unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
+					bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
+					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
+					kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
+					risikoEingetreten[i] = 2;
+					if (initErgebnis[i] == 0){
+						ereignisErgebnis[i] = ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+						initErgebnis[i] = 1;
+					} else {
+						ereignisErgebnis[i] += ("\nEs hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
+					}
+				}
+			}
 		}
-		for (int i = 0; i < unternehmen.size(); i++) {
-			int zufallszahl = (int)(Math.random() * 100) + 1;
-			if (zufallszahl <= 2){ //Ereignis Adler Mannheim
-				alteBekanntheit = unternehmen.get(i).getBekanntheit();
-				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
-				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
-				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
-				if (initErgebnis[i] == 0){
-					ereignisErgebnis[i] = ("Das Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
-					initErgebnis[i] = 1;
-				} else {
-					ereignisErgebnis[i] += ("Das Adler Mannheim-Team war bei Ihnen zu Besuch!\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesteigert.");
-				}
-			}
-			
-			if (2 < zufallszahl && zufallszahl<= 5){ //Ereignis Brandunfall
-				alteBekanntheit = unternehmen.get(i).getBekanntheit();
-				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[1].getBekanntheit()));
-				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[1].getKundenzufriedenheit()));
-				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
-				if (initErgebnis[i] == 0){
-					ereignisErgebnis[i] = ("In der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
-					initErgebnis[i] = 1;
-				} else {
-					ereignisErgebnis[i] += ("In der Kueche kam es zu einem Brandunfall.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
-				}
-			}
-			
-			if (risikoEingetreten[i] == 1){ //Ereignis Gammelfleischskandal
-				alteBekanntheit = unternehmen.get(i).getBekanntheit();
-				unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[2].getBekanntheit()));
-				bekanntheitsVeraenderung = unternehmen.get(i).getBekanntheit() - alteBekanntheit;
-				unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) (unternehmen.get(i).getKundenzufriedenheit()*(-0.01)*ereignis[2].getKundenzufriedenheit()));
-				kundenzufriedenheitsVeraenderung = Math.abs(unternehmen.get(i).getKundenzufriedenheitsVeraenderung());
-				risikoEingetreten[i] = 2;
-				if (initErgebnis[i] == 0){
-					ereignisErgebnis[i] = ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
-					initErgebnis[i] = 1;
-				} else {
-					ereignisErgebnis[i] += ("Es hat sich herausgestellt, dass Ihr Fleischlieferant Teil eines Gammelfleischskandals ist.\nDadurch hat sich die Bekanntheit des Unternehmens " + unternehmen.get(i).getName() + " um " + bekanntheitsVeraenderung + " gesteigert und ihre Kundenzufriedenheit um " + kundenzufriedenheitsVeraenderung + " gesenkt.");
-				}
-			}
-		}
-		
 		for (int i = 0; i < ereignisErgebnis.length; i++) {
 			if (ereignisErgebnis[i] == null){
 				checkArray ++;
