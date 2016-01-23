@@ -1,5 +1,9 @@
 package business;
 
+
+/**
+ * @author entenmann
+ */
 public class Standort {
 	
 	private String lage;
@@ -16,7 +20,9 @@ public class Standort {
 		this.bekanntheit = bekanntheit;
 	}
 	
-	//Getter und Setter fï¿½r Standort
+	/**
+	 * Get - und Setter Methoden für Klasse Standort
+	 */
 	public String getLage() {
 		return lage;
 	}
@@ -67,7 +73,11 @@ public class Standort {
 	}
 
 
-	//berechneMiete des kompletten Standorts
+	/**
+	 * Berechnen der Miete inklusive Mietzusatzkosten für den Kühlraum
+	 * Miete wird 3fach zurückgegeben, da Berechnung für ein Quartal stattfindet
+	 * @return miete
+	 */
 	public double berechneMiete(){
 		miete = miete + getKuehlraum().getMietZusatzKosten();
 		return miete*3;

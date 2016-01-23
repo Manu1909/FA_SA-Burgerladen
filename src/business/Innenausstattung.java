@@ -1,5 +1,9 @@
 package business;
 
+
+/**
+ * @author entenmann
+ */
 public class Innenausstattung {
 	
 	private String bezeichnung;
@@ -13,6 +17,9 @@ public class Innenausstattung {
 		this.kosten = kosten;
 	}
 	
+	/**
+	 * Get - und Setter Methoden der Klasse Innenausstattung
+	 */
 	public String getBezeichnung() {
 		return bezeichnung;
 	}

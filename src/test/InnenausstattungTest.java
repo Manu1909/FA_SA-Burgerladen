@@ -7,6 +7,9 @@ import org.junit.Test;
 
 import business.Standort;
 
+/**
+ * @author entenmann
+ */
 public class InnenausstattungTest {
 
 	Standort s1;

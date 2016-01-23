@@ -9,15 +9,21 @@ import business.Catering;
 import backend.Datenbank;
 import business.Unternehmen;
 
+/**
+ * @author entenmann
+ *
+ */
 public class CateringTest {
 	
 	Unternehmen u1;
 	Catering c1;
+	Catering c2;
 	
 	@Before
 	public void init(){
 		u1 = new Unternehmen("test1");
 		c1 = Datenbank.c1;
+		c2 = Datenbank.c2;
 	}
 
 	@Test
@@ -80,24 +86,24 @@ public class CateringTest {
 	public void testVergleichePreisLeistung() {
 		Unternehmen u2 = new Unternehmen("test2");
 		
-		c1.addName(u1.getName());
-		c1.addPreis(10000);
-		c1.addQualitaet(55);
+		c2.addName(u1.getName());
+		c2.addPreis(10000);
+		c2.addQualitaet(55);
 		
-		c1.addName(u2.getName());
-		c1.addPreis(11000);
-		c1.addQualitaet(55);
+		c2.addName(u2.getName());
+		c2.addPreis(11000);
+		c2.addQualitaet(55);
 		
-		String result = c1.vergleichePreisLeistung();
+		String result = c2.vergleichePreisLeistung();
 		
 		assertTrue("Test vergleichePreisLeistung", result == "test1");
 
 	}
-	
+		
 	@Test
 	public void testVergleichePreisLeistungOhneAngebote() {
 		
-		String result = Datenbank.c2.vergleichePreisLeistung();
+		String result = Datenbank.c3.vergleichePreisLeistung();
 		
 		assertTrue("Test vergleichePreisLeistung", result == "Kein Angebot eingegangen");
 

@@ -9,6 +9,9 @@ import org.junit.Test;
 import business.Kuehlraum;
 import business.Standort;
 
+/**
+ * @author entenmann
+ */
 public class StandortTest {
 
 	private Standort s1;

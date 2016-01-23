@@ -9,6 +9,9 @@ import org.junit.Test;
 import business.Kuehlraum;
 import business.Standort;
 
+ /**
+  * @author entenmann
+  */
 public class KuehlraumTest {
 
 	private Kuehlraum k1;
@@ -89,8 +92,5 @@ public class KuehlraumTest {
 	}
 	
 
-	//TODO In Methoden mit IF-Verzeigung alle möglichen Eingaben testen
-	//TODO Fragen nach Tests mit Paramtern
-	//TODO Fragen nach try-catch
 	
 }

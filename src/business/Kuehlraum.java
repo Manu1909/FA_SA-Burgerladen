@@ -1,5 +1,9 @@
 package business;
 
+
+/**
+ * @author entenmann
+ */
 public class Kuehlraum {
 	
 	private int lagerGroesse;
@@ -12,7 +16,10 @@ public class Kuehlraum {
 		this.mietZusatzKosten = mietzusatzkosten;
 	}
 	
-	//Getter und Setter
+	/*
+	 * Get - und Setter Methoden der Klasse Kuehlraum 
+	 */
+	
 	public int getLagerGroesse() {
 		return lagerGroesse;
 	}
@@ -32,9 +39,12 @@ public class Kuehlraum {
 		this.mietZusatzKosten = mietZusatzKosten;
 	}
 	
-	
+	/**
+	 * Ware wird nach vorheriger Prüfung  eingelagert
+	 * @param menge
+	 * @return inhalt
+	 */
 	public int wareEinlagern(int menge){
-		//Wenn bestellte Menge und aktueller Inhalt die Lagergï¿½ï¿½e ï¿½bertreffen muss eine Fehlermeldung ausgegeben werden
 		if((inhalt + menge) > lagerGroesse || menge <= 0){
 			return inhalt;
 		}
@@ -46,7 +56,11 @@ public class Kuehlraum {
 	}
 	
 	
-	//Entnehme Ware aus dem Lager
+	/**
+	 * Entnahme der Ware nach vorheriger Prüfung
+	 * @param entnahme
+	 * @return inhalt
+	 */
 	public int wareEntnehmen(int entnahme){
 		if(entnahme > lagerGroesse || entnahme > inhalt || entnahme <= 0){
 			return inhalt;
@@ -56,14 +70,14 @@ public class Kuehlraum {
 		if(newInhalt >= 0){
 			inhalt = newInhalt;
 		}	
-		//Aufzurufende Funktion muss prï¿½fen ob Wert negativ oder nicht
-		//Wenn negativ dann muss Fehlermeldung kommen
-		//Wenn positiv wird Inhalt aktualisiert und Bestellung kann abgeschlossen werden.
 		
 		return inhalt;
 	}
 	
-	//Berechne den aktuell freiene Lagerplatz im Kï¿½hlraum
+	/**
+	 * Berechnet den aktuell freien Lagerplatz
+	 * @return freien Lagerplatz
+	 */
 	public int berechneFreienLagerplatz(){	
 		return lagerGroesse - inhalt;
 	}

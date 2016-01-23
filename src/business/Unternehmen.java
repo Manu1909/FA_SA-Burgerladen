@@ -142,7 +142,12 @@ public class Unternehmen {
 		this.personal = personal;
 	}
 
-	
+	/**
+	 * Hier wird das Kapital des Unternehmens berechnet unter Berücksichtung
+	 * ob ein Kredit gewählt und bereits abbezahlt wurde
+	 * @param kreditWahl
+	 * @return kapital
+	 */
 	public double berechneKapital(boolean kreditWahl){
 		kapital = kapital + gewinn;
 		if(kreditWahl && kredit != null){
@@ -208,6 +213,9 @@ public class Unternehmen {
 		}
 	}
 
+	/**
+	 * Hier wird die Auswirkung des Caterings auf die Bekanntheit und Kundezufriedenheit berechnet
+	 */
 	public void berechneCatering(){
 		if(catering!=null){
 			bekanntheit = catering.berechneBekanntheit(bekanntheit);
