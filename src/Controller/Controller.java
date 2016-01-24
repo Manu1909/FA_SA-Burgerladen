@@ -584,7 +584,7 @@ public class Controller {
 			}
 			for (int i = 0; i < unternehmen.size(); i++) {
 				int zufallszahl = (int)(Math.random() * 100) + 1; //Zufallszahl für die beiden anderen Ereignissen
-				if (zufallszahl <= 100){ //Ereignis Adler Mannheim zu Besuch
+				if (zufallszahl <= 2){ //Ereignis Adler Mannheim zu Besuch
 					unternehmen.get(i).setBekanntheit((int)(unternehmen.get(i).getBekanntheit() + (int)(100-unternehmen.get(i).getBekanntheit())*0.01*ereignis[0].getBekanntheit()));
 					unternehmen.get(i).setKundenzufriedenheitsVeraenderung((int) ((100-unternehmen.get(i).getKundenzufriedenheit())*0.01*ereignis[0].getKundenzufriedenheit()));
 					if (initErgebnis[i] == 0){
