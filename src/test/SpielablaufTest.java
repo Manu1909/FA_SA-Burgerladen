@@ -76,7 +76,7 @@ public class SpielablaufTest {
             }
 
             if (anzahlRunden == 6 && ereignis){
-                Controller.ereignisTrittEin(anzahlRunden);
+                Controller.ereignisTrittEin(1);
                 }
             
             for (int i = 0; i < unternehmen.size(); i++) {

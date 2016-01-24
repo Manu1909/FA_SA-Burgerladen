@@ -38,21 +38,14 @@ public class PersonalTest {
 		assertTrue("Test setAnzahlGefeuerte", 11 == p.getAnzahlGefeuerte());
 	}
 	
-
 	@Test
-	public void testGetBurgerKapazitaet(){
-		assertTrue("Test getBurgerKapazit�t", 0 ==p.getBurgerKapazitaet());
-	}
-	
-	@Test 
-	public void testSetBurgerKapazitaet(){
-		p.setBurgerKapazitaet(11);;
-		assertTrue("Test setBurgerKapazit�t", 11 == p.getBurgerKapazitaet());
+	public void testBerechneKapazitaet(){
+		assertTrue("Test berechneKapazitaet", 6000 == p.berechneKapazitaet());
 	}
 
 	@Test
 	public void testErhoeheAnzahl(){
-		//assertTrue("Test erh�heAnzahl", 11 == p.erhoeheAnzahl());
+		assertTrue("Test erhoeheAnzahl", 11 == p.erhoeheAnzahl(1));
 	}
 	
 	@Test 
@@ -62,7 +55,7 @@ public class PersonalTest {
 	
 	@Test
 	public void testBerechneKosten(){
-		assertTrue("Test berechneKosten", 10000 == p.berechneKosten());
+		assertTrue("Test berechneKosten", 42000 == p.berechneKosten());
 	}
 	
 	@Test 

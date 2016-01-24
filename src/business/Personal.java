@@ -4,7 +4,7 @@ public class Personal {
 	
 	public int anzahlAngestellte;
 	public int anzahlGefeuerte;
-	public int hoechstanzahl = 30;
+	public int hoechstanzahl = 15;
 	public int mindestanzahl = 4;
 	public int burgerKapazitaet = 200*3;
 	public int kapazitaet;
@@ -34,23 +34,23 @@ public class Personal {
 		return burgerKapazitaet;
 	}
 
-	public int erhoeheAnzahl(int i){
+	public int erhoeheAnzahl(int i){ //Einstellung von Personal wird durch eine bestimmte Höchstanzahl eingeschränkt
 		if (anzahlAngestellte  + i <= hoechstanzahl){
 			anzahlAngestellte = anzahlAngestellte + i;
 		} else {
-			System.out.println("Hï¿½chstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
+			System.out.println("Höchstanzahl an Personal erreicht. Anzahl der Angestellten bleibt gleich.");
 		}
 		return anzahlAngestellte;
 	}
-	public int berechneAnzahl(){
+	public int berechneAnzahl(){ //wird zum Beginn der Periode aufgerufen und aktualisiert die Anzahl an Personal
 		anzahlAngestellte = anzahlAngestellte-anzahlGefeuerte;
 		return anzahlAngestellte;
 	}
 	public double berechneKosten(){
-		kosten = anzahlAngestellte*gehalt; // Beispielwert: Kosten pro Personal
+		kosten = anzahlAngestellte*gehalt;
 		return kosten;
 	}
-	public int feuern(int anzahl){
+	public int feuern(int anzahl){ //Feuern von Personal wird durch eine bestimmte Mindestanzahl eingeschränkt
 		if (anzahlAngestellte - anzahl >= mindestanzahl){
 			anzahlGefeuerte = anzahl;
 		} else {

@@ -4,7 +4,7 @@ public class Kredit {
 	
 	private int laufzeit; //entspricht einer Periode = 3 Monate
 	private double zinssatz;
-	private int hoehe; // Idee: Hï¿½he des Kredits selber bestimmen
+	private int hoehe;
 	private double annuitaet;
 	private double zinsaufwand;
 	private double bereinigteAnnuitaet;
@@ -15,7 +15,6 @@ public class Kredit {
 		this.hoehe = hoehe;
 	}
 	
-	//Getter und Setter
 	
 	public void setLaufzeit(int laufzeit) {
 		this.laufzeit = laufzeit;
@@ -55,19 +54,19 @@ public class Kredit {
 	}
 	
 	// Methoden
-	public double berechneAnnuitaet(){
+	public double berechneAnnuitaet(){ //pro Periode
 		annuitaet = hoehe*(Math.pow((1+zinssatz*0.01), laufzeit/4)*(zinssatz*0.01/(Math.pow((1+zinssatz*0.01), laufzeit/4)-1)))/4;
 		annuitaet = Math.round(100.0 * annuitaet) / 100.0;
 		return annuitaet;
 	}
 
-	public double berechneZinsaufwand() {
+	public double berechneZinsaufwand() { //Dieser Betrag fließt in die Gewinnberechnung mit ein, ...
 		zinsaufwand = (annuitaet*laufzeit - hoehe)/laufzeit;
 		zinsaufwand = Math.round(100.0 * zinsaufwand) / 100.0;
 		return zinsaufwand;
 	}
 	
-	public double berechneBereinigteAnnuitaet() {
+	public double berechneBereinigteAnnuitaet() { //...während die bereinigte Annuität pauschal vom Kapital abgezogen wird
 		bereinigteAnnuitaet = annuitaet - zinsaufwand;
 		return bereinigteAnnuitaet;
 	}

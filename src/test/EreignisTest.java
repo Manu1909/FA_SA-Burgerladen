@@ -20,7 +20,7 @@ public class EreignisTest {
 	
 	@Test
 	public void testGetBekanntheit(){
-		assertTrue("Test getBekanntheit", 10 == e.getBekanntheit());
+		assertTrue("Test getBekanntheit", 30 == e.getBekanntheit());
 	}
 	
 	@Test 
@@ -31,7 +31,7 @@ public class EreignisTest {
 	
 	@Test
 	public void testGetKundenzufriedenheit(){
-		assertTrue("Test getKundenzufriedenheitsVeraenderung", -20 ==e.getKundenzufriedenheit());
+		assertTrue("Test getKundenzufriedenheitsVeraenderung", 10 ==e.getKundenzufriedenheit());
 	}
 	
 	@Test 
