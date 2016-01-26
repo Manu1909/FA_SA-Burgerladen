@@ -1,6 +1,6 @@
 package frontend;
 
-import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -40,40 +40,35 @@ public class StartGame extends JFrame implements ActionListener {
 	public void buildWindow() {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentPane.setLayout(new BorderLayout(0, 0));
-		frame.setContentPane(contentPane);
-
-		JLabel icon = new JLabel(new ImageIcon("logo.png"));
-		icon.setBounds(1, 1, 300, 200);
-		contentPane.add(icon);
-
-		JPanel panel = new JPanel();
-		contentPane.add(panel, BorderLayout.CENTER);
 		contentPane.setLayout(null);
-
-		JLabel heading = new JLabel("<html><body><h1 align=center>Burger im Quadrat</h1></body></html>");
-		heading.setBounds(102, 11, 220, 49);
-		contentPane.add(heading);
-
-		txtUNZahl.setBounds(200, 230, 50, 14);
+		frame.setContentPane(contentPane);
+		
+		ImageIcon icon = new ImageIcon("logoJavaBG.PNG");
+		JLabel label = new JLabel(icon);
+		label.setBounds(120, 10, icon.getIconWidth(), icon.getIconHeight());
+		contentPane.add(label);
+		
+		txtUNZahl.setBounds(200, 330, 50, 14);
 		contentPane.add(txtUNZahl);
 
-		btnGo.setBounds(180, 280, 90, 23);
+		btnGo.setBounds(180, 380, 90, 23);
 		btnGo.addActionListener(this);
 		contentPane.add(btnGo);
 
 		JLabel info = new JLabel("<html><body><p align = center>"
-				+ "In diesem Unternehmensplanspiel gründen Sie und Ihre Gegenspieler je einen Burgerladen"
-				+ " in der Innenstadt Mannheims. Über eine Zeitspanne von vier Jahren leiten Sie die Geschicke des Ladens und beeinflussen seinen"
-				+ " Erfolg durch Marketing und eine eigene Bestell- und Personalpolitik. <br>Das Spiel dauert zwölf Spielrunden, die je eine"
-				+ " Zeitspanne von drei Monaten abdecken. Am Ende der zwölften Spielrunde gewinnt derjenige, der den höchsten Gewinn erzielt hat."
+				+ "Herzlich Willkommen bei Burger im Quadrat! Bei diesem Unternehmensplanspiel gründen "
+				+ "Sie und Ihre Mitspieler ein Burgerrestaurant und betreiben es in einem Zeitraum von vier Jahren. "
+				+ "Eine Runde ist genau ein Quartal, also drei Monate lang."
+				+ "Das Spiel findet im Hot-Seat-Verfahren statt: Also beginnt ein Spieler, danach geben die Mitspieler ihre Werte ein. " 
+				+ "Zuerst geben Sie jedoch bitte an wie viele Spieler an dieser Spielrunde teilnehmen:"
 				+ "</p></body></html>");
-		info.setBounds(89, 50, 290, 180);
+		info.setBounds(89, 130, 290, 180);
 		contentPane.add(info);
 
+//		contentPane.setBackground(new Color(239,237, 227));
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-		frame.setBounds(100, 100, 450, 400);
+		frame.setBounds(100, 100, 450, 450);
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
 	}

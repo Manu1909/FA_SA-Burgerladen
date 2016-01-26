@@ -51,12 +51,12 @@ public class newName extends JFrame implements ActionListener {
 		btnNext.addActionListener(this);
 		panel.add(btnNext);
 
-		JLabel info = new JLabel("<html><body><h4>Schritt 1:</h4><p>Name Ihres Unternehmens::</p></body></html>");
+		JLabel info = new JLabel("<html><body><h4>Schritt 1:</h4><p>Bitte geben Sie ihrem Burgerrestaurant einen Namen!</p></body></html>");
 		info.setBounds(89, 71, 257, 82);
 		panel.add(info);
 
 		txtName = new JTextField();
-		txtName.setBounds(89, 144, 257, 20);
+		txtName.setBounds(89, 149, 257, 20);
 		panel.add(txtName);
 		txtName.setColumns(10);
 

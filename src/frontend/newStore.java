@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 //import java.util.Locale.LanguageRange;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -99,10 +100,10 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		// Abschnitt Standort
 		JLabel infoLocation = new JLabel(
 				"<html><body><h3>Schritt 2:</h3><p>Wählen Sie hier den Standort aus:</p></body></html>");
-		infoLocation.setBounds(300, 39, 257, 82);
+		infoLocation.setBounds(250, 39, 257, 82);
 		panel.add(infoLocation);
 
-		listStandort.setBounds(300, 109, 90, 75);
+		listStandort.setBounds(250, 109, 90, 75);
 		listStandort.setSelectedIndex(0);
 		listStandort.addMouseListener(this);
 		panel.add(listStandort);
@@ -110,55 +111,60 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		int p = listStandort.getSelectedIndex();
 		tipLocations.setText("<html><body><p>Traffic: " + traffic[p] + "<br> Bekanntheitgrad: " + bekanntheit[p]
 				+ "<br> Miete: " + miete[p] + "€</p></body></hmtl>");
-		tipLocations.setBounds(400, 117, 138, 55);
+		tipLocations.setBounds(350, 117, 138, 55);
 		panel.add(tipLocations);
 
-		listKuehlraum.setBounds(570, 122, 112, 54);
+		listKuehlraum.setBounds(520, 122, 112, 54);
 		listKuehlraum.addMouseListener(this);
 		listKuehlraum.setSelectedIndex(0);
 		panel.add(listKuehlraum);
 
 		int x = listKuehlraum.getSelectedIndex();
-		tipStorage.setBounds(690, 115, 130, 60);
+		tipStorage.setBounds(640, 115, 130, 60);
 		tipStorage.setText("<html><body><p>Lagereinheiten: " + kapazitaet[x] + "<br>Mietzusatz: " + lagerMiete[x]
 				+ "</p></body></html>");
 		panel.add(tipStorage);
 
 		/////// Abschnitt Inneneinrichtung
 		JLabel infoInterior = new JLabel("<html><body><p>Wählen Sie die Inneneinrichtung:</p></body></html>");
-		infoInterior.setBounds(300, 170, 257, 82);
+		infoInterior.setBounds(250, 170, 257, 82);
 		panel.add(infoInterior);
 
-		listInnenausstattung.setBounds(300, 222, 90, 56);
+		listInnenausstattung.setBounds(250, 222, 90, 56);
 		listInnenausstattung.setSelectedIndex(0);
 		listInnenausstattung.addMouseListener(this);
 		panel.add(listInnenausstattung);
 
 		int n = listInnenausstattung.getSelectedIndex();
 		tipInterior.setText("<html><body><p>Kosten: " + kostenMobiliar[n] + "€</p></body></hmtl>");
-		tipInterior.setBounds(400, 220, 138, 55);
+		tipInterior.setBounds(350, 220, 138, 55);
 		panel.add(tipInterior);
 
 		// Abschnitt Kredit
 		JLabel infoCredit = new JLabel("<html><body><p>Optional: Nehmen Sie einen Kredit auf:</p></body></html>");
-		infoCredit.setBounds(300, 268, 257, 82);
+		infoCredit.setBounds(250, 268, 257, 82);
 		panel.add(infoCredit);
 
 		listKredit.setSelectedIndex(0);
 		listKredit.addMouseListener(this);
-		listKredit.setBounds(300, 320, 90, 72);
+		listKredit.setBounds(250, 320, 90, 72);
 		panel.add(listKredit);
 
 		int m = listKredit.getSelectedIndex();
-		tipCredit.setBounds(400, 326, 138, 55);
+		tipCredit.setBounds(350, 326, 138, 55);
 		tipCredit.setText("<html><body><p>Zins: " + zins[m] + "<br> Laufzeit: " + laufzeit[m] + "</p></body></hmtl>");
 		panel.add(tipCredit);
 
 		/////////////////////
-		btnConfirm.setBounds(427, 420, 95, 23);
+		btnConfirm.setBounds(380, 420, 95, 23);
 		btnConfirm.addActionListener(this);
 		panel.add(btnConfirm);
 
+		ImageIcon icon = new ImageIcon("logoJavaBG.PNG");
+		JLabel label = new JLabel(icon);
+		label.setBounds(0,0, icon.getIconWidth(), icon.getIconHeight());
+		panel.add(label);
+		
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setBounds(100, 100, 900, 500);
