@@ -153,8 +153,8 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 	}
 
 	public void zeigeFensterOverview() {// Überblick aufbauen und anzeigen
-		frame.setTitle(
-				"Überblick für " + Controller.getUnternehmen(n).getName() + " (Runde " + (Controller.getRunde()+1) + ")");
+		frame.setTitle("Überblick für " + Controller.getUnternehmen(n).getName() + " (Runde "
+				+ (Controller.getRunde() + 1) + ")");
 		contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout(0, 0));
 
@@ -442,7 +442,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		listMarketing.addMouseListener(this);
 		contentPaneMarketing.add(listMarketing);
 
-		lblEffekte.setBounds(192, 125, 200, 50);
+		lblEffekte.setBounds(192, 105, 200, 100);
 		contentPaneMarketing.add(lblEffekte);
 
 		btnConfirm.setBounds(171, 240, 100, 23);
@@ -494,7 +494,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		contentPanePersonal.add(txtFeuern);
 		txtFeuern.setColumns(10);
 
-		btnAbschicken.setBounds(199, 269, 89, 23);
+		btnAbschicken.setBounds(199, 220, 120, 23);
 		btnAbschicken.addActionListener(this);
 		contentPanePersonal.add(btnAbschicken);
 
@@ -502,7 +502,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		framePersonal.setUndecorated(true);
 		framePersonal.getRootPane().setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
 		framePersonal.setContentPane(contentPanePersonal);
-		framePersonal.setBounds(100, 100, 501, 364);
+		framePersonal.setBounds(100, 100, 501, 280);
 		framePersonal.setLocationRelativeTo(null);
 		framePersonal.setVisible(true);
 	}
@@ -642,8 +642,17 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			int p = listMarketing.getSelectedIndex();
 			String text = "<html><body>";
 			if (p < 3) {
+				if (p == 0) {
+					text += "Sie bewerben ihr Unternehmen mit Flyern.";
+				}
+				if (p == 1) {
+					text += "Sie verkaufen zwei Burger für den Preis von Einem.";
+				}
+				if (p == 2) {
+					text += "Sie bewerben ihr Unternehmen im Radio.";
+				}
 				if (bekanntheitsPlus[p] > 0) {
-					text += "Bekanntheitsgrad: steigt ";
+					text += "<br>Bekanntheitsgrad steigt. ";
 				}
 				if (zufriedenheitsPlus[p] > 0) {
 					text += "<br>Kundenzufriedenheit: steigt";
@@ -654,7 +663,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			}
 
 			else
-				lblEffekte.setText("<html><body><br>Keine Effekte</body></html>");
+				lblEffekte.setText("<html><body>Keine Effekte</body></html>");
 		}
 	}
 
@@ -730,12 +739,16 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (s == btnPreis) { // Button im Preisfenster
 			try {
 				if (Integer.parseInt(txtPreis.getText()) >= 6 && Integer.parseInt(txtPreis.getText()) <= 25) {// Begrenzung:0<=Preis<=25
-					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));// Preis im UN setzen
+					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));// Preis
+																											// im
+																											// UN
+																											// setzen
 					lblPreis.setText("Preis/Burger: " + Controller.getUnternehmen(n).getBurger().getPreis() + "€");
 					frame.setFocusableWindowState(true);
 					framePreis.dispose();
 				} else// Falls Verstoß gegen die Preisbegrenzung
-					preisErk.setBackground(Color.RED); // Erklärung hervorheben <=> Fehlermeldung
+					preisErk.setBackground(Color.RED); // Erklärung hervorheben
+														// <=> Fehlermeldung
 				preisErk.setOpaque(true);
 			} catch (Exception e1) {
 				preisErk.setBackground(Color.RED);
@@ -757,11 +770,17 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			// keine Datenänderung, Behandlung im RundeBeenden Button
 		}
 		if (s == btnConfirm) {// Button im Fenster Marketing
-			if (listMarketing.getSelectedIndex() < 3) // Falls Optionen ausgewählt
+			if (listMarketing.getSelectedIndex() < 3) // Falls Optionen
+														// ausgewählt
 				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(listMarketing.getSelectedIndex()));
 			else
-				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));// setzen: kein Marketing
-			if (Controller.getUnternehmen(n).getMarketing() != null) {// Label im Überblick ändern
+				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));// setzen:
+																							// kein
+																							// Marketing
+			if (Controller.getUnternehmen(n).getMarketing() != null) {// Label
+																		// im
+																		// Überblick
+																		// ändern
 				lblMarketing.setText("Marketing:      " + Controller.getUnternehmen(n).getMarketing().getBezeichnung());
 			} else
 				lblMarketing.setText("Marketing:      nichts");
@@ -774,15 +793,31 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					if (Controller.getRunde() == 3) {// Falls Runde 3
 														// (Rundenzähler startet
 														// bei 0)
-						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis und Qualität in Cateringauswahl
+						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
+																								// und
+																								// Qualität
+																								// in
+																								// Cateringauswahl
 						Datenbank.c1.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 6) {// Falls Runde 6 (Rundenzähler startet bei 0)
-						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis und Qualität in Cateringauswahl
+					if (Controller.getRunde() == 6) {// Falls Runde 6
+														// (Rundenzähler startet
+														// bei 0)
+						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
+																								// und
+																								// Qualität
+																								// in
+																								// Cateringauswahl
 						Datenbank.c2.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 9) {// Falls Runde 9 (Rundenzähler startet bei 0)
-						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis und Qualität in Cateringauswahl
+					if (Controller.getRunde() == 9) {// Falls Runde 9
+														// (Rundenzähler startet
+														// bei 0)
+						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
+																								// und
+																								// Qualität
+																								// in
+																								// Cateringauswahl
 						Datenbank.c3.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
 				} catch (Exception e2) {
@@ -796,26 +831,44 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
 				} catch (Exception e1) {
 				}
-				Controller.getUnternehmen(n).betreibeMarketing();// Marketingauswikrungen berechnen
-				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);// Ware in Kühlraum lagern
-				Controller.getUnternehmen(n).berechneCatering();// Cateringkosten berechnen
+				Controller.getUnternehmen(n).betreibeMarketing();// Marketingauswikrungen
+																	// berechnen
+				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);// Ware
+																									// in
+																									// Kühlraum
+																									// lagern
+				Controller.getUnternehmen(n).berechneCatering();// Cateringkosten
+																// berechnen
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
 				if (n == StartGame.getI() - 1) {// Wenn letzter Spieler spielt
 					alleGegruendet = true;
 					ereignisErgebnis = null;
-					ereignisErgebnis = Controller.ereignisTrittEin(0);// Array von Ereignissen füllen (1 Element pro UN)
+					ereignisErgebnis = Controller.ereignisTrittEin(0);// Array
+																		// von
+																		// Ereignissen
+																		// füllen
+																		// (1
+																		// Element
+																		// pro
+																		// UN)
 					if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9)
 						Controller.cateringAuswahlTreffen(Controller.getRunde());
 					Controller.rundeBeenden();
-					RundenUbersicht ende = new RundenUbersicht();// neue Rundenübersicht öffnen
+					RundenUbersicht ende = new RundenUbersicht();// neue
+																	// Rundenübersicht
+																	// öffnen
 					frame.dispose();
 				} else if (alleGegruendet) {
-					if (n < StartGame.getI() - 1) {// wenn alle UN gegründet wurden und der Spieler nicht der letzte ist
+					if (n < StartGame.getI() - 1) {// wenn alle UN gegründet
+													// wurden und der Spieler
+													// nicht der letzte ist
 						frame.dispose();
 						Overview nextUN = new Overview(n + 1);
 					}
 				} else {
-					if (n < StartGame.getI() - 1) { // wenn nicht alle gegründet sind, immer neue Gründung starten
+					if (n < StartGame.getI() - 1) { // wenn nicht alle gegründet
+													// sind, immer neue Gründung
+													// starten
 						frame.dispose();
 						newName nextUN = new newName(n + 1);
 					}
@@ -824,7 +877,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 	}
 
-	public static int[] getReihenfolgeKapital() { // Gibt Array zurück, dass die Unternehmen nach Kapital geordnet enthält
+	public static int[] getReihenfolgeKapital() { // Gibt Array zurück, dass die
+													// Unternehmen nach Kapital
+													// geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;
@@ -841,7 +896,9 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		return i;
 	}
 
-	public static int[] getReihenfolgeGewinn() {// Gibt Array zurück, dass die Unternehmen nach Gewinn geordnet enthält
+	public static int[] getReihenfolgeGewinn() {// Gibt Array zurück, dass die
+												// Unternehmen nach Gewinn
+												// geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;

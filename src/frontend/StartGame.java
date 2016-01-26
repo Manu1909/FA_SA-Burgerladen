@@ -77,6 +77,7 @@ public class StartGame extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnGo) {
+			if(Controller.Controller.getRunde()<11)
 			try {
 				i = Integer.parseInt(txtUNZahl.getText());
 				unZahl = i;

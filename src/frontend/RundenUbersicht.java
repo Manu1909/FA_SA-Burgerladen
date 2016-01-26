@@ -41,7 +41,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		lblRunde.setBounds(70, 50, 100, 14);
 		contentPane.add(lblRunde);
 
-		if (Controller.getRunde() >= 11) {
+		if (Controller.getRunde() >=11) {
 			lblRunde.setText("Kapitalstände:");
 			int[] reihenf = frontend.Overview.getReihenfolgeKapital();
 			String reihenfolge = "";
@@ -51,8 +51,8 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 				reihenfolge += "\n" + (m + 1) + ". " + Controller.getUnternehmen(reihenf[m]).getName() + ": "
 						+ (Controller.getUnternehmen(reihenf[m]).getKapital()) + " €";
 			}
-			lblText.setText("<html><body><h1>" + Controller.getUnternehmen(reihenf[0]).getName() + " hat gewonnen!");
-			lblText.setBounds(170, 11, 250, 30);
+			lblText.setText("<html><body><h3>" + Controller.getUnternehmen(reihenf[0]).getName() + " hat gewonnen!");
+			lblText.setBounds(170, 11, 300, 30);
 			btnWeiter.setText("Spiel beenden");
 			JPanel panel = new JPanel();
 			JTextPane txtUb = new JTextPane();
@@ -99,9 +99,13 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		Object s = e.getSource();
 		if (s == btnWeiter) {
-			if (Controller.getRunde() < 12) {
+			if (Controller.getRunde() < 11) {
 				frame.dispose();
 				Overview overview = new Overview(0);
+			}
+			if (Controller.getRunde() >= 11 )
+			{
+				frame.dispose();
 			}
 		}
 	}
