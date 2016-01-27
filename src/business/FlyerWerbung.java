@@ -3,7 +3,7 @@ package business;
 /**
  * Created by kochsiek on 05.12.2015.
  */
-public class FlyerWerbung extends Marketing {
+public class FlyerWerbung extends Marketing{
 
     public FlyerWerbung() {
         bekanntheitssteigerung = 7;

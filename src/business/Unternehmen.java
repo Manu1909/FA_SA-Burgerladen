@@ -165,36 +165,6 @@ public class Unternehmen {
 	}
 
 
-	/*
-	public void bestelleFleisch(Lieferant fl){
-		bestellung.bestelleFleisch(fl);
-		fleischlieferant = fl;
-		standort.getKuehlraum().wareEinlagern(bestellung.getMenge());
-	}
-
-	public void bestelleBrot(Lieferant bl){
-		bestellung.bestelleBrot(bl);
-		brotlieferant = bl;
-	}
-
-	public void bestelleSalat(Lieferant sal){
-		bestellung.bestelleSalat(sal);
-		salatlieferant = sal;
-	}
-
-	public void bestelleSosse(Lieferant sol){
-		bestellung.bestelleSosse(sol);
-		sossenlieferant = sol;
-	}
-
-
-	public void bestellen(Lieferant fl, Lieferant bl, Lieferant sal, Lieferant sol){
-		bestelleFleisch(fl);
-		bestelleBrot(bl);
-		bestelleSalat(sal);
-		bestelleSosse(sol);
-	}*/
-
 	public int berechneBurgerQualitaet(){
 		return burger.berechneQualitaet(bestellung.getFleischlieferant().getQualitaet(), bestellung.getBrotlieferant().getQualitaet(), bestellung.getSalatlieferant().getQualitaet(), bestellung.getSossenlieferant().getQualitaet());
 	}
@@ -228,7 +198,7 @@ public class Unternehmen {
 			}
 		}
 }
-
+	//hier wird der Kundenanteil berechnet wobei auch mit einbezogen wird, ob in dieser Rudnde Marketing gewählt wurde
 	public int berechneKundenanteil(){
 		kundenAnteil = (int)(0.25*bekanntheit + 0.33* kundenzufriedenheit + 0.17*standort.getTraffic() + 0.25*burger.berechnePreisPunkte());
 		if(marketing!=null){
@@ -242,6 +212,9 @@ public class Unternehmen {
 		return umsatz;
 	}
 
+	//Bei der Gewinnberechnung müssen in der ersten Runde die Gründungskosten miteinbezogen werden.
+	//Wenn ein Cateringauftrag angeommen wurde müssen diese Kosten abgezogen werden
+	//In dieser Methode werden auch erst die Zutaten aus dem Lager genommen, da nur hier die Zwei für 1 Verkaufaktion richtig mit einbezogen werden kann
 	public double berechneGewinn(int rundenZahl){
 		if(rundenZahl == 0){
 			gewinn = burger.preis * kunden - berechneGruendungsKosten();
@@ -304,6 +277,7 @@ public class Unternehmen {
 		return c.getAnzahlBurger()*(bestellung.getFleischlieferant().getPreisProGut()+bestellung.getBrotlieferant().getPreisProGut()+bestellung.getSalatlieferant().getPreisProGut()+bestellung.getSossenlieferant().getPreisProGut());
 	}
 
+	//Die Kundenzufriedenheit setzt sich aus der Preisleistung und den im Spiel anfallenden Veränderungen zusammen
 	public int berechneKundenzufriedenheit(){
 		kundenzufriedenheit = burger.berechnePreisleistung() + kundenzufriedenheitsVeraenderung;
 		return kundenzufriedenheit;

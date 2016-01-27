@@ -28,7 +28,7 @@ public class SpielablaufTest {
     public void init(){
 
         unternehmen = new ArrayList<>();
-        Controller.setRunde(anzahlRunden=0);
+        Controller.setRunde(anzahlRunden=1);
 
         for (int i = 0; i < 3; i++) {
             Controller.neuesUnternehmen(new Unternehmen("u"+i));
@@ -59,7 +59,7 @@ public class SpielablaufTest {
         init();
         simuliereSpielablauf(true);
 
-        assertTrue("u1 soll gewonnen haben", unternehmen.get(1).getKapital()>unternehmen.get(0).getKapital() && unternehmen.get(1).getKapital()>unternehmen.get(2).getKapital());
+        assertTrue("u2 soll gewonnen haben", unternehmen.get(2).getKapital()>unternehmen.get(0).getKapital() && unternehmen.get(2).getKapital()>unternehmen.get(1).getKapital());
 
         unternehmen = null;
     }
@@ -67,7 +67,7 @@ public class SpielablaufTest {
 
 
     public void simuliereSpielablauf(boolean ereignis){
-        while (anzahlRunden < 12) {
+        while (anzahlRunden <= 12) {
             for (int j = 0; j < Datenbank.fl.length; j++) {
                 Datenbank.fl[j].setVerbrauchteRessourcen(0);
                 Datenbank.bl[j].setVerbrauchteRessourcen(0);
@@ -162,7 +162,7 @@ public class SpielablaufTest {
                         //u.getPersonal().feuern(1);
                     }
                 }
-                if(anzahlRunden==4 || anzahlRunden==6 || anzahlRunden==8){
+                if(anzahlRunden==4  || anzahlRunden==8  && (i==0 || i== 2)|| (anzahlRunden==9 && i==1)){
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
@@ -200,11 +200,14 @@ public class SpielablaufTest {
                     eingabe = 0;
                 }
 
-                if(anzahlRunden == 3 && i==0){
+                if(anzahlRunden == 3 && i==2){
+                    eingabe = 1;
+                }
+                if(anzahlRunden==4 && i==0){
                     eingabe = 1;
                 }
 
-                if(anzahlRunden == 6 && (i==0 || i==1)){
+                if(anzahlRunden == 6 && (i==0 || i==2)){
                     eingabe = 2;
                 }
 

@@ -60,12 +60,9 @@ public class Bestellung {
 		setSalatlieferant(salatlieferant);
 		setSossenlieferant(sossenlieferant);
 	}
-	
+
+	//Vor dem Setzen der Bestellmenge wird hier geprüft, ob genügend Lagerplatz vorhanden ist
 	public void setzeBestellmenge(int bestellmenge, int freierLagerplatz){
-		/*boolean fleischOK;
-		boolean brotOK;
-		boolean salatOK;
-		boolean sosseOK;*/
 		boolean lagerPlatzOK;
 
 		menge = 0;
@@ -82,54 +79,10 @@ public class Bestellung {
 		else if(!lagerPlatzOK){
 			System.out.println("Nicht genügend Lagerplatz vorhanden");
 		}
-		/*
-		if(Datenbank.fl1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.fl3.berechneUebrigeRessourcen() >= bestellmenge){
-			fleischOK = true;
-		}
-		else{
-			fleischOK = false;
-		}
-		
-		if(Datenbank.bl1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.bl2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.bl3.berechneUebrigeRessourcen() >= bestellmenge){
-			brotOK = true;
-		}
-		else{
-			brotOK = false;
-		}
-		
-		if(Datenbank.sal1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sal2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sal3.berechneUebrigeRessourcen() >= bestellmenge){
-			salatOK = true;
-		}
-		else{
-			salatOK = false;
-		}
-		
-		if(Datenbank.sol1.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sol2.berechneUebrigeRessourcen() >= bestellmenge || Datenbank.sol3.berechneUebrigeRessourcen() >= bestellmenge){
-			sosseOK = true;
-		}
-		else{
-			sosseOK = false;
-		}
-		
-		if(fleischOK && brotOK && salatOK && sosseOK && lagerPlatzOK){
-			menge = bestellmenge;
-		}*/
 
-	/*	else{
-			System.out.println("Die Ressourcen der Lieferanten reichen nicht aus, um so viele Burger zu bestellen");
-		}*/
 	}
 	
 
-	//Diese Methode wäre nötig, wenn man von mehreren Lieferanten gleichzeitig bestellen könnte
-	/*public boolean pruefeAnzahlZutaten(int einzelneBestellmenge){
-		if(einzelneBestellmenge==menge){
-			return true;
-		}
-		else{
-			return false;
-		}
-	}*/
 	
 	
 	public void bestelleFleisch(Lieferant fl){
@@ -170,6 +123,7 @@ public class Bestellung {
 		bestelleSosse(sol);
 	}
 
+	//Gesamtpreis setzt sich aus allen Lieferantenpreisen zusammen
 	public double berechneGesamtpreis(){
 		double preis = (fleischlieferant.getPreisProGut() + brotlieferant.getPreisProGut() + salatlieferant.getPreisProGut() + sossenlieferant.getPreisProGut())*menge;
 		preis = Math.round(100.0*preis)/100.0;

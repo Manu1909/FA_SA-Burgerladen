@@ -3,7 +3,7 @@ package business;
 /**
  * Created by kochsiek on 05.12.2015.
  */
-public class RadioWerbung extends Marketing {
+public class RadioWerbung extends Marketing{
     public RadioWerbung() {
         bekanntheitssteigerung = 30;
         kundenzufriednenheitssteigerung = 0;
