@@ -135,9 +135,6 @@ public class SpielablaufTest {
 
                 }
 
-                /*if (anzahlRunden > 0 && ereignis){
-                Controller.ereignisTrittEin();
-                }*/
 
 
                 //Setze Bestellmenge und bearbeite Personal
@@ -166,10 +163,6 @@ public class SpielablaufTest {
                     u.getPersonal().berechneAnzahl();
                     u.getPersonal().erhoeheAnzahl(1);
                 }
-                /*if(anzahlRunden==9 && i==1){
-                    u.getPersonal().berechneAnzahl();
-                    u.getPersonal().erhoeheAnzahl(1);
-                }*/
 
 
                 if(u.getStandort().getKuehlraum().berechneFreienLagerplatz() < bestellMenge){
@@ -218,15 +211,6 @@ public class SpielablaufTest {
 
                 u.berechneRundenkosten();
 
-                //Setze BurgerPreis
-                /*if(anzahlRunden == 0){
-                    u.getBurger().setPreis(startPreise[i]);
-                }
-                if(anzahlRunden%2 == 1){
-                    u.getBurger().setPreis(startPreise[i] + anzahlRunden/2);
-                }*/
-
-                //u.getBurger().setPreis(startPreise[i] + anzahlRunden);
                 u.getBurger().setPreis(startPreise[i]);
 
                 Controller.unternehmensRundeBeenden(u);
@@ -266,7 +250,6 @@ public class SpielablaufTest {
                 System.out.println("Kapital " + u.getName() + ": " + u.berechneKapital(false));
                 System.out.println("Bekanntheit " + u.getName() + ": " + u.getBekanntheit());
                 System.out.println("Kundenzufriedenheit " + u.getName() + ": " + u.getKundenzufriedenheit() + "\n");
-                //System.out.println("Preise Lieferant2: " + Datenbank.fl[2].getPreisProGut() +"\n");
 
                 u.setCatering(null);
                 u.setMarketing(null);
