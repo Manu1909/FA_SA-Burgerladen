@@ -25,11 +25,11 @@ public class StartGame extends JFrame implements ActionListener {
 		StartGame test = new StartGame();
 	}
 
-	public static int getUnZahl() {
+	public static int getUnZahl() { //gibt UN-Zahl zurück
 		return unZahl;
 	}
 
-	public static int getI() {
+	public static int getI() {//gibt UN-Zahl zurück
 		return i;
 	}
 
@@ -37,7 +37,7 @@ public class StartGame extends JFrame implements ActionListener {
 		buildWindow();
 	}
 
-	public void buildWindow() {
+	public void buildWindow() {//Fenster aufbauen und anzeigen
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);
@@ -82,11 +82,11 @@ public class StartGame extends JFrame implements ActionListener {
 				i = Integer.parseInt(txtUNZahl.getText());
 				unZahl = i;
 				if (i > 0) {
-					for (int n = 0; n < i; n++) {
+					for (int n = 0; n < i; n++) {//Unternehmen anlegen
 						Controller.Controller.neuesUnternehmen(new business.Unternehmen("un" + n));
 						frame.setVisible(false);
 					}
-					newName giveName = new newName(0);
+					newName giveName = new newName(0); //Gründung starten
 					frame.dispose();
 				}
 			} catch (NumberFormatException e1) {

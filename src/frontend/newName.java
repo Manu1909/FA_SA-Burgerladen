@@ -32,7 +32,7 @@ public class newName extends JFrame implements ActionListener {
 		buildWindow();
 	}
 
-	public void buildWindow() {
+	public void buildWindow() { //Frame aufbauen und anzeigen
 		//contentPane settings
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -74,8 +74,8 @@ public class newName extends JFrame implements ActionListener {
 		Object s = e.getSource();
 		if (s == btnNext) {
 			boolean taken = false;
-			for (int i = 0; i < 5; i++) {
-				try {
+			for (int i = 0; i < 5; i++) {//Prüfen, ob Name schon vergeben ist
+				try { 
 					if (Controller.getUnternehmen(i).getName().equals(txtName.getText()))
 						taken = true;
 				} catch (Exception e1) {

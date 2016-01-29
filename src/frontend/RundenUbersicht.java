@@ -24,7 +24,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		buildWindow();
 	}
 
-	private void buildWindow() {
+	private void buildWindow() { //Fenster aufbauen und anzeigen
 		contentPane.setLayout(null);
 
 		JLabel lblText = new JLabel("Rundenübersicht (Runde " + (Controller.getRunde() + 1) + ")");
@@ -41,7 +41,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		lblRunde.setBounds(70, 50, 100, 14);
 		contentPane.add(lblRunde);
 
-		if (Controller.getRunde() >=11) {
+		if (Controller.getRunde() >=11) { //Variante Spielübersicht am Spielenden
 			lblRunde.setText("Kapitalstände:");
 			int[] reihenf = frontend.Overview.getReihenfolgeKapital();
 			String reihenfolge = "";
@@ -66,7 +66,7 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 			scrollPane.setBounds(69, 73, 365, 242);
 			contentPane.add(scrollPane);
 		}
-		if (Controller.getRunde() < 11) {
+		if (Controller.getRunde() < 11) { //Variante Rundenübersicht am Rundenende
 			int[] reihenf = frontend.Overview.getReihenfolgeGewinn();
 			String reihenfolge = "";
 			reihenfolge += "1. " + (Controller.getUnternehmen(reihenf[0]).getName()) + ": "
@@ -101,11 +101,11 @@ public class RundenUbersicht extends JFrame implements ActionListener {
 		if (s == btnWeiter) {
 			if (Controller.getRunde() < 11) {
 				frame.dispose();
-				Overview overview = new Overview(0);
+				Overview overview = new Overview(0); //nächste Runden starten
 			}
 			if (Controller.getRunde() >= 11 )
 			{
-				frame.dispose();
+				frame.dispose(); //Am ende das Fenster schließen und das Spiel beenden
 			}
 		}
 	}

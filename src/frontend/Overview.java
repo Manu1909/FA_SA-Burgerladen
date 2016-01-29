@@ -30,7 +30,7 @@ import Controller.Controller;
 import backend.Datenbank;
 
 public class Overview extends JFrame implements ActionListener, MouseListener {
-
+	private static String cateringWahl;
 	private static String werbung;
 	private int burgerZahl;
 	private int n; // Unternehmensnummer
@@ -242,6 +242,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		int[] ranglisteGewinn = getReihenfolgeGewinn();
 		String rangKapital = "";
 		String rangGewinn = "";
+		//füllen und anzeigen der Ranglisten Kapital und Gewinn
 		rangKapital += "1. " + Controller.getUnternehmen(ranglisteKapital[0]).getName() + "   "
 				+ Controller.getUnternehmen(ranglisteKapital[0]).getKapital() + " €";
 		rangGewinn += "1. " + (Controller.getUnternehmen(ranglisteGewinn[0]).getName()) + "   "
@@ -307,13 +308,20 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(null);
 
-		if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9) {
+		//PopUp-Benachrichtigugnen
+		if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9) { //Catering-Meldungs
 			JOptionPane.showMessageDialog(this, "In dieser Runde steht ein Catering-Auftrag zur Verfügung");
 			menuCatering.setEnabled(true);
 		}
 		try {
-			if (ereignisErgebnis[n] != null) {
+			if (ereignisErgebnis[n] != null) { //Anzeige von Ereignissen
 				JOptionPane.showMessageDialog(this, ereignisErgebnis[n]);
+			}
+		} catch (Exception e) {
+		}
+		try {
+			if (cateringWahl.equals(Controller.getUnternehmen(n).getName())) { //Anzeige der Cateringauswahl
+				JOptionPane.showMessageDialog(this, "Ihr Umsatz hat sich verbessert, da Sie das Catering der letzten Periode ausführen durften.");
 			}
 		} catch (Exception e) {
 		}
@@ -680,10 +688,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 				if (Integer.parseInt(txtBurgerZahl.getText())
 						+ Controller.getUnternehmen(n).getStandort().getKuehlraum().getInhalt() <= Controller
 								.getUnternehmen(n).getStandort().getKuehlraum().getLagerGroesse()
-						&& Integer.parseInt(txtBurgerZahl.getText()) >= 0) {// Falls
-																			// Lager
-																			// nicht
-																			// überfüllt
+						&& Integer.parseInt(txtBurgerZahl.getText()) >= 0) {
 					// Lieferanten übergeben
 					Controller.getUnternehmen(n).getBestellung().bestellen(Datenbank.fl[listFleisch.getSelectedIndex()],
 							Datenbank.bl[listBroetchen.getSelectedIndex()], Datenbank.sal[listSalat.getSelectedIndex()],
@@ -699,11 +704,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					btnRundeBeenden.setEnabled(true);
 					frame.setFocusableWindowState(true);
 					frameBestellungen.dispose();
-				} else if (Integer.parseInt(txtBurgerZahl.getText()) < 0) {// Begrenzung:
-																			// Bestellmenge
-																			// muss
-																			// >=0
-																			// sein
+				} else if (Integer.parseInt(txtBurgerZahl.getText()) < 0) {
 				} else {
 					JOptionPane.showMessageDialog(this, "Ihr Kühlraum hat nicht genug Platz für die Bestellung");
 				}
@@ -739,10 +740,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		if (s == btnPreis) { // Button im Preisfenster
 			try {
 				if (Integer.parseInt(txtPreis.getText()) >= 6 && Integer.parseInt(txtPreis.getText()) <= 25) {// Begrenzung:0<=Preis<=25
-					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));// Preis
-																											// im
-																											// UN
-																											// setzen
+					Controller.getUnternehmen(n).getBurger().setPreis(Integer.parseInt(txtPreis.getText()));
 					lblPreis.setText("Preis/Burger: " + Controller.getUnternehmen(n).getBurger().getPreis() + "€");
 					frame.setFocusableWindowState(true);
 					framePreis.dispose();
@@ -770,17 +768,11 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 			// keine Datenänderung, Behandlung im RundeBeenden Button
 		}
 		if (s == btnConfirm) {// Button im Fenster Marketing
-			if (listMarketing.getSelectedIndex() < 3) // Falls Optionen
-														// ausgewählt
+			if (listMarketing.getSelectedIndex() < 3) //alle Optionen außer "kein MArketing"
 				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(listMarketing.getSelectedIndex()));
 			else
-				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1));// setzen:
-																							// kein
-																							// Marketing
-			if (Controller.getUnternehmen(n).getMarketing() != null) {// Label
-																		// im
-																		// Überblick
-																		// ändern
+				Controller.getUnternehmen(n).setMarketing(Controller.waehleMarketing(-1)); //für kein Marketing
+			if (Controller.getUnternehmen(n).getMarketing() != null) {
 				lblMarketing.setText("Marketing:      " + Controller.getUnternehmen(n).getMarketing().getBezeichnung());
 			} else
 				lblMarketing.setText("Marketing:      nichts");
@@ -789,35 +781,17 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 		if (frame.getFocusableWindowState()) {
 			if (s == btnRundeBeenden && btnRundeBeenden.isEnabled()) {
-				try {
-					if (Controller.getRunde() == 3) {// Falls Runde 3
-														// (Rundenzähler startet
-														// bei 0)
-						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
-																								// und
-																								// Qualität
-																								// in
-																								// Cateringauswahl
+				try { //Cateringauswahl aufstellen
+					if (Controller.getRunde() == 3) {
+						Datenbank.c1.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
 						Datenbank.c1.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 6) {// Falls Runde 6
-														// (Rundenzähler startet
-														// bei 0)
-						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
-																								// und
-																								// Qualität
-																								// in
-																								// Cateringauswahl
+					if (Controller.getRunde() == 6) {
+						Datenbank.c2.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
 						Datenbank.c2.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
-					if (Controller.getRunde() == 9) {// Falls Runde 9
-														// (Rundenzähler startet
-														// bei 0)
-						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));// Preis
-																								// und
-																								// Qualität
-																								// in
-																								// Cateringauswahl
+					if (Controller.getRunde() == 9) {
+						Datenbank.c3.addPreis(Double.parseDouble(txtAngebotSumme.getText()));
 						Datenbank.c3.addQualitaet(Controller.getUnternehmen(n).getBurger().getQualitaet());
 					}
 				} catch (Exception e2) {
@@ -831,44 +805,26 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 					Controller.getUnternehmen(n).getPersonal().feuern(Integer.parseInt(txtFeuern.getText()));
 				} catch (Exception e1) {
 				}
-				Controller.getUnternehmen(n).betreibeMarketing();// Marketingauswikrungen
-																	// berechnen
-				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);// Ware
-																									// in
-																									// Kühlraum
-																									// lagern
-				Controller.getUnternehmen(n).berechneCatering();// Cateringkosten
-																// berechnen
+				Controller.getUnternehmen(n).betreibeMarketing();// Marketingauswikrungen berechnen
+				Controller.getUnternehmen(n).getStandort().getKuehlraum().wareEinlagern(burgerZahl);// Ware in Kühlraum einlagern
 				Controller.unternehmensRundeBeenden(Controller.getUnternehmen(n));
 				if (n == StartGame.getI() - 1) {// Wenn letzter Spieler spielt
 					alleGegruendet = true;
 					ereignisErgebnis = null;
-					ereignisErgebnis = Controller.ereignisTrittEin(0);// Array
-																		// von
-																		// Ereignissen
-																		// füllen
-																		// (1
-																		// Element
-																		// pro
-																		// UN)
+					ereignisErgebnis = Controller.ereignisTrittEin(0);// Array von Ereignissen füllen (1 Element pro UN)
 					if (Controller.getRunde() == 3 || Controller.getRunde() == 6 || Controller.getRunde() == 9)
-						Controller.cateringAuswahlTreffen(Controller.getRunde());
+						cateringWahl = Controller.cateringAuswahlTreffen(Controller.getRunde());
+					Controller.getUnternehmen(n).berechneCatering();// Cateringkosten  berechnen
 					Controller.rundeBeenden();
-					RundenUbersicht ende = new RundenUbersicht();// neue
-																	// Rundenübersicht
-																	// öffnen
+					RundenUbersicht ende = new RundenUbersicht();// neue Rundenübersicht öffnen
 					frame.dispose();
 				} else if (alleGegruendet) {
-					if (n < StartGame.getI() - 1) {// wenn alle UN gegründet
-													// wurden und der Spieler
-													// nicht der letzte ist
+					if (n < StartGame.getI() - 1) {// wenn alle UN gegründet wurden und der Spieler nicht der letzte ist
 						frame.dispose();
 						Overview nextUN = new Overview(n + 1);
 					}
 				} else {
-					if (n < StartGame.getI() - 1) { // wenn nicht alle gegründet
-													// sind, immer neue Gründung
-													// starten
+					if (n < StartGame.getI() - 1) { // wenn nicht alle gegründet sind, immer neue Gründung starten
 						frame.dispose();
 						newName nextUN = new newName(n + 1);
 					}
@@ -877,9 +833,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		}
 	}
 
-	public static int[] getReihenfolgeKapital() { // Gibt Array zurück, dass die
-													// Unternehmen nach Kapital
-													// geordnet enthält
+	public static int[] getReihenfolgeKapital() { // Gibt Array zurück, dass die Unternehmen nach Kapital geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;
@@ -896,9 +850,7 @@ public class Overview extends JFrame implements ActionListener, MouseListener {
 		return i;
 	}
 
-	public static int[] getReihenfolgeGewinn() {// Gibt Array zurück, dass die
-												// Unternehmen nach Gewinn
-												// geordnet enthält
+	public static int[] getReihenfolgeGewinn() {// Gibt Array zurück, dass die Unternehmen nach Gewinn geordnet enthält
 		int[] i = new int[StartGame.getUnZahl()];
 		for (int z = 0; z < i.length; z++) {
 			i[z] = z;

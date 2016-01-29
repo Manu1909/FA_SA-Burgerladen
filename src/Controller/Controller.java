@@ -233,7 +233,7 @@ public class Controller {
 	}
 
 	//Methode die das Catering dem Unternehmen zuweist
-	public static void cateringAuswahlTreffen(int anzahlRunden) {
+	public static String cateringAuswahlTreffen(int anzahlRunden) {
 		String wahlUnternehmen = "";
 		Catering c = null;
 
@@ -254,9 +254,11 @@ public class Controller {
 					unternehmen.get(i).setCatering(c);
 					unternehmen.get(i).berechneCatering();
 					System.out.println(unternehmen.get(i).getName() + " hat Catering bekommen");
+					return wahlUnternehmen;
 				}
 			}
 		}
+		return null;
 	}
 
 	//Methode die den Start des Spiels behandelt

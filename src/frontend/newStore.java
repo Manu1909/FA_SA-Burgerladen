@@ -191,7 +191,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 	}
 
 	@Override
-	public void mousePressed(MouseEvent e) {
+	public void mousePressed(MouseEvent e) { //Infotexte gemäß Listenauswahl ändenr
 		Object s = e.getSource();
 		if (s == listStandort) {
 			int p = listStandort.getSelectedIndex();
