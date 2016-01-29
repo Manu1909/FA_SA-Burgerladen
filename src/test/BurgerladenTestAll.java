@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 
 @RunWith(Suite.class)
-@SuiteClasses({StandortTest.class, KuehlraumTest.class, BurgerTest.class, KreditTest.class, BestellungTest.class, LieferantTest.class, CateringTest.class, InnenausstattungTest.class, MarketingTest.class})
+@SuiteClasses({StandortTest.class, KuehlraumTest.class, BurgerTest.class, KreditTest.class, BestellungTest.class, LieferantTest.class, CateringTest.class, InnenausstattungTest.class, MarketingTest.class, ControllerTest.class, EreignisTest.class, PersonalTest.class})
 public class BurgerladenTestAll {
 	
 }

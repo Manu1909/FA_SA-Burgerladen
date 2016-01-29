@@ -56,12 +56,7 @@ public class Lieferant {
 	public int getRisikoQuote(){
 		return risikoQuote;
 	}
-	
 
-	//Methode wird gebraucht bei begrenzten Ressourcen
-	/*public int berechneUebrigeRessourcen(){
-		return ressourcen -verbrauchteRessourcen;
-	}*/
 
 	public double berechneNeuenPreis(){
 		double preisveraenderung = 1.00*verbrauchteRessourcen/ressourcen;
@@ -83,13 +78,6 @@ public class Lieferant {
 		}
 		return preisProGut;
 	}
-	
-	//Wenn die Lieferanten begrenzte Ressourcen haben ist diese Methode von Nöten
-	/*public boolean checkRessourcen(int res){
-		if(res> berechneUebrigeRessourcen()){
-			return false;
-		}
-		return true;
-	}*/
+
 	
 }

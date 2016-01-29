@@ -77,7 +77,7 @@ public class Bestellung {
 			menge=bestellmenge;
 		}
 		else if(!lagerPlatzOK){
-			System.out.println("Nicht genügend Lagerplatz vorhanden");
+			//System.out.println("Nicht genügend Lagerplatz vorhanden");
 		}
 
 	}
