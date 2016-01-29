@@ -16,6 +16,7 @@ public class Werbung21 extends Marketing{
 
     }
 
+    // Die Bekanntheit steigert sich abhängig von der bisherigen Bekanntheit
     @Override
     public int berechneBekanntheit(int bekanntheit) {
         bekanntheit = (int)(bekanntheit + bekanntheitssteigerung - bekanntheit*prozent + 0.5);
@@ -23,6 +24,7 @@ public class Werbung21 extends Marketing{
         return bekanntheit;
     }
 
+    // Die Kundenzufriedenheit steigert sich abhängig von der bisherigen kundenzufriedenheit
     @Override
     public int berechneKundenzufriedenheit(int kundenzufriedenheit) {
         kundenzufriedenheit = (int)(kundenzufriedenheit + kundenzufriednenheitssteigerung -kundenzufriedenheit*prozent+ 0.5);

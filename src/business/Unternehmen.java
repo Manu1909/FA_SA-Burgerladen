@@ -19,7 +19,6 @@ public class Unternehmen {
 	private Catering catering;
 	private Marketing marketing = null;
 	private Personal personal;
-	//private int tmpKundenzufriedenheitsOffset;
 
 	// Konstruktor mit ï¿½bergabe von name
 	public Unternehmen(String name) {
@@ -143,8 +142,8 @@ public class Unternehmen {
 	}
 
 	/**
-	 * Hier wird das Kapital des Unternehmens berechnet unter Berücksichtung
-	 * ob ein Kredit gewählt und bereits abbezahlt wurde
+	 * Hier wird das Kapital des Unternehmens berechnet unter Berï¿½cksichtung
+	 * ob ein Kredit gewï¿½hlt und bereits abbezahlt wurde
 	 * @param kreditWahl
 	 * @return kapital
 	 */
@@ -283,11 +282,4 @@ public class Unternehmen {
 		return kundenzufriedenheit;
 	}
 
-	/*public int erhoeheKundenzufriedenheit(int erhoehung){
-		kundenzufriedenheitsVeraenderung = burger.berechnePreisleistung();
-		tmpKundenzufriedenheitsOffset += erhoehung;
-		kundenzufriedenheitsVeraenderung += tmpKundenzufriedenheitsOffset;
-
-		return kundenzufriedenheitsVeraenderung;
-	}*/
 }

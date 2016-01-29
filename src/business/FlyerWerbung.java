@@ -14,6 +14,7 @@ public class FlyerWerbung extends Marketing{
         bezeichnung = "Flyer";
     }
 
+    // Die Bekanntheit steigert sich abhängig von der bisherigen Bekanntheit
     @Override
     public int berechneBekanntheit(int bekanntheit) {
         if(bekanntheit*prozent>=bekanntheitssteigerung){
@@ -25,6 +26,8 @@ public class FlyerWerbung extends Marketing{
         return bekanntheit;
     }
 
+
+    // Die Kundenzufriedenheit steigert sich abhängig von der bisherigen kundenzufriedenheit
     @Override
     public int berechneKundenzufriedenheit(int kundenzufriedenheit) {
         kundenzufriedenheit = (int)(kundenzufriedenheit + kundenzufriednenheitssteigerung + 0.5);
