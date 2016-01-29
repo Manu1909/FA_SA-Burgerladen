@@ -6,7 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 //import java.util.Locale.LanguageRange;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -160,10 +163,14 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		btnConfirm.addActionListener(this);
 		panel.add(btnConfirm);
 
-		ImageIcon icon = new ImageIcon("logoJavaBG.PNG");
-		JLabel label = new JLabel(icon);
-		label.setBounds(0,0, icon.getIconWidth(), icon.getIconHeight());
-		panel.add(label);
+		try {
+			BufferedImage io = ImageIO.read(getClass().getResource("logoJavaBG.PNG"));
+			ImageIcon icon = new ImageIcon(io);
+			JLabel label = new JLabel(icon);
+			label.setBounds(0,0, icon.getIconWidth(), icon.getIconHeight());
+			panel.add(label);
+		} catch (Exception e) {
+		}
 		
 		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

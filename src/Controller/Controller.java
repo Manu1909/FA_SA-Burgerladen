@@ -254,7 +254,7 @@ public class Controller {
 					unternehmen.get(i).setCatering(c);
 					unternehmen.get(i).berechneCatering();
 					System.out.println(unternehmen.get(i).getName() + " hat Catering bekommen");
-					return wahlUnternehmen;
+					return unternehmen.get(i).getName();
 				}
 			}
 		}

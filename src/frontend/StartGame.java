@@ -3,7 +3,10 @@ package frontend;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -43,10 +46,14 @@ public class StartGame extends JFrame implements ActionListener {
 		contentPane.setLayout(null);
 		frame.setContentPane(contentPane);
 		
-		ImageIcon icon = new ImageIcon("logoJavaBG.PNG");
-		JLabel label = new JLabel(icon);
-		label.setBounds(120, 10, icon.getIconWidth(), icon.getIconHeight());
-		contentPane.add(label);
+		try {
+			BufferedImage io = ImageIO.read(getClass().getResource("logoJavaBG.PNG"));
+			ImageIcon icon = new ImageIcon(io);
+			JLabel label = new JLabel(icon);
+			label.setBounds(120, 10, icon.getIconWidth(), icon.getIconHeight());
+			contentPane.add(label);
+		} catch (Exception e) {
+		}
 		
 		txtUNZahl.setBounds(200, 330, 50, 14);
 		contentPane.add(txtUNZahl);
