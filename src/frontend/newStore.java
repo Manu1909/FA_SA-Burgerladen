@@ -164,7 +164,7 @@ public class newStore extends JFrame implements ActionListener, MouseListener {
 		panel.add(btnConfirm);
 
 		try {
-			BufferedImage io = ImageIO.read(getClass().getResource("logoJavaBG.PNG"));
+			BufferedImage io = ImageIO.read(getClass().getResource("/resources/logoJavaBG.png"));
 			ImageIcon icon = new ImageIcon(io);
 			JLabel label = new JLabel(icon);
 			label.setBounds(0,0, icon.getIconWidth(), icon.getIconHeight());

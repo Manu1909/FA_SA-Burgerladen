@@ -47,7 +47,7 @@ public class StartGame extends JFrame implements ActionListener {
 		frame.setContentPane(contentPane);
 		
 		try {
-			BufferedImage io = ImageIO.read(getClass().getResource("logoJavaBG.PNG"));
+			BufferedImage io = ImageIO.read(getClass().getResource("/resources/logoJavaBG.png"));
 			ImageIcon icon = new ImageIcon(io);
 			JLabel label = new JLabel(icon);
 			label.setBounds(120, 10, icon.getIconWidth(), icon.getIconHeight());
